@@ -35,6 +35,7 @@
  function say(message){
   stop();if(!sound||!voice||!message||document.hidden)return;
   const clip=clips.find(item=>normalize(item.text)===normalize(message));
+  const speaker=clip?.speaker||(document.querySelector('.frame.active')?'martian':'tenbot');
   if(clip){
    const token=generation,player=new Audio(clip.src);narration=player;player.volume=.85;
    if(status)status.textContent='';
@@ -49,13 +50,14 @@
   // Short sentences avoid long speech queues; a new instruction cancels the old one.
   const pieces=message.match(/[^.!?]+[.!?]*/g)||[message];
   const voices=synth.getVoices(),english=voices.filter(v=>/^en(?:-|_)/i.test(v.lang));
-  const selectedVoice=english.find(v=>v.localService&&/zira|samantha|female/i.test(v.name))||english.find(v=>v.localService)||english[0];
+  const preferred=speaker==='martian'?/david|mark|daniel|alex\b/i:/zira|samantha|female/i;
+  const selectedVoice=english.find(v=>v.localService&&preferred.test(v.name))||english.find(v=>preferred.test(v.name))||english.find(v=>v.localService)||english[0];
   function next(index){
    if(token!==generation||!sound||!voice||document.hidden)return;
    if(index===pieces.length){current=null;document.documentElement.dataset.speaking='false';return;}
    const utterance=new SpeechSynthesisUtterance(pieces[index].trim());current=utterance;
    utterance.lang=selectedVoice?.lang||'en-US';if(selectedVoice)utterance.voice=selectedVoice;
-   utterance.pitch=1.65;utterance.rate=.9;utterance.volume=.85;
+   utterance.pitch=speaker==='martian'?.7:1.65;utterance.rate=speaker==='martian'?.85:.9;utterance.volume=.85;
    utterance.onstart=()=>{if(token===generation)document.documentElement.dataset.speaking='true';};
    utterance.onend=()=>next(index+1);
    utterance.onerror=event=>{if(token!==generation)return;current=null;document.documentElement.dataset.speaking='false';if(status&&event.error!=='canceled'&&event.error!=='interrupted')status.textContent='Voice could not start. Press Hear instruction again to retry.';};

@@ -14,5 +14,6 @@ jobs:
       - run: node farm-contracts.test.js
       - run: node --test training.test.js
       - run: node --test alien-voice.test.js
+      - run: node --test voice-effects.test.js
       - run: node --test block-field.test.js
       - run: node --test super-model.test.js
