@@ -2,7 +2,7 @@
 (() => {
  if(new URLSearchParams(location.search).get('training')==='1')return;
  const lessons=[
-  ['mission-title','Every machine needs particular arrangements of blocks. Each arrangement is a configuration. This machine needs TWO configurations, both with a value of 28. Let us unlock them together!'],
+  ['mission-title','Every machine needs particular arrangements of blocks. Each arrangement is a configuration. This machine needs TWO configurations, both with a value of 28. Precision first, apprentice. The community is counting on us.'],
   ['representation','Look at the WORD DESCRIPTION below the blocks: 2 tens and 8 ones. It names the blocks on the ground. It changes when you split or join them.'],
   ['value','Look at VALUE on the green screen. Two tens are worth 20, and eight ones are worth 8. The total value is 28. Splitting and joining keep this value the same.'],
   ['count','Look at BLOCKS beside VALUE. There are 10 separate pieces: two rods and eight ones. Count each whole rod as ONE block. Value 28, block count 10!'],
@@ -13,7 +13,7 @@
   split:'Choose the pink Discombobulator, then click ONE ten rod. TEN-BOT will keep the other blocks safe. Watch the word description and block count change!',
   ready1:'The word description now says 1 ten and 18 ones. Value: 28. Block count: 19. Configuration matched! Press SUPPLY POWER and watch the module zap the machine.',
   powering:'Power transformation in progress! Watch the blocks enter the module and the energy zap the machine. A correct configuration unlocks a machine action.',
-  join:'One key unlocked: the machine has grown legs! It is 50 percent active. Configuration two needs value 28 using 10 blocks. Choose the blue Transmorgifier. Sweep across TEN ones and release to make one ten. Keyboard: Tab to each one and press Enter.',
+  join:'One key unlocked. The machine has grown legs. A promising development for planetary transport. It is 50 percent active. Configuration two needs value 28 using 10 blocks. Choose the blue Transmorgifier. Sweep across TEN ones and release to make one ten. Keyboard: Tab to each one and press Enter.',
   ready2:'Now the word description says 2 tens and 8 ones. Value: 28. Block count: 10. The second configuration matches! Press SUPPLY POWER to unlock the final action.',
   done:'Both configurations complete! Different arrangements, the same value of 28. Both keys are lit. Your wondrous machine is now 100 percent active!'
  };

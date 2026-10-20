@@ -55,7 +55,7 @@ async function microwaveReward(){
    $('microwave-desc').textContent='A small purple alien with twenty hands has emerged and performed a stadium wave, one hand at a time.';
   }
   guard(id);busy=false;rewardRunning=false;machinePaused=false;$('pause-machine').hidden=true;$('pause-machine').textContent='Pause machine';$('pause-machine').setAttribute('aria-pressed','false');$('world').classList.remove('cutscene');
-  if(phase===2){complete=true;render();$('completion').hidden=false;$('feedback').textContent='All three keys accepted. Every representation has value 45.';$('again').focus({preventScroll:true});}
+  if(phase===2){complete=true;render();$('completion').hidden=false;window.PlanetNPC?.completed();$('feedback').textContent='All three keys accepted. Every representation has value 45.';$('again').focus({preventScroll:true});}
   else{phase++;history=[];updateContractUI();render();showBrief();}
  }catch(e){if(e!==STOP)throw e;}
 }

@@ -1,7 +1,7 @@
 'use strict';
 (function(root){
  const steps=[
-  {kind:'quiz',text:'I am TEN-BOT! One ten rod is worth 10, but it is ONE separate block. Value counts the glowing cells. Block count counts separate pieces.',value:10,blocks:1},
+  {kind:'quiz',text:'I am TEN-BOT. Civic engineer. Your careful work will help our community. One ten rod is worth 10, but it is ONE separate block. Value counts the glowing cells. Block count counts separate pieces.',value:10,blocks:1},
   {kind:'tool',tool:'split',text:'Choose the pink Discombobulator below. It splits a bigger block into smaller blocks.'},
   {kind:'exchange',tool:'split',text:'Now aim at the glowing ten rod and click it once. Keyboard: Tab to Ten block 1, then press Enter.'},
   {kind:'quiz',text:'You split one ten into ten separate ones. Count the value, then count the separate blocks. Nothing was added or lost.',value:10,blocks:10},

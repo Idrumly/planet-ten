@@ -55,7 +55,7 @@ async function hundredReward(){
     break;
   }
   guard(id);$('hundred-desc').textContent=machineStories[contract.id][phase];beep('win');busy=false;rewardRunning=false;machinePaused=false;$('pause-machine').hidden=true;$('pause-machine').textContent='Pause machine';$('pause-machine').setAttribute('aria-pressed','false');$('world').classList.remove('cutscene');
-  if(phase===contract.keys.length-1){complete=true;render();$('completion').hidden=false;$('feedback').textContent=machineStories[contract.id][phase];$('again').focus({preventScroll:true});}
+  if(phase===contract.keys.length-1){complete=true;render();$('completion').hidden=false;window.PlanetNPC?.completed();$('feedback').textContent=machineStories[contract.id][phase];$('again').focus({preventScroll:true});}
   else{phase++;history=[];updateContractUI();render();showBrief();}
  }catch(e){if(e!==STOP)throw e;}
 }

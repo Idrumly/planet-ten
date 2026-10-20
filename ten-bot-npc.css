@@ -1,0 +1,7 @@
+.npc-message{margin:14px 0 0;padding:14px;border:2px solid #85d8de;border-radius:12px;background:#102c40;color:#f2ffe9;text-align:left;letter-spacing:normal}
+.npc-message strong{font-size:13px;color:#a4f6ff}.npc-message p{font-size:16px;line-height:1.45;margin:8px 0}.npc-message button{padding:8px 12px;min-height:36px;border:2px solid #8dd9e4;border-radius:7px;background:#d0f8ff;color:#163c4b;font-weight:bold}.npc-message .robot-face{width:48px;height:38px}
+.completion .npc-message{max-width:620px}.coached:has(.completion:not([hidden])) .puzzle-coach{display:none}
+@media(max-width:700px){.npc-message{padding:10px}.npc-message p{font-size:14px}}
+.world .completion .npc-message button{background:#d0f8ff;color:#163c4b;border-color:#8dd9e4;opacity:1}
+.world .completion:has(.npc-message){top:auto;bottom:12px;max-height:45%}
+.npc-message .robot-face:before{content:'';position:absolute;width:5px;height:8px;top:-11px;background:#b9edef;border-radius:3px}

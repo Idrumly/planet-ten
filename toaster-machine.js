@@ -61,7 +61,7 @@ async function toasterReward(){
   else await toasterFeed(id);
   guard(id);$('toaster-desc').textContent=toasterStageDescriptions[phase+1];$('toaster-display').textContent=phase===4?'MAMMA / WELL FED':'T—64 / KEY '+(phase+1);
   busy=false;rewardRunning=false;machinePaused=false;$('pause-machine').textContent='Pause machine';$('pause-machine').setAttribute('aria-pressed','false');$('pause-machine').hidden=true;$('world').classList.remove('cutscene');
-  if(phase===4){complete=true;render();$('completion').hidden=false;$('toaster-replay').hidden=false;$('feedback').textContent='All five keys accepted. Value 64.';$('again').focus({preventScroll:true});beep('win');}
+  if(phase===4){complete=true;render();$('completion').hidden=false;window.PlanetNPC?.completed();$('toaster-replay').hidden=false;$('feedback').textContent='All five keys accepted. Value 64.';$('again').focus({preventScroll:true});beep('win');}
   else{phase++;history=[];updateContractUI();render();$('feedback').textContent='Power key accepted. '+PowerContracts.instruction(rule());showBrief();}
  }catch(e){if(e!==STOP)throw e;}
 }
