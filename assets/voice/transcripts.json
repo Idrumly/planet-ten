@@ -58,5 +58,53 @@
   {
     "id": "hint-blocks",
     "text": "The value is right! For BLOCKS, count each whole rod once and each separate one once. Try the block count again."
+  },
+  {
+    "id": "puzzle-1",
+    "text": "Every machine needs particular arrangements of blocks. Each arrangement is a configuration. This machine needs TWO configurations, both with a value of 28. Let us unlock them together!"
+  },
+  {
+    "id": "puzzle-2",
+    "text": "Look at the WORD DESCRIPTION below the blocks: 2 tens and 8 ones. It names the blocks on the ground. It changes when you split or join them."
+  },
+  {
+    "id": "puzzle-3",
+    "text": "Look at VALUE on the green screen. Two tens are worth 20, and eight ones are worth 8. The total value is 28. Splitting and joining keep this value the same."
+  },
+  {
+    "id": "puzzle-4",
+    "text": "Look at BLOCKS beside VALUE. There are 10 separate pieces: two rods and eight ones. Count each whole rod as ONE block. Value 28, block count 10!"
+  },
+  {
+    "id": "puzzle-5",
+    "text": "The first configuration asks for value 28 using exactly 19 blocks. We need a different arrangement of the same power. Split ONE ten rod into ten ones."
+  },
+  {
+    "id": "puzzle-6",
+    "text": "When the arrangement matches, press SUPPLY POWER below the green screen. The power transforming module takes the blocks and zaps the machine, unlocking one action. Each correct configuration earns a key."
+  },
+  {
+    "id": "puzzle-7",
+    "text": "Choose the pink Discombobulator, then click ONE ten rod. TEN-BOT will keep the other blocks safe. Watch the word description and block count change!"
+  },
+  {
+    "id": "puzzle-8",
+    "text": "The word description now says 1 ten and 18 ones. Value: 28. Block count: 19. Configuration matched! Press SUPPLY POWER and watch the module zap the machine."
+  },
+  {
+    "id": "puzzle-9",
+    "text": "Power transformation in progress! Watch the blocks enter the module and the energy zap the machine. A correct configuration unlocks a machine action."
+  },
+  {
+    "id": "puzzle-10",
+    "text": "One key unlocked: the machine has grown legs! It is 50 percent active. Configuration two needs value 28 using 10 blocks. Choose the blue Transmorgifier. Sweep across TEN ones and release to make one ten. Keyboard: Tab to each one and press Enter."
+  },
+  {
+    "id": "puzzle-11",
+    "text": "Now the word description says 2 tens and 8 ones. Value: 28. Block count: 10. The second configuration matches! Press SUPPLY POWER to unlock the final action."
+  },
+  {
+    "id": "puzzle-12",
+    "text": "Both configurations complete! Different arrangements, the same value of 28. Both keys are lit. Your wondrous machine is now 100 percent active!"
   }
 ]

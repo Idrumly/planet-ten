@@ -21,6 +21,7 @@
  }
  function stop(){generation++;current=null;if(narration){narration.pause();narration.currentTime=0;narration=null;}if(supported)synth.cancel();document.documentElement.dataset.speaking='false';}
  function text(){
+  const coach=document.getElementById("coach-instruction");if(window.FirstPuzzle?.active&&coach)return coach.textContent;
   const instruction=document.getElementById('training-instruction');
   if(instruction){const hint='';const form=document.getElementById('training-form');return [instruction.textContent,!form.hidden?'Type the total value and the number of blocks. Then choose Check my answers.':'',hint].filter(Boolean).join(' ');}
   const frame=document.querySelector('.frame.active');return frame?[...frame.querySelectorAll('h1,.bubble p')].map(el=>el.textContent).join('. '):'';
