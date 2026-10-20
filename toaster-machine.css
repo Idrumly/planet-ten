@@ -1,0 +1,5 @@
+#toaster-body{transform-origin:330px 400px}#mamma-mouth{transform-origin:330px 313px}.baby-actor{opacity:0;transform-origin:55px 90px}#toaster-machine{overflow:visible}
+.toaster-round .machine-area{left:37%;width:min(65vw,850px);top:8%;height:47%;max-height:510px}.toaster-round .ground-cargo{top:58%;height:25%}
+.toaster-round.cutscene .machine-area{top:16%;height:65%;max-height:650px}.toaster-round:has(.completion:not([hidden])) .machine-area{top:20%;height:60%;max-height:620px}
+@media(max-width:900px){.toaster-round.world{min-height:1050px}.toaster-round .machine-area{left:30%;width:70%;top:22%;height:37%}.toaster-round.cutscene .machine-area,.toaster-round:has(.completion:not([hidden])) .machine-area{left:25%;width:75%;top:28%;height:50%}}
+@media(max-width:550px){.toaster-round.world{min-height:1150px}.toaster-round .machine-area{left:46%;width:95%;top:27%;height:27%}.toaster-round .ground-cargo{top:63%;height:21%}.toaster-round.cutscene .machine-area,.toaster-round:has(.completion:not([hidden])) .machine-area{left:0;width:100%;top:50%;height:34%}.toaster-round:has(.completion:not([hidden])) .completion{bottom:30px}}

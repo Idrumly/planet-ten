@@ -1,0 +1,9 @@
+#microwave-door{transform-origin:184px 274px;transform:scaleX(.12) skewY(-12deg)}
+#micro-fan{transform-origin:585px 331px}
+#microwave-body{transform-origin:400px 410px}
+#microwave-machine{overflow:visible}
+.microwave-round .machine-area{left:37%;width:min(65vw,850px);top:8%;height:47%;max-height:510px}
+.microwave-round .ground-cargo{top:58%;height:25%}
+.microwave-round.cutscene .machine-area,.microwave-round:has(.completion:not([hidden])) .machine-area{top:18%;height:60%;max-height:620px}
+@media(max-width:900px){.microwave-round.world{min-height:1050px}.microwave-round .machine-area{left:30%;width:70%;top:22%;height:37%}.microwave-round.cutscene .machine-area,.microwave-round:has(.completion:not([hidden])) .machine-area{left:25%;width:75%;top:28%;height:50%}}
+@media(max-width:550px){.microwave-round.world{min-height:1150px}.microwave-round .machine-area{left:46%;width:95%;top:27%;height:27%}.microwave-round .ground-cargo{top:63%;height:21%}.microwave-round.cutscene .machine-area,.microwave-round:has(.completion:not([hidden])) .machine-area{left:0;width:100%;top:50%;height:34%}.microwave-round:has(.completion:not([hidden])) .completion{bottom:30px}}

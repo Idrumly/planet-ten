@@ -1,0 +1,13 @@
+/* A common power intake, independent of the machine's reward animation. */
+.machine-action.power-funnel{top:69%;left:0;width:160px;min-width:0;padding:0 6px 7px;background:#102f46eb;border:1px solid #87ffdc;color:#d7ffba;box-shadow:0 0 20px #7effd333;font-size:11px;line-height:1.3}
+.power-funnel svg{display:block;width:100%;height:70px;overflow:visible}.power-funnel small{display:block;font-size:8px;letter-spacing:1px;color:#e5ffe7}.power-funnel strong{display:block;font-size:11px}.power-funnel.charging{box-shadow:0 0 35px #aaffb0}.power-funnel:disabled{opacity:1}
+.power-zap{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:6;opacity:0;overflow:visible}.power-zap path{fill:none;stroke:#c6ff91;stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 7px #7cffe1);stroke-dasharray:14 10;animation:energy-flow .3s linear infinite}
+.power-payload{position:fixed;z-index:16;pointer-events:none;background:none;border:0;padding:8px 5px;min-height:0;display:flex;align-items:center;justify-content:center;transform-origin:center;opacity:1}.power-payload .cells{display:flex}.power-payload .unit-label{position:absolute;bottom:-8px;font-size:10px;color:#fff;background:#102d46;padding:1px 4px}
+.coalescing .cell:before,.coalescing .jelly i{animation:power-ripple .65s ease-out both;animation-delay:calc(var(--ripple,0)*45ms)}
+@keyframes power-ripple{0%,100%{transform:scale(1)}40%{transform:scale(1.5);box-shadow:0 0 14px #efffa6}65%{transform:scale(.85)}}
+@keyframes energy-flow{to{stroke-dashoffset:-48}}
+.cargo{touch-action:none}.block.picked{opacity:.22}.sticky-pickup{position:fixed;z-index:20;pointer-events:none;width:220px;text-align:center;color:#fff8d4;font: bold 12px 'Trebuchet MS',sans-serif}.sticky-cells{display:flex;justify-content:center;min-height:24px}.sticky-cells .cell{--unit:21px;animation:unstable .7s ease-in-out infinite alternate}.sticky-pickup strong{display:inline-block;margin-top:8px;background:#0b293e;padding:4px 8px;border:1px solid #ffe49c;border-radius:5px}.sticky-pickup.stable .cell{animation:none}.sticky-pickup.stable strong{border-color:#a9ffb2;color:#a9ffb2}
+@keyframes unstable{to{transform:translateY(-3px) rotate(3deg)}}
+@media(max-width:900px){.machine-action.power-funnel{top:70%;left:0;width:132px}}
+@media(max-width:550px){.machine-action.power-funnel{top:79%;left:5%;width:125px}.power-funnel svg{height:48px}}
+@media(prefers-reduced-motion:reduce){.power-zap path,.coalescing .cell:before,.coalescing .jelly i,.sticky-cells .cell{animation:none}}

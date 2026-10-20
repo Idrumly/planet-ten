@@ -1,0 +1,37 @@
+.flat .cells,.flat-payload .cells{display:grid!important;grid-template-columns:repeat(10,var(--unit));gap:0}
+.hundreds-round.world{min-height:1100px}
+.hundreds-round .machine-area{left:35%;width:65%;top:8%;height:40%;max-height:470px}
+.hundreds-round .ground-cargo{left:30%;right:7%;top:48%;height:32%;--unit:10px;pointer-events:auto}
+.hundreds-round .cargo{display:flex;flex-wrap:wrap;align-content:flex-start;align-items:center;gap:15px 12px;padding:15px 12px 25px;overflow:auto;scrollbar-color:#8cdcb3 #16364a;overscroll-behavior:contain}
+.hundreds-round .block{position:relative;left:auto;top:auto;transform:none;flex-shrink:0;--unit:10px;min-width:34px;min-height:38px;padding:5px 3px;margin:0 0 8px}
+.hundreds-round .block .cells{animation:none}
+.hundreds-round .flat{min-height:112px}
+.hundreds-round .cell{border-radius:2px;border-width:1px;box-shadow:inset 1px 1px #fff8,1px 2px #358f85}
+.hundreds-round .unit-label{bottom:-9px!important}
+.hundreds-round .ten-slot{width:100px;background-size:10px 100%}
+.hundreds-round .intake-slots{gap:9px}
+.hundred-slot{width:48px;height:48px;background:repeating-linear-gradient(0deg,transparent 0 3px,#70bca866 3px 4px),repeating-linear-gradient(90deg,#092735 0 3px,#70bca866 3px 4px)}
+.picked-shape{display:flex}
+.collect-tens{width:180px}
+.collect-tens .sticky-cells{display:grid;grid-template-columns:1fr;gap:1px}
+.collect-tens .cell{width:12px;height:12px}
+.hundreds-round.cutscene .machine-area,.hundreds-round:has(.completion:not([hidden])) .machine-area{top:19%;height:58%;max-height:640px}
+.hundreds-round .completion h2{font-size:23px}
+@media(max-width:900px){
+ .hundreds-round.world{min-height:1300px}
+ .hundreds-round .machine-area{left:30%;width:70%;top:20%;height:27%}
+ .hundreds-round .ground-cargo{left:8%;right:8%;top:55%;height:27%}
+ .hundreds-round.cutscene .machine-area,.hundreds-round:has(.completion:not([hidden])) .machine-area{left:10%;width:90%;top:36%;height:40%}
+}
+@media(max-width:550px){
+ .hundreds-round.world{min-height:1500px}
+ .hundreds-round .machine-area{left:2%;width:96%;top:35%;height:20%}
+ .hundreds-round .ground-cargo{left:4%;right:4%;top:57%;height:27%}
+ .hundreds-round .block{--unit:9px}
+ .hundreds-round .flat{min-height:102px}
+ .hundreds-round .intake-slots{gap:6px}
+ .hundreds-round .ten-slot{width:90px}
+ .hundreds-round .hundred-slot{width:36px;height:36px}
+ .hundreds-round.cutscene .machine-area,.hundreds-round:has(.completion:not([hidden])) .machine-area{left:0;width:100%;top:40%;height:32%}
+ .hundreds-round:has(.completion:not([hidden])) .completion{top:auto;bottom:65px}
+}

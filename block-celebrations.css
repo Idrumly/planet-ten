@@ -1,0 +1,3 @@
+.cell:before{display:none}.nucleus{display:block;width:55%;height:55%;border-radius:50%;position:relative;background:radial-gradient(circle at 30% 25%,#fffce2,#deff8e 50%,#78ba58);box-shadow:0 0 6px #cfff8e77;transform-origin:center}
+.nucleus:before{content:'';position:absolute;width:45%;height:55%;left:28%;top:16%;border-radius:50%;background:#f6ffdc;box-shadow:inset -1px -1px #6a989566}.nucleus:after{content:'';position:absolute;left:43%;top:30%;width:19%;height:25%;border-radius:50%;background:#16405b}
+.block.single .cell:after,.rod .cell:nth-child(5):after{display:none}.celebrating .cells{animation:none}.celebrating .cell{border-color:#f6ffca}.coalescing .nucleus{box-shadow:0 0 12px #eaff9d}

@@ -1,0 +1,69 @@
+.farm-landscape{display:none;position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.farm-round .farm-landscape{display:block}.farm-round .sky,.farm-round .terrain{display:none}
+.farm-round.world{min-height:1350px;background:#204f60}
+.farm-round .machine-area{left:34%;width:66%;top:8%;height:38%;max-height:530px}
+.farm-round .ground-cargo{left:30%;right:4%;top:48%;height:31%}
+.farm-round .cargo{display:block;padding:12px;overflow:auto}
+.grow-group{display:flex;flex-wrap:wrap;align-items:center;gap:15px 10px;margin-bottom:16px;border-bottom:1px solid #a7eeee44;padding:0 0 16px}
+.grow-group h3{width:100%;font:600 15px 'Trebuchet MS',sans-serif;margin:0;color:#e4fff8;text-shadow:0 2px #164c5d}
+.farm-round .block.grow-block{min-width:38px;min-height:44px;margin:0 0 8px;padding:5px;filter:drop-shadow(3px 7px 3px #063f53);background:none}
+.grow-shape{display:flex!important;gap:0;position:relative}
+.water-cell{display:block;width:10px;height:10px;border:1px solid #acfff0;background:radial-gradient(ellipse at 30% 15%,#effffd 0 10%,#55e8d9 25%,#02aebe 80%);border-radius:3px;box-shadow:inset -2px -2px #0087ac66,1px 2px #025b8488}
+.grow-ones .water-cell{width:10px;height:10px}
+.grow-hundreds{display:grid!important;grid-template-columns:repeat(10,10px)}
+.grow-thousands{display:flex!important;flex-direction:column;transform:skewY(-8deg);padding:8px 12px 8px 0}
+.grow-thousands:before{content:'';position:absolute;left:4px;top:-2px;width:100px;height:10px;transform:skewX(-38deg);background:repeating-linear-gradient(0deg,transparent 0 2px,#42bcbf77 2px 3px),repeating-linear-gradient(90deg,#a4f9e7 0 9px,#42bcbf 9px 10px);border:1px solid #c5ffef}
+.grow-thousands:after{content:'';position:absolute;left:100px;top:5px;width:10px;height:80px;transform:skewY(-30deg);background:repeating-linear-gradient(0deg,#168ca6 0 7px,#83e9db 7px 8px);border:1px solid #94f6e7}
+.water-layer{display:block;width:100px;height:8px;background:repeating-linear-gradient(90deg,#45ddcf 0 9px,#aefff1 9px 10px);border:1px solid #b6fff3;box-shadow:8px -4px #108da1;font-size:7px;font-weight:bold;color:#083b56;text-align:center;line-height:7px}
+.grow-tenThousands{display:grid!important;grid-template-columns:repeat(5,24px);gap:5px 4px;padding:6px}
+.water-cube{display:grid;place-items:center;width:24px;height:27px;background:repeating-linear-gradient(0deg,#25c6c4 0 3px,#aaffed 3px 4px);border:1px solid #d2fff3;box-shadow:4px -3px #158a9c;font:700 7px 'Trebuchet MS',sans-serif;color:#043c55}
+.farm-round .unit-label{color:#e9fff8;background:#16485dc9;padding:1px 5px;border-radius:4px;opacity:1!important;font-size:10px!important;bottom:-11px!important}
+.farm-round .grow-group .block .cells{animation:grow-shimmer 4s ease-in-out infinite}
+@keyframes grow-shimmer{0%,100%{filter:brightness(1)}50%{filter:brightness(1.17)}}
+.grow-reserve{color:#c9fff3;background:#164c60;border:1px dashed #8ce3db;border-radius:7px;padding:9px;font:12px 'Trebuchet MS',sans-serif;max-width:170px}
+.grow-ghost,.grow-payload{position:fixed;z-index:20;pointer-events:none;transform-origin:top left;background:none;border:0;padding:5px}
+.grow-payload .unit-label{display:block;color:#e7fff8;font:11px 'Trebuchet MS',sans-serif}
+.grow-ghost .grow-shape{transform-origin:top left}
+.collect-grow{width:260px}.collect-grow .sticky-cells{display:flex;flex-wrap:wrap;gap:7px}
+.collect-grow .picked-shape{width:42px;height:42px;overflow:hidden}.collect-grow .grow-shape{transform:scale(.35);transform-origin:top left;flex-shrink:0}
+.farm-round .intake-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.grow-slot{font:700 9px monospace;width:100%;height:33px;display:grid;place-items:center;color:#cefff7;border-color:#8affec;background:#0c435d}
+.farm-round .slot-wrap{min-width:0;width:100%}
+.farm-round .power-intake{background:linear-gradient(145deg,#187c83,#134c69);border-color:#8bddcf}
+.farm-round .supply-button{background:linear-gradient(#c9fff4,#57decd);border-color:#c9fff4;color:#104859;box-shadow:0 5px #187b82}
+.farm-round .monitor-screen{background:#103e50;color:#aef8e5}
+.farm-round .monitor-screen h1 em,.farm-round .readout strong{color:#b5fff1}
+.farm-challenge .monitor-screen h1 em{font-size:18px;line-height:1.3}
+.farm-round #rule-progress{color:#d1ffeb}
+.farm-round .held-tool{filter:drop-shadow(-6px 10px 4px #104c5c) hue-rotate(55deg)}
+#farm-notebook{background:#103e50e8;border:1px solid #8acdc3;border-radius:9px;margin-top:10px;padding:10px;color:#e0fff3}
+#farm-notebook h3{font:700 12px monospace;margin:0 0 7px}
+#farm-notebook p{font:12px/1.4 'Trebuchet MS',sans-serif;margin:7px 0;border-top:1px solid #9fffe133;padding-top:6px}
+.farm-round .bottom-hud{width:76%;max-width:900px}
+.farm-round #representation{font-size:22px}
+.farm-round.cutscene .machine-area,.farm-round:has(.completion:not([hidden])) .machine-area{top:18%;height:50%;max-height:670px}
+.farm-round .completion{max-width:550px}
+.farm-theme #briefing{border-color:#65cdbb}
+#seed-source{font-size:12px!important;margin:9px 0;display:block}
+#chapter-switch{white-space:nowrap}
+@media(max-width:900px){
+ .farm-round.world{min-height:1600px}
+ .farm-round .machine-area{left:27%;width:73%;top:24%;height:29%}
+ .farm-round .ground-cargo{left:6%;right:6%;top:57%;height:28%}
+ .farm-round.cutscene .machine-area,.farm-round:has(.completion:not([hidden])) .machine-area{left:10%;width:90%;top:38%;height:38%}
+}
+@media(max-width:550px){
+ .farm-round.world{min-height:2100px}
+ header{flex-wrap:wrap}.settings{flex-wrap:wrap}
+ .farm-round .power-station{top:100px;width:215px}
+ .farm-round .machine-area{left:0;width:100%;top:43%;height:18%}
+ .farm-round .ground-cargo{left:3%;right:3%;top:63%;height:23%}
+ .farm-round .bottom-hud{width:96%;max-width:none}
+ .farm-round #representation{font-size:18px}
+ .farm-round.cutscene .machine-area,.farm-round:has(.completion:not([hidden])) .machine-area{left:0;width:100%;top:47%;height:28%}
+ .farm-round:has(.completion:not([hidden])) .completion{top:auto;bottom:210px}
+ .farm-round .completion h2{font-size:21px}
+ .farm-round #farm-notebook p{font-size:11px}
+ .farm-challenge .monitor-screen h1 em{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){.farm-round .grow-group .block .cells{animation:none}}
