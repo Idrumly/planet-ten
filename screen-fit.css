@@ -1,0 +1,56 @@
+/* Fit the game to the browser; individual panels can scroll on small screens. */
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+.world,.world.large-contract{height:100vh;height:100dvh;min-height:0}
+.world>header{padding:10px 18px;min-height:60px;gap:10px}
+.settings{flex-wrap:wrap;justify-content:flex-end;gap:5px}
+.settings button{min-height:36px}
+#screen-message{font-size:12px;max-width:220px}#screen-message:empty{display:none}
+.power-station{top:72px;bottom:125px;width:clamp(210px,23vw,265px);overflow:auto;scrollbar-width:thin;padding-right:4px}
+.world .machine-area{left:38%;top:10%;width:60%;height:44%;max-height:none}
+.world .ground-cargo{left:29%;right:8%;top:56%;height:22%;--unit:clamp(15px,1.8vw,25px)}
+.world .rod{--unit:clamp(15px,1.8vw,25px)}
+.world .bottom-hud{bottom:12px;left:62%;min-width:0;width:65%;max-width:none}
+.world .held-tool{width:clamp(120px,18vw,240px);right:-20px;bottom:-45px}
+.world #representation{font-size:clamp(15px,2vw,24px)}
+.world #feedback{font-size:12px;margin:4px 0 8px}
+.world .aim-hint{font-size:8px;margin-top:6px}
+#briefing{max-height:calc(100dvh - 24px);overflow:auto;overscroll-behavior:contain}
+.completion{max-height:calc(100dvh - 100px);overflow:auto}
+.world.farm-world .ground-cargo{overflow:auto}
+body:has(.story){display:flex;flex-direction:column}
+body:has(.story)>header{flex-shrink:0;padding:10px 18px}
+.story,.story:has(.frame[data-chapter^='03']:not([hidden])){flex:1;min-height:0;height:auto;width:100%}
+.story .chapter{top:14px}
+.story .frame,.story .frame[data-chapter^='03']{top:55px;bottom:85px;overflow:auto;padding:5px 12px 12px 0;width:48%;scrollbar-width:thin}
+.story h1,.story .frame[data-chapter^='03'] h1{font-size:clamp(32px,4.5vw,60px);margin:16px 0}
+.story .bubble p{font-size:clamp(16px,1.8vw,21px)}
+.story .tutor,.story:has(.frame[data-chapter^='03']:not([hidden])) .tutor{top:12%;right:0;width:49%}
+.story-nav{bottom:18px}.training-link{display:inline-block;padding:12px 16px;border-radius:8px;color:#163447;text-decoration:none}
+@media(max-height:700px) and (min-width:701px){
+ .world .power-station{bottom:14px}.power-station .key-rack{padding:5px;margin-bottom:5px}.power-station #key-caption{min-height:0;margin:4px 0}.power-station .monitor-screen{padding:6px}.power-station .monitor-screen h1{font-size:18px}.power-station .monitor-screen h1 em{font-size:19px}.power-station .intake-slots{margin:5px 0}.power-station .power-intake{padding:6px;margin-top:6px}
+ .world .ground-cargo{top:51%;height:23%}.world .bottom-hud{bottom:8px}.world .machine-area{height:40%}
+}
+@media(max-width:700px){
+ .world>header{padding:7px 10px;align-items:start}.world header>a{font-size:18px}.world .coordinates{display:none}.world .settings{max-width:72%}.world .settings button{font-size:10px;padding:5px 7px}.tutorial-link{font-size:11px}
+ .world .power-station{top:100px;bottom:auto;height:38%;left:8px;width:44%;font-size:12px}.world .monitor-screen h1{font-size:15px}.world .monitor-screen h1 em{font-size:17px}.world .key-rack{padding:4px}.world .power-intake{padding:5px}.world .ten-slot{width:85px}.world .supply-button{font-size:11px}.world .key-heading{letter-spacing:0}.world .monitor-screen .readout{gap:10px}
+ .world .machine-area,.world.large-contract .machine-area{left:45%;width:54%;top:19%;height:28%}
+ .world.cutscene .machine-area,.world:has(.completion:not([hidden])) .machine-area{left:20%;width:78%;top:28%;height:38%}
+ .world .ground-cargo,.world.large-contract .ground-cargo{left:8%;right:8%;top:56%;height:23%;--unit:14px}.world .rod{--unit:14px}.world .block{padding:4px 2px;min-height:35px}
+ .world .bottom-hud{left:50%;width:96%;bottom:10px}.world .held-tool{width:125px;opacity:.75}.world .controls button{font-size:11px;padding:8px}.world .completion{top:100px;left:50%;width:94%}
+ .story .frame,.story .frame[data-chapter^='03']{width:90%;top:50px;bottom:82px}.story .tutor,.story:has(.frame[data-chapter^='03']:not([hidden])) .tutor{display:none}.story h1{font-size:36px}header>span{display:none}header>div{flex-wrap:wrap;justify-content:end}.story .bubble{max-width:none}.story-nav .dots{display:none}
+}
+@media(max-height:480px){.world .power-station{top:85px;bottom:8px;height:auto}.world .machine-area{top:15%;height:32%}.world .bottom-hud{width:65%;left:65%}.world .ground-cargo{left:46%;right:4%;top:49%;height:19%}.world .held-tool{display:none}.world .aim-hint{display:none}}
+
+.world{overflow:clip} /* Decorative tool overhang must never create a focus-scroll offset. */
+.world.farm-round,.world.microwave-round,.world.hundreds-round{min-height:0}
+.world.farm-round .cargo{pointer-events:auto;overscroll-behavior:contain;padding:14px}
+.world.farm-round .ground-cargo{overflow:visible}
+@media(max-height:700px) and (min-width:701px){
+ .power-station .monitor-screen h1{margin:4px 0}.power-station .monitor-screen h1 em{margin-top:2px}.power-station .monitor-screen .readout{padding-top:4px}.power-station .monitor-screen .readout strong{display:inline;font-size:18px;margin-left:4px}.power-station .key-heading{margin-bottom:2px}.power-station .shape-slot{height:16px}.power-station .power-intake .supply-button{margin-top:6px}
+}
+.world:not(.training):not(.hundreds-round):not(.farm-round) .cargo{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));grid-auto-rows:minmax(48px,auto);gap:8px 4px;align-content:start;padding:8px 4px 18px;overflow:auto;pointer-events:auto;overscroll-behavior:contain}
+.world:not(.training):not(.hundreds-round):not(.farm-round) .cargo .block{position:relative;left:auto;top:auto;transform:none;margin:auto;max-width:100%}
+.world:not(.training):not(.hundreds-round):not(.farm-round) .cargo .rod{grid-column:span 5}
+.world:not(.training):not(.hundreds-round):not(.farm-round) .cargo .rod+.single{grid-column:1 / span 1}
+.world.hundreds-round .ground-cargo,.world.hundreds-round .rod{--unit:10px}
+.world[data-tool=split] .cargo{touch-action:pan-y}

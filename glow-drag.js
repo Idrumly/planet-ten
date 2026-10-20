@@ -26,10 +26,10 @@ async function releasePickup(cancel=false){
   finally{group.tray.remove();group.blocks.forEach(b=>b.classList.remove('picked'));busy=false;render();}
 }
 // Keyboard users pick one at a time with Enter/Space; the tenth completes the group.
-function keyboardPickup(block){if(!pickup){const r=block.getBoundingClientRect();startPickup(r.left,r.top,null,block.dataset.unit);}
+function keyboardPickup(block){if(block.disabled)return;if(!pickup){const r=block.getBoundingClientRect();startPickup(r.left,r.top,null,block.dataset.unit);}
   collectBlock(block);if(pickup.blocks.length===10)releasePickup();}
 $('cargo').addEventListener('pointerdown',e=>{
-  const block=e.target.closest(isFarm()?'.grow-block:not([data-unit=tenThousands])':contract.hundreds?'.single,.rod':'.single');if(tool!=='join'||busy||complete||!block||e.button!==0)return;
+  const block=e.target.closest(isFarm()?'.grow-block:not([data-unit=tenThousands])':contract.hundreds?'.single,.rod':'.single');if(tool!=='join'||busy||complete||!block||block.disabled||e.button!==0)return;
   e.preventDefault();if(pickup)return;startPickup(e.clientX,e.clientY,e.pointerId,block.dataset.unit);collectBlock(block);$('cargo').setPointerCapture(e.pointerId);
 });
 $('cargo').addEventListener('pointermove',e=>{

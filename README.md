@@ -24,3 +24,11 @@ node farm-contracts.test.js
 ```
 
 Artwork is reused from the original Planet Ten prototype; the Mr. Martian prompt is preserved in assets. All assets use relative paths for GitHub Pages.
+
+## Guided first activity and screen fit
+
+The comic now leads to `world.html?training=1`. TEN-BOT uses the real game tools, blocks, aiming and sweep-to-collect controls. Only the expected action is unlocked. Students enter total value and separate-block count before splitting, after splitting, after regrouping, and for a new delivery of 12 (one ten and two ones). Incorrect answers give targeted hints and retain the current step; incomplete collections can be retried without losing progress. Restart starts this practice again. The first shift remains directly available for returning players.
+
+The game uses the available viewport height. Long missions and large block collections scroll inside their own panels; the page itself stays fitted. Fullscreen/Exit fullscreen is available on the comic and game, with an unavailable/refusal fallback. Browser policy may require the user to activate fullscreen themselves.
+
+Additional checks: `node --test training.test.js`. Reviewed at a desktop viewport, 1024×600 laptop and 390×844 phone frame, including real split/sweep/regroup and wrong-answer recovery. Fullscreen success/exit and error paths have automated coverage; the browser automation session refused actual fullscreen entry, so native fullscreen remains a manual browser check.

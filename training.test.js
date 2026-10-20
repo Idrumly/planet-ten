@@ -1,0 +1,10 @@
+const test=require('node:test'),assert=require('node:assert/strict');const T=require('./training-steps.js');
+test('value stays ten while a split changes one block into ten and a join restores one',()=>{const quizzes=T.steps.filter(s=>s.kind==='quiz');assert.deepEqual(quizzes.slice(0,3).map(s=>[s.value,s.blocks]),[[10,1],[10,10],[10,1]]);assert.deepEqual([quizzes[3].value,quizzes[3].blocks],[12,3]);});
+test('swapped concepts, blank fields and non-whole answers cannot advance training',()=>{for(const [i,s] of T.steps.entries()){if(s.kind!=='quiz')continue;assert.equal(T.check(i,String(s.value),String(s.blocks)),true);for(const pair of [['',''],['10x','1'],['1e1','1'],['10.5','1'],[String(s.value),'']])assert.equal(T.check(i,...pair),false);if(s.value!==s.blocks)assert.equal(T.check(i,String(s.blocks),String(s.value)),false);}});
+const fs=require('node:fs'),vm=require('node:vm');
+test('fullscreen control enters, exits, and handles unsupported or rejected requests',async()=>{
+ async function fixture(supported=true,reject=false){const nodes=[],events={};const doc={fullscreenEnabled:supported,fullscreenElement:null,createElement:()=>({addEventListener(name,fn){this[name]=fn},setAttribute(){}}),querySelector:()=>({append:node=>nodes.push(node)}),addEventListener:(name,fn)=>events[name]=fn};doc.documentElement={async requestFullscreen(){if(reject)throw Error('denied');doc.fullscreenElement=this;events.fullscreenchange();}};doc.exitFullscreen=async()=>{doc.fullscreenElement=null;events.fullscreenchange()};vm.runInNewContext(fs.readFileSync('screen-fit.js','utf8'),{document:doc});return {nodes,doc};}
+ const f=await fixture();await f.nodes[0].click();assert.equal(f.nodes[0].textContent,'Exit fullscreen');await f.nodes[0].click();assert.equal(f.nodes[0].textContent,'Fullscreen');
+ const unavailable=await fixture(false);assert.equal(unavailable.nodes[0].disabled,true);assert.equal(unavailable.nodes[0].textContent,'Fullscreen unavailable');
+ const rejected=await fixture(true,true);await rejected.nodes[0].click();assert.match(rejected.nodes[1].textContent,/keep playing/);assert.equal(rejected.doc.fullscreenElement,null);
+});

@@ -12,3 +12,4 @@ jobs:
           node-version: 24
       - run: node puzzle-contracts.test.js
       - run: node farm-contracts.test.js
+      - run: node --test training.test.js
