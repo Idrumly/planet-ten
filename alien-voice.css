@@ -1,0 +1,12 @@
+/* Keep the sound choice easy to find before any reading is required. */
+header #sound{background:#d7ff9f;color:#123947;border:2px solid #f5ffd8;font-size:12px;font-weight:900;min-height:40px;padding:7px 10px;box-shadow:0 3px 0 #417c59}
+[data-sound=on] header #sound{background:#ffe5a6;border-color:#fff4d4}
+.audio-welcome{margin:22px 0 10px;max-width:470px;padding:15px;background:#123448ed;border:2px solid #9bdfd6;border-radius:14px}
+.audio-welcome button{width:100%;min-height:64px;font-size:23px;background:#d7ff9f;color:#173847;border:3px solid #f5ffda;box-shadow:0 4px #437d60}
+.audio-welcome p{font-size:15px;margin:12px 0 0;line-height:1.4;color:#f0ffe7}.audio-welcome+.landing-stamp{display:none}
+.voice-controls{display:flex;flex-direction:column;gap:5px}.voice-controls button{min-height:44px;padding:8px 12px;background:#d0f8ff;color:#163c4b;border:2px solid #8dd9e4;border-radius:7px;font-size:14px;font-weight:bold}
+.voice-controls span{font-size:12px;line-height:1.3;max-width:280px;color:#ffe4a6}.voice-controls span:empty{display:none}
+.training-panel .voice-controls{margin:10px 0 14px}.training-panel .voice-controls button{background:#d0f8ff;color:#163c4b;border-color:#8dd9e4;font-size:15px;padding:8px}
+[data-speaking=true] .robot-face i{background:#f8ef87;box-shadow:0 0 6px #f8ef87}
+.story-nav .dots{display:none}
+@media(max-width:700px){header #sound{font-size:10px;min-height:36px;padding:6px}.audio-welcome{margin-top:15px;padding:12px}.audio-welcome button{font-size:20px;min-height:58px}.story-nav{gap:8px;left:4%;right:4%}.story-nav button{font-size:11px;padding:8px;min-height:44px}.voice-controls span{max-width:140px}.training-panel{height:52%}.training-panel .voice-controls button{font-size:13px;min-height:40px}.training-panel .voice-controls{margin:8px 0}.training-panel .voice-controls span{max-width:none}}

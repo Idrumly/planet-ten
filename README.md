@@ -32,3 +32,11 @@ The comic now leads to `world.html?training=1`. TEN-BOT uses the real game tools
 The game uses the available viewport height. Long missions and large block collections scroll inside their own panels; the page itself stays fitted. Fullscreen/Exit fullscreen is available on the comic and game, with an unavailable/refusal fallback. Browser policy may require the user to activate fullscreen themselves.
 
 Additional checks: `node --test training.test.js`. Reviewed at a desktop viewport, 1024×600 laptop and 390×844 phone frame, including real split/sweep/regroup and wrong-answer recovery. Fullscreen success/exit and error paths have automated coverage; the browser automation session refused actual fullscreen entry, so native fullscreen remains a manual browser check.
+
+## Alien tutorial narration
+
+The first comic panel has a large Sound ON/OFF control, also available in the header. Sound starts off and the choice lasts for the current browser tab session. Enabling sound reads the current panel; TEN-BOT reads each new instruction and correction hint. Hear instruction again replays the step. Turning sound off cancels speech and closes any active sound-effects context; hidden tabs stop narration. Browser autoplay restrictions can require pressing Hear instruction again after navigation.
+
+Fifteen bundled WAV clips in assets/voice cover the four comic pages, nine training steps and two hints. Transcripts are preserved in transcripts.json and voice-clips.js. Generated with the installed Microsoft Zira Desktop speech synthesizer at rate -2, then raised in pitch/speed by a factor of 1.35 through the PCM sample-rate header; the slower source preserves clear pacing. Assets load on demand. Dynamic text can fall back to browser speech synthesis at pitch 1.65/rate 0.9. No microphone or speech recognition is used.
+
+Run `node --test alien-voice.test.js` for mute/cancellation, missing speech-engine support, replay, preferences, transcript consistency and non-silent audio checks. Browser review confirmed the bundled audio enters playback and stops on mute; classroom speaker volume and intelligibility remain a listening check.
