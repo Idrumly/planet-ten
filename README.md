@@ -43,3 +43,5 @@ Run `node --test alien-voice.test.js` for mute/cancellation, missing speech-engi
 
 ### TEN-BOT first puzzle
 After accepting the first shift, TEN-BOT highlights the word description, value, block count, configuration and Supply Power control. Guided actions allow one split for 28 / 19 blocks, then one regroup for 28 / 10 blocks. Each supply unlocks a key and machine action; completion announces 100% active. Students can dismiss the helper and play independently. The helper ends when changing assignments. Twelve additional bundled voice clips use the same Zira settings and pitch treatment as the tutorial.
+
+Narration now reads only the comic instructions, excluding headings. The header Voice ON/OFF toggle mutes narration independently of the master Sound control and remembers the preference for this tab. Hear again explicitly re-enables narration.

@@ -47,6 +47,6 @@
  }
  window.FirstPuzzle={get active(){return active;},powering(){feeding=true;},start};
  $('coach-next').onclick=()=>{page++;refresh();};$('coach-skip').onclick=finish;
- $('coach-replay').onclick=()=>{if(!sound)$('sound').click();else window.PlanetVoice?.instructionChanged();};
+ $('coach-replay').onclick=()=>{window.PlanetVoice?.listen();};
  $('briefing').addEventListener('close',()=>{if(!started&&contract.id==='first-shift')start();});
 })();

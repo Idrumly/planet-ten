@@ -5,6 +5,8 @@
  const clips=window.PlanetVoiceClips||[],hasVoice=clips.length>0||supported;
  const normalize=value=>value.replace(/\s+/g," ").trim();
  try{sound=sessionStorage.getItem('planet-ten-sound')==='on';}catch{sound=false;}
+ let voice=true;try{voice=sessionStorage.getItem('planet-ten-voice')!=='off';}catch{}
+ const voiceButton=document.createElement('button');voiceButton.type='button';voiceButton.id='voice-toggle';voiceButton.title='Narration only; game sounds stay on';main.parentNode.insertBefore(voiceButton,main.nextSibling);
  const controls=[main,...document.querySelectorAll('[data-sound-toggle]')];
  const practice=document.querySelector('.training-panel'),story=document.querySelector('.story-nav');
  let replay=null,status=null;
@@ -17,17 +19,18 @@
  function refresh(){
   for(const button of controls){button.textContent=sound?'🔇 Turn sound OFF':'🔊 Turn sound ON';button.setAttribute('aria-pressed',String(sound));}
   document.documentElement.dataset.sound=sound?'on':'off';
-  if(replay){replay.disabled=!hasVoice;replay.textContent=hasVoice?(sound?'🔊 Hear instruction again':'🔊 Sound on & listen'):'Voice unavailable';}
+  document.documentElement.dataset.voice=voice?'on':'off';voiceButton.textContent=voice?'Voice ON':'Voice OFF';voiceButton.setAttribute('aria-pressed',String(voice));
+  if(replay){replay.disabled=!hasVoice;replay.textContent=hasVoice?(sound&&voice?'🔊 Hear instruction again':!sound?'🔊 Sound on & listen':'Voice on & listen'):'Voice unavailable';}
  }
  function stop(){generation++;current=null;if(narration){narration.pause();narration.currentTime=0;narration=null;}if(supported)synth.cancel();document.documentElement.dataset.speaking='false';}
  function text(){
   const coach=document.getElementById("coach-instruction");if(window.FirstPuzzle?.active&&coach)return coach.textContent;
   const instruction=document.getElementById('training-instruction');
   if(instruction){const hint='';const form=document.getElementById('training-form');return [instruction.textContent,!form.hidden?'Type the total value and the number of blocks. Then choose Check my answers.':'',hint].filter(Boolean).join(' ');}
-  const frame=document.querySelector('.frame.active');return frame?[...frame.querySelectorAll('h1,.bubble p')].map(el=>el.textContent).join('. '):'';
+  const frame=document.querySelector('.frame.active');return frame?[...frame.querySelectorAll('.bubble p')].map(el=>el.textContent).join('. '):'';
  }
  function say(message){
-  stop();if(!sound||!message||document.hidden)return;
+  stop();if(!sound||!voice||!message||document.hidden)return;
   const clip=clips.find(item=>normalize(item.text)===normalize(message));
   if(clip){
    const token=generation,player=new Audio(clip.src);narration=player;player.volume=.85;
@@ -43,12 +46,12 @@
   // Short sentences avoid long speech queues; a new instruction cancels the old one.
   const pieces=message.match(/[^.!?]+[.!?]*/g)||[message];
   const voices=synth.getVoices(),english=voices.filter(v=>/^en(?:-|_)/i.test(v.lang));
-  const voice=english.find(v=>v.localService&&/zira|samantha|female/i.test(v.name))||english.find(v=>v.localService)||english[0];
+  const selectedVoice=english.find(v=>v.localService&&/zira|samantha|female/i.test(v.name))||english.find(v=>v.localService)||english[0];
   function next(index){
-   if(token!==generation||!sound||document.hidden)return;
+   if(token!==generation||!sound||!voice||document.hidden)return;
    if(index===pieces.length){current=null;document.documentElement.dataset.speaking='false';return;}
    const utterance=new SpeechSynthesisUtterance(pieces[index].trim());current=utterance;
-   utterance.lang=voice?.lang||'en-US';if(voice)utterance.voice=voice;
+   utterance.lang=selectedVoice?.lang||'en-US';if(selectedVoice)utterance.voice=selectedVoice;
    utterance.pitch=1.65;utterance.rate=.9;utterance.volume=.85;
    utterance.onstart=()=>{if(token===generation)document.documentElement.dataset.speaking='true';};
    utterance.onend=()=>next(index+1);
@@ -63,10 +66,13 @@
   refresh();if(on)say(text());
  }
  for(const button of controls)button.onclick=()=>enable(!sound);
- if(replay)replay.onclick=()=>{if(!sound)enable(true);else say(text());};
+ function setVoice(on){voice=on;try{sessionStorage.setItem('planet-ten-voice',on?'on':'off');}catch{}stop();refresh();if(on)say(text());}
+ voiceButton.onclick=()=>setVoice(!voice);
+ function listen(){voice=true;try{sessionStorage.setItem('planet-ten-voice','on');}catch{}if(!sound)enable(true);else{refresh();say(text());}}
+ if(replay)replay.onclick=listen;
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});window.addEventListener('pagehide',stop);
  // Voice lists may arrive later; choose the freshest available voice on each read.
  if(supported)synth.getVoices();
- window.PlanetVoice={say,instructionChanged:()=>say(text()),refresh,stop};
+ window.PlanetVoice={say,listen,instructionChanged:()=>say(text()),refresh,stop};
  refresh();if(sound)say(text());
 })();

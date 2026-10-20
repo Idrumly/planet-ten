@@ -10,3 +10,6 @@ header #sound{background:#d7ff9f;color:#123947;border:2px solid #f5ffd8;font-siz
 [data-speaking=true] .robot-face i{background:#f8ef87;box-shadow:0 0 6px #f8ef87}
 .story-nav .dots{display:none}
 @media(max-width:700px){header #sound{font-size:10px;min-height:36px;padding:6px}.audio-welcome{margin-top:15px;padding:12px}.audio-welcome button{font-size:20px;min-height:58px}.story-nav{gap:8px;left:4%;right:4%}.story-nav button{font-size:11px;padding:8px;min-height:44px}.voice-controls span{max-width:140px}.training-panel{height:52%}.training-panel .voice-controls button{font-size:13px;min-height:40px}.training-panel .voice-controls{margin:8px 0}.training-panel .voice-controls span{max-width:none}}
+header #voice-toggle{min-height:40px;padding:7px 10px;border:2px solid #8dd9e4;border-radius:7px;background:#d0f8ff;color:#163c4b;font-size:12px;font-weight:bold}
+[data-voice=off] header #voice-toggle{background:#17394e;color:#eafff9}
+@media(max-width:700px){header #voice-toggle{font-size:10px;min-height:36px;padding:6px}}
