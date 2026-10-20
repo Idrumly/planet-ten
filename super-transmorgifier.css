@@ -1,0 +1,19 @@
+.controls{flex-wrap:wrap;justify-content:center;gap:6px}
+#super-tool{background:#103f59;border:2px solid #68f4ff;color:#e6ffff;box-shadow:0 0 12px #4be6ff44;font-weight:700}
+#super-dialog{box-sizing:border-box;width:min(620px,94vw);max-height:90dvh;overflow:auto;padding:24px;border:2px solid #68f4ff;border-radius:18px;background:#102c3d;color:#efffff;box-shadow:0 0 45px #48d9ff44}
+#super-dialog::backdrop{background:#041021bb}
+#super-dialog h2{margin:0 0 12px;color:#8ff6ff}
+#super-dialog p{line-height:1.5}
+#super-dialog table{width:100%;border-collapse:collapse;font-size:16px}
+#super-dialog th,#super-dialog td{padding:10px 5px;text-align:left;border-bottom:1px solid #73d8dc44}
+#super-dialog input{box-sizing:border-box;width:100%;min-width:0;font:inherit;padding:10px 6px;border:2px solid #81bfca;border-radius:6px;background:#f1ffff;color:#112b3d}
+#super-dialog td:nth-child(n+3){width:24%}
+#super-dialog :focus-visible{outline:3px solid #ffe693;outline-offset:3px}
+#super-totals{font-weight:700;color:#9effdb}
+#super-error{min-height:1.5em;color:#ffd6ce}
+.super-actions{display:flex;justify-content:flex-end;gap:12px}
+.super-actions button{padding:12px;border:2px solid #a1efff;border-radius:8px;color:#edffff;background:#174c63;font:inherit;cursor:pointer}
+#super-zap{background:#b1ffea;color:#123542;font-weight:700}
+.super-packet{position:fixed;z-index:1000;left:15%;right:15%;top:35%;padding:25px;text-align:center;border:3px solid #80ffff;border-radius:20px;background:#123d50;box-shadow:0 0 70px #61ffff;color:#eaffff;pointer-events:none}
+.super-packet strong,.super-packet span{display:block;margin:8px;font-size:clamp(18px,3vw,30px)}
+@media(max-width:500px){#super-dialog{padding:14px}#super-dialog th,#super-dialog td{padding:8px 3px;font-size:14px}.super-packet{left:5%;right:5%}}
