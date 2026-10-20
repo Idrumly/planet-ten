@@ -1,0 +1,27 @@
+/* Later assignments use the open ground, not a two-rod-wide loading strip. */
+.world.expanded-field .ground-cargo{left:max(29%,285px);right:3%;top:39%;bottom:125px;height:auto;pointer-events:none}
+.world.expanded-field .scene{transform:none}
+.world.expanded-field:not(.cutscene):not(:has(.completion:not([hidden]))) .machine-area{top:78px;left:45%;width:48%;height:28%;max-height:260px}
+.world.expanded-field:not(.training):not(.farm-round) .cargo{display:flex;flex-wrap:wrap;align-items:center;align-content:flex-start;gap:14px 12px;padding:12px 10px 20px;overflow:auto;pointer-events:auto;scrollbar-width:thin;overscroll-behavior:contain}
+.world.expanded-field:not(.training):not(.farm-round) .cargo .block{position:relative;left:auto;top:auto;transform:none;flex:0 0 auto;min-width:34px;min-height:40px;padding:5px 4px;margin:0;max-width:none;--unit:17px}
+.world.expanded-field:not(.training):not(.farm-round) .cargo .unit-label{bottom:-7px;font-size:9px}
+.world.expanded-field.hundreds-round:not(.farm-round) .cargo .block{--unit:10px}
+.world.expanded-field.hundreds-round:not(.farm-round) .cargo .flat{min-height:112px}
+.world.expanded-field .held-tool{width:130px;right:-30px;bottom:-38px}
+@media(max-width:700px){
+ .world.expanded-field .power-station{height:33%}
+ .world.expanded-field .ground-cargo{left:3%;right:3%;top:calc(100px + 34%);bottom:120px;height:auto}
+ .world.expanded-field:not(.cutscene):not(:has(.completion:not([hidden]))) .machine-area{top:120px;left:47%;width:52%;height:25%}
+ .world.expanded-field:not(.training):not(.farm-round) .cargo{gap:12px 6px;padding:8px 5px 18px}
+ .world.expanded-field:not(.training):not(.farm-round) .cargo .block{--unit:13px;min-width:32px;min-height:38px;padding:4px 3px}
+ .world.expanded-field.hundreds-round:not(.farm-round) .cargo .block{--unit:9px}
+ .world.expanded-field.hundreds-round:not(.farm-round) .cargo .flat{min-height:102px}
+ .world.expanded-field .held-tool{display:none}
+}
+@media(max-height:600px) and (min-width:701px){
+ .world.expanded-field .ground-cargo{top:36%;bottom:105px}
+ .world.expanded-field:not(.cutscene):not(:has(.completion:not([hidden]))) .machine-area{top:70px;height:23%}
+ .world.expanded-field:not(.training):not(.farm-round) .cargo{gap:10px 10px}
+ .world.expanded-field:not(.training):not(.farm-round) .cargo .block{--unit:15px;min-height:36px}
+ .world.expanded-field.hundreds-round:not(.farm-round) .cargo .block{--unit:10px}
+}

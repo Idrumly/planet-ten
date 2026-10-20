@@ -10,7 +10,7 @@ $('sound').onclick=()=>{sound=!sound;$('sound').textContent=sound?'Sound on':'So
 function cell(){const c=document.createElement('span');c.className='cell';c.append(GlowCelebrations.core());return c;}
 function targetCount(){return contract.keys[phase].amount;}
 function render(){
- const cargo=$('cargo');cargo.replaceChildren();$('world').classList.toggle('large-contract',contract.value>28);
+ const cargo=$('cargo');cargo.replaceChildren();$('world').classList.toggle('expanded-field',contract.id==='mixed-practice'||!!contract.hundreds);$('world').classList.toggle('large-contract',contract.value>28);
  const tenRows=Math.ceil(state.tens/2),oneRows=Math.ceil(state.ones/10),rows=Math.max(1,tenRows+oneRows);
  $('world').classList.toggle('hundreds-round',!!contract.hundreds);
  if(isFarm())renderGrowBlocks();else for(const unit of ['hundreds','tens','ones'])for(let i=0;i<(state[unit]||0);i++){
@@ -22,6 +22,7 @@ function render(){
   const label=document.createElement('span');label.className='unit-label';label.textContent=flat?'1 HUNDRED':ten?'1 TEN':'1';label.setAttribute('aria-hidden','true');b.append(label);b.disabled=busy||complete;
   b.onclick=e=>{if(tool==='join'&&(unit==='ones'||unit==='tens'&&contract.hundreds)){if(e.detail===0&&!busy&&!complete)keyboardPickup(b);return;}exchange(unit,b);};cargo.append(b);
  }
+ if($('world').classList.contains('expanded-field')&&!isFarm())BlockField.arrange(cargo);
  $('count').textContent=M.count(state);$('representation').textContent=M.describe(state);$('rule-progress').textContent=complete&&rule().kind==='fewest'?M.count(state)+' blocks · Fewest found!':PowerContracts.progress(state,rule());
  document.querySelector('.aim-hint').textContent=isFarm()?'SPLIT: CLICK · JOIN: SWEEP 10 MATCHING BLOCKS · TAB + ENTER · ESC CANCELS':contract.hundreds?'SPLIT: CLICK · JOIN: SWEEP 10 MATCHING ONES OR TENS · TAB + ENTER · ESC CANCELS':'SPLIT: CLICK · JOIN: DRAG ACROSS 10 ONES · KEYBOARD: TAB + ENTER · ESC CANCELS';
  $('undo').disabled=busy||complete||!history.length;for(const id of ['supply','split-tool','join-tool','restart'])$(id).disabled=busy||complete&&id!=='restart';
