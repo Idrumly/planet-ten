@@ -11,10 +11,10 @@
  ];
  const messages={
   split:'Choose the pink Discombobulator, then click ONE ten rod. TEN-BOT will keep the other blocks safe. Watch the word description and block count change!',
-  ready1:'The word description now says 1 ten and 18 ones. Value: 28. Block count: 19. Configuration matched! Press SUPPLY POWER and watch the module zap the machine.',
+  ready1:'The word description now says 1 ten and 18 ones. Value: 28. Block count: 19. Configuration matched! Follow me to the glowing SUPPLY POWER button below the green screen. Click it once now. Keyboard: press Enter on the highlighted button.',
   powering:'Power transformation in progress! Watch the blocks enter the module and the energy zap the machine. A correct configuration unlocks a machine action.',
   join:'One key unlocked. The machine has grown legs. A promising development for planetary transport. It is 50 percent active. Configuration two needs value 28 using 10 blocks. Choose the blue Transmorgifier. Sweep across TEN ones and release to make one ten. Keyboard: Tab to each one and press Enter.',
-  ready2:'Now the word description says 2 tens and 8 ones. Value: 28. Block count: 10. The second configuration matches! Press SUPPLY POWER to unlock the final action.',
+  ready2:'Now the word description says 2 tens and 8 ones. Value: 28. Block count: 10. The second configuration matches! I am pointing to SUPPLY POWER again. Click that button once now to unlock the final action. Keyboard: press Enter.',
   done:'Both configurations complete! Different arrangements, the same value of 28. Both keys are lit. Your wondrous machine is now 100 percent active!'
  };
  window.FirstPuzzleNarration=[...lessons.map(item=>item[1]),...Object.values(messages)];
@@ -22,7 +22,7 @@
  panel.innerHTML='<div class="robot-face" aria-hidden="true"><span>●</span><span>●</span><i></i></div><h2>TEN-BOT <small id="coach-progress"></small></h2><p id="coach-instruction" tabindex="-1" aria-live="polite"></p><div class="coach-actions"><button id="coach-next">Show me →</button><button id="coach-replay">Hear again</button><button id="coach-skip">I can do it myself</button></div>';
  $('world').append(panel);let page=0,last='',active=false,feeding=false,started=false;
  const clear=()=>document.querySelectorAll('.coach-target').forEach(el=>el.classList.remove('coach-target'));
- function finish(){active=false;panel.hidden=true;clear();$('world').classList.remove('coached');window.training=undefined;$('open-brief').disabled=false;window.PlanetVoice?.stop();render();}
+ function finish(){active=false;window.TenBotPointer?.hide();panel.hidden=true;clear();$('world').classList.remove('coached');window.training=undefined;$('open-brief').disabled=false;window.PlanetVoice?.stop();render();}
  function stage(){return complete?'done':busy?(feeding?'powering':last):page<lessons.length?'intro'+page:PowerContracts.matches(state,contract,phase)?(phase===0?'ready1':'ready2'):(phase===0?'split':'join');}
  function refresh(){
   if(!active)return;if(!busy)feeding=false;if(contract.id!=='first-shift'){finish();return;}
@@ -39,6 +39,7 @@
   $('coach-instruction').textContent=intro?lessons[page][1]:messages[key];
   $('coach-progress').textContent=complete?'100% ACTIVE':phase===1?'1 / 2 KEYS · 50% ACTIVE':'0 / 2 KEYS';
   $('coach-next').hidden=!intro;$('coach-skip').textContent=complete?'Thanks, TEN-BOT!':'I can do it myself';
+  if(key.startsWith('ready')){window.TenBotPointer?.show();$('supply').focus({preventScroll:true});}else window.TenBotPointer?.hide();
   window.PlanetVoice?.instructionChanged();
  }
  function start(){if(contract.id!=='first-shift')return;started=true;active=true;page=0;last='';panel.hidden=false;$('world').classList.add('coached');

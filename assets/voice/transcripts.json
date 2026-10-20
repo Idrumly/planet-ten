@@ -89,7 +89,7 @@
   },
   {
     "id": "puzzle-8",
-    "text": "The word description now says 1 ten and 18 ones. Value: 28. Block count: 19. Configuration matched! Press SUPPLY POWER and watch the module zap the machine."
+    "text": "The word description now says 1 ten and 18 ones. Value: 28. Block count: 19. Configuration matched! Follow me to the glowing SUPPLY POWER button below the green screen. Click it once now. Keyboard: press Enter on the highlighted button."
   },
   {
     "id": "puzzle-9",
@@ -101,7 +101,7 @@
   },
   {
     "id": "puzzle-11",
-    "text": "Now the word description says 2 tens and 8 ones. Value: 28. Block count: 10. The second configuration matches! Press SUPPLY POWER to unlock the final action."
+    "text": "Now the word description says 2 tens and 8 ones. Value: 28. Block count: 10. The second configuration matches! I am pointing to SUPPLY POWER again. Click that button once now to unlock the final action. Keyboard: press Enter."
   },
   {
     "id": "puzzle-12",
@@ -109,7 +109,7 @@
   },
   {
     "id": "npc-first-shift-0",
-    "text": "The transport workers need reliable reflex testing. Configure this instrument with care, apprentice. The planetary economy depends on functioning knees."
+    "text": "Our transport crews need this project. Earth engineers say, measure twice, cut once. Sensible advice. I have measured three times, to be safe."
   },
   {
     "id": "npc-first-shift-1",
@@ -117,7 +117,7 @@
   },
   {
     "id": "npc-microwave-0",
-    "text": "Our repair crews need a specialist with excellent coordination. Prepare the microwave. Twenty hands will require a very thorough employee handbook."
+    "text": "Our repair crews are counting on you. An Earth saying claims many hands make light work. I have requested a proper scientific investigation."
   },
   {
     "id": "npc-microwave-1",
@@ -125,7 +125,7 @@
   },
   {
     "id": "npc-mixed-practice-0",
-    "text": "The bakery nursery needs a dependable breakfast system. Complete each configuration. Small appliances cannot build a strong economy on an empty crumb tray."
+    "text": "The breakfast district awaits this project. Earthlings say you are what you eat. A bold statement. Our research department is taking it seriously."
   },
   {
     "id": "npc-mixed-practice-1",
@@ -133,7 +133,7 @@
   },
   {
     "id": "npc-vacuum-0",
-    "text": "Our dustbunny walking service needs equipment. Configure the collector carefully. Every small business begins with an idea. Some ideas shed."
+    "text": "This project will support neighbourhood businesses. Earthlings advise us to let sleeping dogs lie. Excellent. We shall begin with a different problem."
   },
   {
     "id": "npc-vacuum-1",
@@ -141,7 +141,7 @@
   },
   {
     "id": "npc-elevator-0",
-    "text": "The delivery district needs an accessible lift. Configure the power carefully. The building is unusually willing to cooperate."
+    "text": "Our delivery district needs your precision. On Earth, they say what goes up must come down. I have checked the paperwork. It does not specify what goes up."
   },
   {
     "id": "npc-elevator-1",
@@ -149,7 +149,7 @@
   },
   {
     "id": "npc-coffee-0",
-    "text": "Mr. Martian needs coffee. This is a matter of planetary productivity. Complete the configurations with precision. I have marked this assignment essential."
+    "text": "This assignment supports the morning shift. Earthlings say the early bird catches the worm. Mr. Martian has requested a more civilised incentive."
   },
   {
     "id": "npc-coffee-1",
@@ -157,7 +157,7 @@
   },
   {
     "id": "npc-cheerleader-0",
-    "text": "The community celebrations committee needs a morale specialist. Configure this device. Eight tentacles should provide adequate enthusiasm."
+    "text": "Our community festival needs this project. Earthlings say, put your best foot forward. The selection committee is still discussing the word best."
   },
   {
     "id": "npc-cheerleader-1",
@@ -165,7 +165,7 @@
   },
   {
     "id": "npc-blender-0",
-    "text": "The market growers need a way to use leftover fruit. Complete each configuration. Waste is unacceptable. Unusual anatomy is negotiable."
+    "text": "The market growers need your help. Waste not, want not, as Earthlings say. I have instructed the laboratory to take the first part very seriously."
   },
   {
     "id": "npc-blender-1",
@@ -173,7 +173,7 @@
   },
   {
     "id": "npc-farm-walnut-0",
-    "text": "This wrinkled seed will help our nursery. Water it with the required arrangements. Never judge a seed by its wrinkles. I have several respected colleagues with wrinkles."
+    "text": "Our nursery is counting on this seed. Never judge a book by its cover, says Earth. This seed has an exceptionally unconvincing cover."
   },
   {
     "id": "npc-farm-walnut-1",
@@ -181,7 +181,7 @@
   },
   {
     "id": "npc-farm-castor-0",
-    "text": "This beautiful seed supports the compost gardens. Match each watering configuration. Beauty is not a guarantee of table manners."
+    "text": "This seed supports our growing district. All that glitters is not gold, Earthlings warn. I shall reserve judgement until the final watering."
   },
   {
     "id": "npc-farm-castor-1",
@@ -189,7 +189,7 @@
   },
   {
     "id": "npc-farm-cacao-0",
-    "text": "This crumpled seed belongs to the seed delivery programme. Supply its water precisely. Our smallest farms are counting on this delivery."
+    "text": "Our small farms need this planting. Good things come in small packages, according to Earth. Please do not shake the package."
   },
   {
     "id": "npc-farm-cacao-1",
@@ -197,7 +197,7 @@
   },
   {
     "id": "npc-farm-heart-0",
-    "text": "This heart-marked seed is assigned to canal maintenance. Find the required arrangements. Our irrigation workers deserve dependable assistance."
+    "text": "The waterworks team is counting on this seed. Still waters run deep, Earthlings say. Our inspection equipment has not yet reached the bottom."
   },
   {
     "id": "npc-farm-heart-1",
@@ -205,7 +205,7 @@
   },
   {
     "id": "npc-farm-nutmeg-0",
-    "text": "This knobbly seed will support the night gardens. Find different representations of the same value. Careful thinking keeps our growing community supplied."
+    "text": "Our gardens need careful work today. Great oaks from little acorns grow, says Earth. This is not an acorn. Results may vary."
   },
   {
     "id": "npc-farm-nutmeg-1",
@@ -213,7 +213,7 @@
   },
   {
     "id": "npc-farm-paradise-0",
-    "text": "This bright seed belongs to the soil laboratory. Find distinct watering arrangements. Healthy soil is the foundation of our food supply. Even when the laboratory smells unusual."
+    "text": "This planting supports next season’s harvest. Every cloud has a silver lining, Earthlings claim. Our soil laboratory has proposed a different material."
   },
   {
     "id": "npc-farm-paradise-1",
@@ -221,7 +221,7 @@
   },
   {
     "id": "npc-farm-date-0",
-    "text": "This grooved seed will support the irrigation team. Find every required representation. The final delivery deserves the same care as the first."
+    "text": "Our growing community needs this final planting. From small beginnings come great things. A respectable Earth saying. Let us give it some evidence."
   },
   {
     "id": "npc-farm-date-1",
