@@ -10,3 +10,6 @@
 
 @media(max-width:550px){.rod{--unit:14px}.single{min-width:28px}.keys{top:172px;bottom:auto;align-items:center}.keys b{font-size:16px}.key-card strong{font-size:14px}}
 
+
+/* Retractable corrugated hose and mechanical gripper. */
+.vacuum-arm{opacity:0;transform-origin:143px 240px;transform:scaleY(.08)}
