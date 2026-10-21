@@ -19,6 +19,7 @@ function creatureArt(index,pretty){
  return `<g class="critter-foot" fill="${colors[k]}" stroke="#657a88" stroke-width="4"><ellipse cx="-36" cy="57" rx="25" ry="14"/><ellipse cx="36" cy="57" rx="25" ry="14"/></g><ellipse cy="22" rx="66" ry="48" fill="${colors[k]}" stroke="#657a88" stroke-width="4"/>${index===0?'<ellipse cx="-34" cy="-58" rx="17" ry="48" fill="#f2dce9"/><ellipse cx="34" cy="-58" rx="17" ry="48" fill="#f2dce9"/><path d="M-34-91v55m68-55v55" stroke="#df9bc0" stroke-width="10" stroke-linecap="round"/>':index===2?'<path d="M-52-34q-46-46-11-51l18 46m87 0q46-46 26-52l-26 46" fill="#efe8c4" stroke="#657a88" stroke-width="4"/>':index===4?'<path d="M-58-23l-7-55 49 34m31 0 49-34-6 55" fill="#bddeef" stroke="#657a88" stroke-width="4"/>':'<circle cx="-55" cy="-30" r="20" fill="#ebcfb3"/><circle cx="55" cy="-30" r="20" fill="#ebcfb3"/>'}<ellipse cy="-4" rx="65" ry="49" fill="${colors[k]}" stroke="#657a88" stroke-width="4"/><g fill="#263c58"><ellipse cx="-25" cy="-7" rx="14" ry="18"/><ellipse cx="25" cy="-7" rx="14" ry="18"/></g><g fill="white"><circle cx="-29" cy="-13" r="5"/><circle cx="21" cy="-13" r="5"/></g><ellipse cy="16" rx="9" ry="6" fill="#c67eac"/><path d="M-15 27q15 15 30 0" stroke="#6c6c86" stroke-width="3" fill="none"/><g fill="#e8a8bd" opacity=".7"><ellipse cx="-43" cy="17" rx="12" ry="7"/><ellipse cx="43" cy="17" rx="12" ry="7"/></g>`;
 }
 function configureFarm(){
+ window.FarmCrossovers?.clear();
  const farm=isFarm();$('world').classList.toggle('farm-round',farm);document.documentElement.classList.toggle('farm-theme',farm);$('farm-garden')?.remove();
  $('farm-notebook').hidden=true;document.title=farm?'Planet Ten · Tidebloom Farm':'Planet Ten · Fabrication Outpost';document.querySelector('.brief-copy>span').textContent=farm?'TIDEBLOOM FARM / SEED ASSIGNMENT':'INCOMING MISSION / VX-28';document.querySelector('.key-heading').firstChild.textContent=farm?'WATER KEYS ':'POWER KEYS ';document.querySelector('.machine-area').setAttribute('aria-label',farm?'Growing seed':'Fabrication machine');document.querySelector('.ground-cargo').setAttribute('aria-label',farm?'Grow Blocks on the wet ground':'Glowblocks lying on the ground');$('world').classList.toggle('farm-challenge',farm&&contract.seedIndex>=4);
  document.querySelector('.intake-slots').innerHTML=farm?M.units.slice().reverse().map((u,i)=>`<span class="slot-wrap"><span class="shape-slot grow-slot" id="grow-slot-${u}">${(10**(4-i)).toLocaleString('en-US')}</span></span>`).join(''):farmDefaultIntake;
@@ -48,11 +49,10 @@ async function farmReward(){
    await act('farm-flower',[{opacity:1,transform:'scale(.65)'},{opacity:1,transform:'scale(1.1)'},{opacity:1,transform:'scale(1)'}],1200);
    await act('flower-opening',[{opacity:0},{opacity:1}],500);
    await act('farm-critter',[{opacity:0,transform:'translate(0,0) scale(.05)'},{opacity:1,transform:'translate(75px,30px) scale(.75)',offset:.6},{opacity:1,transform:'translate(120px,170px) scale(1)'}],1600);
-   await act('farm-critter',[{transform:'translate(120px,170px)'},{transform:'translate(155px,155px)'},{transform:'translate(190px,170px)'},{transform:'translate(225px,155px)'},{transform:'translate(260px,170px)'}],1800);
-   $('garden-desc').textContent=(seed[3]?'A beautiful flower releases a slimy, toothy ':'A gnarly flower spits out a cute ')+seed[6]+'.';
+   await window.FarmCrossovers.play(id,contract.seedIndex);
   }else $('garden-desc').textContent='The seed is growing. '+(phase+1)+' watering keys supplied.';
   guard(id);busy=false;rewardRunning=false;machinePaused=false;$('pause-machine').hidden=true;$('pause-machine').textContent='Pause machine';$('pause-machine').setAttribute('aria-pressed','false');$('world').classList.remove('cutscene');
-  if(last){complete=true;render();$('completion').hidden=false;window.PlanetNPC?.completed();$('feedback').textContent='Well grown! '+seed[6]+' discovered.';$('again').focus({preventScroll:true});beep('win');}
+  if(last){complete=true;render();$('completion').hidden=false;window.FarmCrossovers.completed();window.PlanetNPC?.completed();$('feedback').textContent='Well grown! '+seed[6]+' discovered.';$('again').focus({preventScroll:true});beep('win');}
   else{phase++;history=[];updateContractUI();render();showBrief();}
  }catch(e){if(e!==STOP)throw e;}
 }

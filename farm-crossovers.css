@@ -1,0 +1,13 @@
+#farm-crossover{width:100%;height:100%;overflow:visible}
+.farm-crossover #farm-garden{display:none}
+#world.farm-crossover .machine-area{left:26%;width:73%;top:12%;height:61%;max-height:none}
+#world.farm-crossover .ground-cargo,#world.farm-crossover .bottom-hud,#world.farm-crossover .held-tool{visibility:hidden}
+#world.farm-crossover .completion{left:63%;top:auto;bottom:24px;max-width:650px;width:69%;max-height:25%;padding:12px 18px}
+#world.farm-crossover .completion h2{font-size:clamp(19px,2.4vw,30px);margin:5px 0 12px}
+#world.farm-crossover .completion{display:flex;flex-direction:column}
+#world.farm-crossover .completion>div{order:1;display:flex;justify-content:center;flex-wrap:wrap;gap:6px}
+#world.farm-crossover .completion .npc-message{order:2;margin-top:10px;padding:8px}
+#world.farm-crossover .completion .npc-message p{font-size:14px}
+#farm-replay{border:2px solid #a6ffdc;background:#206075}
+@media(max-width:700px){#world.farm-crossover .power-station{visibility:hidden}#world.farm-crossover .machine-area{left:1%;width:98%;top:20%;height:51%}#world.farm-crossover .completion{left:50%;width:94%;bottom:18px;max-height:28%}#world.farm-crossover .completion button{font-size:12px;padding:8px}}
+@media(max-height:480px){#world.farm-crossover .machine-area{top:16%;height:56%}#world.farm-crossover .completion{bottom:8px;max-height:25%}#world.farm-crossover .completion h2{font-size:17px;margin:2px}}
