@@ -1,11 +1,28 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Planet Ten · Apprentice Orientation</title><link rel="stylesheet" href="tutorial.css"><link rel="stylesheet" href="glow-power.css"><script src="tutorial.js" defer></script><link rel="stylesheet" href="screen-fit.css"><script src="screen-fit.js" defer></script><link rel="stylesheet" href="alien-voice.css?v=hints2"><script src="voice-clips.js?v=characters3" defer></script><script src="alien-voice.js?v=characters3" defer></script></head><body>
-<header><a href="tutorial.html">PLANET <b>TEN</b></a><span>APPRENTICE ORIENTATION / ISSUE 01</span><div><button id="sound" aria-pressed="false">Sound off</button><button id="motion" aria-pressed="false">Motion on</button><a href="world.html?training=1">Begin guided practice →</a></div></header>
-<main class="story" id="story"><div class="stars" aria-hidden="true"></div><div class="orbital" aria-hidden="true"></div>
-<div class="chapter"><span id="chapter-name">01 / FIRST DAY</span><span id="page-count">1 / 4</span></div>
-<div class="tutor"><div class="hover-shadow" aria-hidden="true"></div><button id="greet" aria-label="Say hello to your alien tutor"><img src="assets/mr-martian-blue-eyes.png" alt="A smiling alien version of Mr. Martian: bald, bearded, with glowing blue eyes and futuristic glasses, with four arms attached to a glowing head hovercraft."></button><span class="tutor-name">MR. MARTIAN / HEAD OF TRAINING</span><span class="hello" id="hello" aria-live="polite"></span></div>
-<section class="frame active" data-chapter="01 / FIRST DAY" aria-labelledby="welcome"><div class="caption">YOUR FIRST DAY ON PLANET TEN</div><div class="audio-welcome"><button type="button" data-sound-toggle>🔊 Turn sound ON</button><p>Hear the alien tutorial voice! You can turn sound off any time.</p></div><h1 id="welcome" tabindex="-1">New planet.<br><em>New job.</em></h1><div class="bubble"><p>“Welcome to Planet Ten! It’s your first day as an apprentice Block Manipulator.”</p><p class="aside">“I’m Mr. Martian. Head of training. Literally.”</p></div><div class="landing-stamp" aria-hidden="true">APPRENTICE<br>ACCESS GRANTED</div></section>
-<section class="frame" data-chapter="02 / MEET THE GLOWBLOCKS" aria-labelledby="glow-title" hidden><div class="caption">HANDLE WITH CURIOSITY</div><h1 id="glow-title" tabindex="-1">Glowblocks™<br><em>POWER OF TEN!</em></h1><div class="bubble"><p>“Glowblocks™ capture the POWER OF TEN! Ten smaller units join to make one bigger unit. Same value. Bigger wobble.”</p></div><button id="wobble" class="petri" aria-label="Gently wobble the glowblock"><span class="jelly giant"><i></i></span><span>TAP TO WOBBLE</span></button><p id="wobble-caption" class="field-note" aria-live="polite">They’re very good at sticking together.</p></section>
-<section class="frame" data-chapter="03 / YOUR TWO TOOLS" aria-labelledby="tools-title" hidden><div class="caption">PRACTISE WITH THE REAL TOOLS</div><h1 id="tools-title" tabindex="-1">Meet your<br><em>robot helper.</em></h1><div class="bubble"><p>“TEN-BOT will help you aim, split and collect. We will check the value and count the blocks together.”</p><p class="aside">“Only the next action is unlocked. Take your time!”</p></div><p><a class="primary training-link" href="world.html?training=1">Start guided practice →</a></p></section>
-<section class="frame" data-chapter="04 / FIRST DELIVERY" aria-labelledby="job-title" hidden><div class="caption">YOUR FIRST MACHINE IS WAITING</div><h1 id="job-title" tabindex="-1">Let’s see what<br><em>you can do.</em></h1><div class="bubble"><p>“Your job is to reshape deliveries so they fit the colony’s machines.”</p></div><div class="delivery-card"><span>DELIVERY 001</span><strong>28</strong><p>Keep the value.<br>Make <b>19 blocks.</b></p></div><button id="start" class="primary">Start guided practice →</button></section>
-<nav class="story-nav" aria-label="Comic pages"><button id="previous" disabled>← Back</button><div class="dots" aria-label="Page 1 of 4"><i class="current"></i><i></i><i></i><i></i></div><button id="next">Next panel →</button></nav>
-</main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Welcome to Planet Ten: a growing universe of playful learning games. Start your first job as an Energy Configuration Assistant.">
+<title>Planet Ten · A universe of games</title>
+<link rel="stylesheet" href="suite.css?v=1">
+</head>
+<body>
+<a class="skip" href="#games">Choose a game</a>
+<header class="masthead"><a class="brand" href="index.html" aria-label="Planet Ten home">PLANET <b>TEN</b><span class="orbit" aria-hidden="true">✦</span></a><span class="station-label">LEARNING THROUGH PLAY</span></header>
+<main>
+<section class="welcome" aria-labelledby="welcome-title">
+<div class="welcome-copy"><p class="eyebrow">WELCOME TO YOUR NEXT ADVENTURE</p><h1 id="welcome-title">Small planet.<br><em>Big possibilities.</em></h1><p class="intro">Curious minds wanted. Explore a growing universe of games, solve puzzles, and put your ideas to work.</p><a class="choose" href="#games">Choose your game <span aria-hidden="true">↓</span></a></div>
+<figure class="host"><img src="assets/mr-martian-blue-eyes.png" alt="Mr. Martian, a smiling, blue-eyed alien with four arms and a floating head hovercraft." fetchpriority="high"><figcaption><b>MR. MARTIAN</b><span>“Your next important job awaits.”</span></figcaption></figure>
+</section>
+<section class="games" id="games" aria-labelledby="games-title"><div class="section-heading"><h2 id="games-title">Choose your game</h2><span>01 / READY TO PLAY</span></div>
+<div class="game-grid"><article class="game-card"><a class="game-link" href="tutorial.html" aria-labelledby="energy-title play-label" aria-describedby="energy-description">
+<div class="game-art" aria-hidden="true"><span class="available">● NOW BOARDING</span><div class="energy-display"><span>POWER OF TEN</span><strong>28</strong><small>SAME VALUE. NEW POSSIBILITIES.</small></div><div class="glow-rod"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="glow-rod"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="glow-ones"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span class="art-label">FABRICATION OUTPOST / ALIEN FARM</span></div>
+<div class="game-copy"><p class="eyebrow">YOUR FIRST PLANET TEN ASSIGNMENT</p><h3 id="energy-title">Energy Configuration Assistant</h3><p id="energy-description">Split, collect, and reshape Glowblocks to power wonderfully ridiculous inventions. Same value. Different arrangements. Unexpected results.</p><ul class="tags" aria-label="Game features"><li>Place value</li><li>Puzzle solving</li><li>Guided practice</li></ul><span class="play" id="play-label">Play game <span aria-hidden="true">→</span></span><small class="start-note">Mr. Martian and TEN-BOT will show you how.</small></div>
+</a></article></div>
+<p class="future"><span aria-hidden="true">✦</span> This universe is growing. More Planet Ten games are on the horizon.</p>
+</section>
+</main>
+<footer><span>PLANET TEN</span><p>Important work. Unreasonably strange results.</p></footer>
+</body>
+</html>

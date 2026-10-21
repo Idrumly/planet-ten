@@ -1,10 +1,10 @@
 # Planet Ten
 
-A classroom place-value puzzle game with Mr. Martian, Glowblocks, ridiculous machines and an alien farm.
+A growing suite of classroom games set on Planet Ten. The first game, **Energy Configuration Assistant**, explores place value with Mr. Martian, Glowblocks, ridiculous machines and an alien farm.
 
 **[Play Planet Ten](https://idrumly.github.io/planet-ten/)**
 
-Start with the interactive tutorial, then enter the fabrication field. Use the Assignment menu on the mission card to jump to a puzzle. Sound is optional; Motion off reduces animation. Progress currently resets when the page is reloaded.
+Choose Energy Configuration Assistant from the suite landing page, start with the interactive tutorial, then enter the fabrication field. Use the Assignment menu on the mission card to jump to a puzzle. Sound is optional; Motion off reduces animation. Progress currently resets when the page is reloaded.
 
 ## Playtesting
 
