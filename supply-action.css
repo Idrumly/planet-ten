@@ -1,0 +1,10 @@
+#world .power-intake .supply-button{min-height:60px;border:3px solid #fff4ae;background:linear-gradient(#fff4a6,#ffca53);color:#143341;font-size:17px;letter-spacing:.8px;box-shadow:0 6px 0 #9a6426,0 0 16px #ffd46a55,inset 0 2px 0 #fff;position:sticky;bottom:4px;z-index:2}
+#world .power-intake .supply-button:hover:not(:disabled){background:linear-gradient(#fffbd7,#ffe17b);box-shadow:0 7px 0 #9a6426,0 0 24px #ffe28c88}
+#world .power-intake .supply-button:disabled{opacity:.65;box-shadow:0 3px 0 #796749}
+#world .power-intake .supply-button.power-ready{border-color:#fff;outline:3px solid #8affdf;outline-offset:3px;animation:power-ready-glow 2s ease-in-out infinite}
+#world .power-intake .supply-button.power-ready::after{content:'READY — PRESS HERE';display:block;font-size:10px;letter-spacing:.5px}
+#world .power-intake .supply-button.power-ready{flex-wrap:wrap;column-gap:8px;row-gap:1px}
+#world .power-intake .supply-button.power-ready::after{flex-basis:100%}
+@keyframes power-ready-glow{50%{box-shadow:0 6px 0 #9a6426,0 0 26px #ffe28c99}}
+@media(max-width:700px){#world .power-intake .supply-button{font-size:14px;min-height:56px;padding:8px 4px}}
+@media(prefers-reduced-motion:reduce){#world .power-intake .supply-button.power-ready{animation:none}}

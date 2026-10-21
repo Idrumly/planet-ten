@@ -13,6 +13,7 @@ jobs:
       - run: node puzzle-contracts.test.js
       - run: node farm-contracts.test.js
       - run: node --test training.test.js
+      - run: node --test orientation.test.js
       - run: node --test alien-voice.test.js
       - run: node --test voice-effects.test.js
       - run: node --test block-field.test.js
