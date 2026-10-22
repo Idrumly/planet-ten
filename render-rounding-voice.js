@@ -1,0 +1,1 @@
+const fs=require('fs'),path=require('path'),{metallicVoice}=require('./voice-effects');const clips=JSON.parse(fs.readFileSync('assets/rounding-voice/transcripts.json','utf8'));for(const c of clips)fs.writeFileSync(c.src,metallicVoice(fs.readFileSync(path.join(process.argv[2],c.id+'.wav')),'tenbot'));console.log('Rendered '+clips.length+' TEN-BOT clips');
