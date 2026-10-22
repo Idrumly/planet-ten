@@ -1,8 +1,8 @@
 'use strict';
 // Project illustrated surfaces into the same camera as the residents.
-window.createAuditorium=function(ctx,polygon,camera,project,redraw){
+window.createAuditorium=function(ctx,polygon,camera,project,redraw,hospital=false){
  const back=new Image(),outside=new Image();back.onload=outside.onload=redraw;
- back.src='assets/rounding/auditorium-backdrop-v1.webp';outside.src='assets/planet-background.webp';
+ back.src=hospital?'assets/rounding/band-aid-backdrop-v1.webp':'assets/rounding/auditorium-backdrop-v1.webp';outside.src='assets/planet-background.webp';
  function triangle(img,vertices){
   // Clip geometry and its texture coordinates at the near plane.
   let out=[];
@@ -21,7 +21,20 @@ window.createAuditorium=function(ctx,polygon,camera,project,redraw){
   const point=(u,v)=>{const p=corners[0].map((_,k)=>(1-v)*((1-u)*corners[0][k]+u*corners[1][k])+v*((1-u)*corners[3][k]+u*corners[2][k]));return {...camera(...p),u,v};};
   for(let j=0;j<n;j++)for(let i=0;i<n;i++){const a=point(i/n,j/n),b=point((i+1)/n,j/n),c=point((i+1)/n,(j+1)/n),d=point(i/n,(j+1)/n);triangle(img,[a,b,c]);triangle(img,[a,c,d]);}
  }
- function draw(){
+ function drawClinic(){
+  polygon([[-520,0,-800],[-520,520,-800],[-520,520,-2100],[-520,0,-2100]],'#759f98');
+  polygon([[520,0,-2100],[520,520,-2100],[520,520,-800],[520,0,-800]],'#6e969a');
+  polygon([[-520,520,-800],[520,520,-800],[520,520,-2100],[-520,520,-2100]],'#bed6c4');
+  for(const side of [-1,1]){const wall=side*519;for(let zz=-920;zz>-2000;zz-=370){
+   polygon([[wall,155,zz],[wall,425,zz],[wall,425,zz-255],[wall,155,zz-255]],'#d6bd78','#f3e3ab');
+   texture(outside,[[wall-side,410,zz-12],[wall-side,410,zz-243],[wall-side,170,zz-243],[wall-side,170,zz-12]]);
+  }for(const yy of [45,110,450])polygon([[wall,yy,-800],[wall,yy+8,-800],[wall,yy+8,-2100],[wall,yy,-2100]],'#d4b876');}
+  polygon([[-520,0,-2100],[-520,520,-2100],[520,520,-2100],[520,0,-2100]],'#80aaa1');
+  texture(back,[[-520,520,-2100],[520,520,-2100],[520,0,-2100],[-520,0,-2100]],8);
+  for(let zz=-800;zz>-2100;zz-=100)for(let xx=-520;xx<520;xx+=130)polygon([[xx,0,zz],[xx+130,0,zz],[xx+130,0,zz-100],[xx,0,zz-100]],(Math.round((xx+520)/130+zz/100)%2)?'#a4c9b9':'#c7ddce','#648b8166');
+  for(const xx of [-430,430])polygon([[xx,1,-810],[xx+5,1,-810],[xx+5,1,-2100],[xx,1,-2100]],'#f2d48b');
+ }
+ function draw(){if(hospital){drawClinic();return;}
   polygon([[-520,0,-800],[-520,520,-800],[-520,520,-2100],[-520,0,-2100]],'#805936');
   polygon([[520,0,-2100],[520,520,-2100],[520,520,-800],[520,0,-800]],'#6e442e');
   polygon([[-520,520,-800],[520,520,-800],[520,520,-2100],[-520,520,-2100]],'#4d332d');

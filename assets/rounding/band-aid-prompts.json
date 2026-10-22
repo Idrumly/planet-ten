@@ -1,0 +1,33 @@
+{
+  "mode": "built-in imagegen",
+  "prompts": [
+    {
+      "name": "band-aid-backdrop",
+      "prompt": "Wide landscape 2:1 richly illustrated whimsical alien hospital interior, no characters. A warm beautiful musical-instrument clinic on Planet Ten with pearl curved organic walls, mint-and-peach tiled floor, brass pipe arches like giant saxophone tubing, bed alcoves left and right, one central healing pod, glowing musical-note vital-sign screens, medicine cabinets containing luminous coloured liquid, hanging glass chimes, huge rounded windows overlooking pink turquoise alien gardens under two moons. Silly yet welcoming, high-detail stylized 3D animated film rendering, tactile fabrics, soft medical lamps, no text, no logos, no red cross symbols. Front-on eye-level back wall for a 2.5D game environment. Not grim or scary."
+    },
+    {
+      "name": "trumpet-doctor",
+      "prompt": "Full body isolated anthropomorphic ALIEN TRUMPET DOCTOR character sprite, true transparent background. Rich detailed stylized 3D animated film art. Polished golden trumpet body with expressive blue eyes on a curved brass face, bell for a smiling mouth, four flexible little brass tube arms, mint medical coat and tiny bow tie, stethoscope, clipboard, comfortable purple shoes. One hand offers a tuning fork. Silly kind dignified doctor, glow-in-the-dark freckles, alien curling antennae. Entire body visible with margin, no text or background or floor. Matching a whimsical alien spelling bee game's detailed characters."
+    },
+    {
+      "name": "violin-patient",
+      "prompt": "Full body isolated anthropomorphic ALIEN VIOLIN PATIENT character sprite, true transparent background. Rich detailed stylized 3D animated film art. Beautiful reddish wood violin body, big expressive three eyes, smiling face, curly scroll head and antennae, slim wooden arms and little legs, one arm in a soft sling holding a bandaged violin bow, cosy hospital gown and fuzzy turquoise slippers. Friendly dramatic theatre kid personality, no distress. Tactile wood grain, luminous strings, unusual alien proportions. Entire silhouette visible with margin, no text or backdrop or floor."
+    },
+    {
+      "name": "drum-patient",
+      "prompt": "Full body isolated anthropomorphic ALIEN SNARE DRUM PATIENT game character, true transparent background. High detail whimsical stylized 3D animated film rendering. Round teal-and-gold drum body with a pale drumhead face, three expressive amber eyes, funny wide grin, four short springy legs in mismatched slippers, little arms clutching two soft-tipped drumsticks, fluffy pink blanket around waist, small bandage on drum rim. A cheerful little alien recovering its beat, completely child-friendly, no distress. Luminous bolts, chrome fittings, tactile worn fabric and pearly drum skin. Full character visible with margin, no text, no background, no ground."
+    },
+    {
+      "name": "velvet-lock",
+      "prompt": "Horizontal full-body isolated ALIEN LIVING LOCK creature side-on head on RIGHT, tail LEFT. True transparent background. Detailed stylized 3D game art. A very fluffy hot pink and snowy white velvet moth caterpillar with round scalloped segments, six tiny purple boot feet, feathery cream antennae, three smiling curious sapphire eyes. Three empty dark oval dial recesses in a horizontal row embedded at middle-left of body, surrounded by soft bronze vine rings. No numbers or text. Distinct playful silhouette, soft plush material. Generous margin, entire creature visible, no scenery or floor."
+    },
+    {
+      "name": "pebble-lock",
+      "prompt": "Horizontal full-body isolated ALIEN LIVING LOCK creature side-on head on RIGHT, tail LEFT. True transparent background. Detailed whimsical stylized 3D game art. A smooth cobalt blue and golden amber armoured pillbug with seven shiny ceramic shell plates, little turquoise legs, a cheerful wide round face with two eyes and bushy golden eyebrows, curling tusk-like antennae. Three EMPTY dark oval dial recesses in horizontal row middle-left on shell, surrounded by gold mineral rings. No text or numbers, no background or floor. Rich tactile glazed ceramic shell with tiny gold cracks, entirely child-friendly, full creature visible with margin."
+    },
+    {
+      "name": "ribbon-lock",
+      "prompt": "Horizontal full-body isolated ALIEN LIVING LOCK creature side-on head on RIGHT, tail LEFT. True transparent background. Detailed whimsical stylized 3D game art. A long luminous turquoise ribbon nudibranch, translucent lilac ruffled fins and fluorescent magenta fronds all along back, four little stalk eyes, cheerful smiling face, flat ribbon tail curled into a spiral. Three EMPTY dark oval dial recesses in row middle-left framed in pearlescent lavender cartilage. Wet slimy glassy skin, glowing internal orange speckles. Entire creature visible with margin, no digits text scenery or floor."
+    }
+  ]
+}

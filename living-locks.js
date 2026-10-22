@@ -3,7 +3,10 @@
  const creatures=[
   {name:'Professor Fuzzlet',kind:'fuzzy-lock',texture:'Fuzzy caterpillar'},
   {name:'Lady Slipperella',kind:'slug-lock',texture:'Pearlescent nudibranch'},
-  {name:'Sir Wobbleworth',kind:'jelly-lock',texture:'Glowing jelly worm'}
+  {name:'Sir Wobbleworth',kind:'jelly-lock',texture:'Glowing jelly worm'},
+  {name:'Nurse Fluffernoodle',kind:'velvet-lock',texture:'Velvet moth caterpillar'},
+  {name:'Doctor Roly Poly',kind:'pebble-lock',texture:'Porcelain pill bug'},
+  {name:'Madame Frill',kind:'ribbon-lock',texture:'Ribbon nudibranch'}
  ];
  const snake=document.getElementById('snake');
  const art=document.createElement('img');art.className='lock-illustration';art.alt='';art.width=1000;art.height=500;snake.prepend(art);
@@ -23,7 +26,7 @@
   [5700,'ash','One delighted little pile of ashes. Lock released!']
  ];
  function displayPhase(phase,text){snake.dataset.phase=phase;status.textContent=text;}
- function finish(){if(!run)return;const done=run.resolve;run=null;cancelAnimationFrame(raf);skip.hidden=true;displayPhase('ash',phases[4][2]);document.dispatchEvent(new CustomEvent('living-lock-released',{detail:{index:current}}));done(true);}
+ function finish(){if(!run)return;const done=run.resolve;run=null;cancelAnimationFrame(raf);skip.hidden=true;displayPhase('ash',phases[4][2]);document.dispatchEvent(new CustomEvent('living-lock-released',{detail:{index:current%3}}));done(true);}
  function tick(now){if(!run)return;const dt=Math.min(now-last,1000);last=now;
   const modal=document.getElementById('lock-inspection');const paused=document.hidden||(modal&&!modal.open);snake.classList.toggle('reward-paused',Boolean(paused));
   if(document.body.classList.contains('still')){finish();return;}
