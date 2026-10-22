@@ -28,3 +28,30 @@
 @media(max-width:600px){#clinic-performance{width:calc(100% - 24px);bottom:130px;padding:8px 12px}#clinic-performance p{font-size:13px}#room-route{max-width:175px;font-size:12px}.show-heading{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.clinic-resident img,.healing-notes,.clinic-monitor span{animation:none!important}}
 @media(max-width:600px){#room-route{left:12px;right:12px;max-width:none;width:calc(100% - 24px);top:10px;min-height:40px}#walk-view:has(#room-route:not([hidden])) #walk-caption{top:58px;font-size:11px;padding:6px 9px}#clinic-performance{bottom:106px}}
+/* Bed frames stay still while patients sit up, shiver, honk and declaim. */
+.patient-bed{position:absolute;inset:22% 0 12%;border:7px solid #b9dfd5;border-radius:30px 30px 12px 12px;background:linear-gradient(100deg,#578b8d,#d4eadc 45%,#659da0);box-shadow:0 12px 0 #254b59,0 18px 12px #0f2a3a77}
+.bed-pillow{position:absolute;inset:6% 8% 35%;border-radius:25px;background:linear-gradient(130deg,#fff9dd,#adcfce);box-shadow:inset 0 0 8px #677b7c}
+.bed-rail{position:absolute;left:-9%;right:-9%;bottom:8%;height:25%;border:7px solid #e2c47d;border-radius:12px;z-index:2;background:repeating-linear-gradient(90deg,transparent 0 35px,#d4ba75 36px 42px)}
+.bed-wheel{position:absolute;width:23px;height:23px;border:6px solid #5c7d85;background:#152e3d;border-radius:50%;bottom:-32px;left:10%}.bed-wheel:last-child{left:auto;right:10%}
+.bed-patient>img{position:absolute;inset:0 1% 10%;width:98%;height:90%;z-index:1;transform-origin:50% 85%;animation:patient-rest 4s ease-in-out infinite}
+.bed-patient .resident-label{z-index:3;bottom:-5px;font-size:12px}.bed-patient .healing-notes{z-index:4}
+.clinic-piano>img{animation-delay:-2s}
+.clinic-flugelhorn.treating>img{animation:flugelhorn-honk 1.8s ease-in-out infinite}
+.clinic-piano.treating>img{animation:piano-declaim 2s ease-in-out infinite}
+.clinic-doctor.treating>img{animation:doctor-conduct 1.4s ease-in-out infinite}
+.clinic-violin.treating>img{animation:violin-wobble 1.2s ease-in-out infinite}
+.clinic-drum.treating>img{animation:drum-roll .65s ease-in-out infinite}
+.patient-exclamation{position:absolute;top:5%;right:-5%;z-index:5;padding:7px 10px;border-radius:18px;background:#fff3af;color:#193b50;font-size:17px;font-weight:bold;opacity:0;pointer-events:none;transform:rotate(8deg)}
+.treating .patient-exclamation{animation:patient-caption 2.4s ease-in-out infinite}
+.ward-controls{display:flex;gap:8px;flex-wrap:wrap}
+#clinic-performance .ward-controls button{min-height:40px}
+@keyframes patient-rest{50%{transform:translateY(-4px) scaleY(1.025)}}
+@keyframes flugelhorn-honk{0%,65%,100%{transform:translateY(0)}20%{transform:translateY(-13px) rotate(-5deg) scale(1.055,.96)}32%{transform:translateY(-7px) rotate(4deg) scale(.98,1.04)}43%{transform:rotate(-3deg)}}
+@keyframes piano-declaim{0%,100%{transform:rotate(-2deg)}25%{transform:translateY(-9px) rotate(4deg)}40%,60%{transform:translateY(-6px) scaleY(1.035)}50%,70%{transform:translateY(-3px) scaleY(.98)}}
+@keyframes doctor-conduct{0%,100%{transform:rotate(-3deg)}30%{transform:translateX(8px) translateY(-7px) rotate(5deg)}65%{transform:translateX(-8px) rotate(-5deg)}}
+@keyframes violin-wobble{25%{transform:rotate(-5deg)}75%{transform:rotate(5deg) translateY(-5px)}}
+@keyframes drum-roll{40%{transform:translateY(-14px) scaleY(1.04)}80%{transform:scale(1.06,.94)}}
+@keyframes patient-caption{15%,65%{opacity:1;transform:translateY(-8px) rotate(-4deg)}85%,100%{opacity:0}}
+.clinic-paused .clinic-resident>img,.clinic-paused .patient-exclamation{animation-play-state:paused}
+.still .clinic-resident>img,.still .patient-exclamation{animation:none!important}
+@media(prefers-reduced-motion:reduce){.clinic-resident>img,.patient-exclamation{animation:none!important}}

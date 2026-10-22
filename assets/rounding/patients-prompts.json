@@ -1,0 +1,13 @@
+{
+  "mode": "built-in imagegen",
+  "prompts": [
+    {
+      "name": "flugelhorn-patient",
+      "prompt": "Use case: stylized-concept. Transparent cutout game character for Planet Ten's whimsical alien instrument hospital, detailed polished 3D animated film illustration, warm golden lighting. A lovable furry BLUE FLUGELHORN instrument alien patient, clearly rounded brass flugelhorn tubing and three valves, covered in soft cobalt and cyan fur, large bell snout with gold interior, expressive sleepy eyes, fluffy eyebrows, small furry arms gripping a mint quilt across its lap, sitting propped upright in bed position facing camera slightly three-quarter. Small ice pack on head and a medical wristband, absurdly dramatic but friendly expression. Patient and lap blanket only, no bed frame or room. Full silhouette entirely inside image, transparent background. No text, no logos, no injury detail."
+    },
+    {
+      "name": "piano-patient",
+      "prompt": "Use case: stylized-concept. Transparent cutout game character for Planet Ten's whimsical alien instrument hospital, detailed polished 3D animated film illustration with warm golden lighting. A lovable anthropomorphic PIANO MAN patient, body/head made from glossy dark walnut upright piano, expressive eyes above an open grinning mouth whose teeth are unmistakeable white and black PIANO KEYS with three visibly chipped or missing keys, funny non-graphic cartoon broken key teeth. Small moustache of curly musical notation, slender wooden arms gesturing theatrically, sitting propped upright in bed position, lavender quilt across lap, small bandage on cheek, humorous worried expression. Patient and lap blanket only, no bed frame or room. Full silhouette entirely inside image, transparent background. Rich brass details and handworked wood. No text, no logos, no blood."
+    }
+  ]
+}
