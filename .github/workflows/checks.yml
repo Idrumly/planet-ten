@@ -20,3 +20,4 @@ jobs:
       - run: node --test super-model.test.js
 
       - run: node --test rounding-model.test.js
+      - run: node --test spelling-bee.test.js

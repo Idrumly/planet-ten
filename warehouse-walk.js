@@ -23,7 +23,11 @@
  ];
  function bee(ex,ez,i){entity('resident bee-resident alien-variant-'+i,ex,ez,350,370,'<span class="hover-podium"></span>'+beeHTML+'<span class="resident-label">'+['CHIEF SPELLER','CITIZENSHIP DIVISION','CULTURE COMMITTEE'][i]+'</span>','Talk to '+['chief spelling bee','citizenship bee','culture bee'][i],()=>say(remarks[i]));}
  bee(0,-1900,0);bee(-320,-1660,1);bee(325,-1740,2);
- [-360,-150,360].forEach((ex,i)=>entity('resident flower-resident',ex,[-1370,-1850,-1430][i],105,170,'<span>✿</span><b>'+['10','10','POLLEN'][i]+'</b>','Talk to flower judge '+(i+1),()=>say(['Ten out of ten. Excellent use of additional legs.','I was told there would be nectar.','Pollen. That is my entire judging system.'][i])));
+ const judges=[-295,-175,295].map((ex,i)=>entity('resident flower-resident judge-'+i,ex,[-1560,-1850,-1560][i],165,260,'<picture class="flower-art"><source srcset="assets/rounding/flower-judge-v1.webp" type="image/webp"><img src="assets/rounding/flower-judge-v1.png" width="567" height="850" alt="" decoding="async"></picture><span class="judge-desk"><b>'+SpellingBee.judges[i]+'</b><em class="judge-score">READY</em></span>','Talk to '+SpellingBee.judges[i],()=>say(['I am Judge Petal. Please do not interrupt. I am rooting for him.','Professor Pollen. I have several degrees. Most are in the greenhouse.','Dame Dandelion. The competition is fierce. I am not going to seed without a fight.'][i])));
+ const microphone=entity('stage-microphone',45,-1815,35,165,'<span></span><i></i>');
+ const bell=entity('judge-bell',190,-1640,75,80,'<span class="bell-dome"></span><b>DING</b>','Ring the spelling bee bell',()=>ringBell());
+ entity('bee-trophy',-65,-1910,65,95,'<span>★</span><b>BEST BEE</b>');
+ entity('bee-bunting',0,-1980,660,45,'<span>▼</span><span>▼</span><span>▼</span><span>▼</span><span>▼</span><span>▼</span><span>▼</span>').base=355;
  const banner=entity('room-banner',0,-2040,690,160,'<small>PLANET TEN CIVIC LITERACY PROGRAMME</small><strong>THE SPELLING BEE</strong><span>Words matter. So do snacks.</span>');
  banner.base=210;
  // Small layered props remain world objects, so they move with the camera.
@@ -34,7 +38,38 @@
  const holo=entity('floating-molecule',210,-1530,90,120,'<span>⬡</span><i>✧</i><b>⬡</b>');holo.base=210;
  entity('honey-desk',-330,-1890,180,180,'<span>⬡</span><b>EMERGENCY NECTAR</b>','Inspect nectar supply',()=>say('Emergency nectar. For spelling emergencies. The budget is confidential.'));
  const speech=document.createElement('div');speech.id='resident-speech';speech.hidden=true;speech.setAttribute('role','status');speech.innerHTML='<p></p><button>Close</button>';viewport.append(speech);speech.querySelector('button').onclick=()=>{speech.hidden=true;viewport.focus({preventScroll:true});};
- function say(text){speech.hidden=false;speech.querySelector('p').textContent=text;window.RoundTalk(text);speech.querySelector('button').focus({preventScroll:true});keys.clear();}
+ function say(text){showWasActive=false;speech.hidden=false;speech.querySelector('p').textContent=text;window.RoundTalk(text);speech.querySelector('button').focus({preventScroll:true});keys.clear();}
+
+ const show=document.createElement('section');show.id='bee-performance';show.hidden=true;show.setAttribute('aria-label','Live spelling bee');show.innerHTML='<div class="show-heading"><strong id="show-speaker"></strong><span id="show-count"></span></div><p id="show-line" aria-live="off"></p><div class="show-controls"><button id="show-pause">Pause show</button><button id="show-next">Next word</button></div>';viewport.append(show);
+ let showIndex=0,showPhase=0,showElapsed=0,showStarted=false,showPaused=false,showBeat=null,showWasActive=false,bellTimer;
+ function ringBell(){bell.el.classList.remove('ding');void bell.el.offsetWidth;bell.el.classList.add('ding');clearTimeout(bellTimer);bellTimer=setTimeout(()=>bell.el.classList.remove('ding'),1000);window.RoundBell?.();}
+ function clearActors(){judges.forEach(j=>j.el.classList.remove('is-speaking','is-cheering'));document.querySelectorAll('.bee-resident').forEach(b=>b.classList.remove('is-spelling'));}
+ function performBeat(){
+  showBeat=SpellingBee.beat(showIndex,showPhase);showElapsed=0;
+  $('show-speaker').textContent=showBeat.speaker;$('show-count').textContent='WORD '+(showIndex+1)+' / '+SpellingBee.entries.length;
+  $('show-line').textContent=showBeat.text;clearActors();
+  if(showPhase===0){judges[showBeat.judge].el.classList.add('is-speaking');judges.forEach(j=>j.el.querySelector('.judge-score').textContent='LISTENING');}
+  if(showPhase===1)document.querySelector('.alien-variant-0').classList.add('is-spelling');
+  if(showPhase===2){judges.forEach((j,i)=>{j.el.classList.add('is-cheering');j.el.querySelector('.judge-score').textContent=['10 / 10','BEE-RILLIANT','BLOOMING GOOD'][i];});ringBell();}
+  window.RoundStageSpeak?.(showBeat.voice);
+ }
+ function updateShow(dt){
+  const inRoom=unlocked&&z< -800;show.hidden=!inRoom;
+  const active=inRoom&&!showPaused&&!document.hidden&&speech.hidden&&!dialog.open;
+  show.classList.toggle('show-paused',!active);viewport.classList.toggle('performance-paused',!active);
+  if(!active){if(showWasActive)window.RoundStopVoice?.();showWasActive=false;return;}
+  showWasActive=true;
+  if(!showStarted){showStarted=true;performBeat();return;}
+  showElapsed+=dt*1000;
+  if(showElapsed>=showBeat.duration&&!window.RoundVoiceBusy?.()){
+   const n=SpellingBee.next(showIndex,showPhase);showIndex=n.index;showPhase=n.phase;performBeat();
+  }
+ }
+ $('show-pause').onclick=()=>{showPaused=!showPaused;$('show-pause').textContent=showPaused?'Resume show':'Pause show';if(showPaused)window.RoundStopVoice?.();};
+ $('show-next').onclick=()=>{showIndex=(showIndex+1)%SpellingBee.entries.length;showPhase=0;showStarted=true;showPaused=false;$('show-pause').textContent='Pause show';performBeat();};
+ function resetShow(){showIndex=0;showPhase=0;showElapsed=0;showStarted=false;showPaused=false;showWasActive=false;show.hidden=true;$('show-pause').textContent='Pause show';clearActors();clearTimeout(bellTimer);bell.el.classList.remove('ding');window.RoundStopVoice?.();}
+ document.addEventListener('visibilitychange',()=>{if(document.hidden&&showWasActive){window.RoundStopVoice?.();showWasActive=false;}});
+ window.addEventListener('pagehide',()=>{clearTimeout(bellTimer);window.RoundStopVoice?.();});
  function camera(px,py,pz){const dx=px-x,dz=z-pz,c=Math.cos(yaw),s=Math.sin(yaw);return {x:c*dx-s*dz,y:145-py,z:s*dx+c*dz};}
  function project(p){const focal=Math.min(width*.8,640)+inspectZoom;return {x:width/2+p.x*focal/p.z,y:height*.48+p.y*focal/p.z,s:focal/p.z};}
  function polygon(points,fill,stroke){let pts=points.map(p=>camera(...p)),out=[];for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length],ai=a.z>=15,bi=b.z>=15;if(ai)out.push(a);if(ai!==bi){const t=(15-a.z)/(b.z-a.z);out.push({x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t,z:15});}}if(out.length<3)return;ctx.beginPath();out.forEach((p,i)=>{const q=project(p);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();}}
@@ -66,12 +101,12 @@
  $('approach').onclick=()=>{x=0;z=unlocked?-1050:-420;yaw=0;draw();caption(unlocked?'Inside the room. Click a bee or flower to talk.':'Door reached. Click the door or Inspect door.');viewport.focus({preventScroll:true});};
  $('inspect').onclick=inspect;
  $('hall-reset').onclick=()=>{window.RoundRestart();};
- function reset(){unlocked=false;opening=false;x=0;z=160;yaw=0;keys.clear();speech.hidden=true;if(dialog.open)dialog.close();$('hall-reset').hidden=true;$('approach').textContent='Walk to door';$('inspect').hidden=false;caption('Walk towards the Spelling Bee door. W A S D to move · ← → to look.');draw();}
+ function reset(){resetShow();unlocked=false;opening=false;x=0;z=160;yaw=0;keys.clear();speech.hidden=true;if(dialog.open)dialog.close();$('hall-reset').hidden=true;$('approach').textContent='Walk to door';$('inspect').hidden=false;caption('Walk towards the Spelling Bee door. W A S D to move · ← → to look.');draw();}
  function open(){if(dialog.open)dialog.close();const transform=door.el.style.transform;opening=!document.body.classList.contains('still');if(opening)door.el.animate([{transform,opacity:1},{transform:transform+' rotateY(-95deg)',opacity:0}],{duration:650,easing:'ease-in'}).finished.then(()=>{opening=false;draw();}).catch(()=>{opening=false;draw();});unlocked=true;$('inspect').hidden=true;$('hall-reset').hidden=false;$('approach').textContent='Step into room';caption('Door open! Walk forward into the room. Click the bees and flower judges to meet them.');draw();viewport.focus({preventScroll:true});}
  window.WarehouseWalk={open,reset};
  function move(dt){const f=(keys.has('w')?1:0)-(keys.has('s')?1:0),r=(keys.has('d')?1:0)-(keys.has('a')?1:0);yaw+=((keys.has('arrowright')?1:0)-(keys.has('arrowleft')?1:0))*dt*1.3;const n=Math.hypot(f,r)||1,speed=210*dt;const nx=x+(Math.sin(yaw)*f+Math.cos(yaw)*r)/n*speed,nz=z+(-Math.cos(yaw)*f+Math.sin(yaw)*r)/n*speed;
   x=Math.max(-420,Math.min(420,nx));const crosses=(z+720)*(nz+720)<=0;if(!crosses||Math.abs(x)<115)z=Math.max(unlocked?-1930:-470,Math.min(180,nz));draw();}
- function frame(t){const dt=Math.min((t-last)/1000,.04);last=t;if(keys.size&&!dialog.open&&!document.hidden&&speech.hidden)move(dt);raf=requestAnimationFrame(frame);}
+ function frame(t){const elapsed=Math.min((t-last)/1000,1),dt=Math.min(elapsed,.04);last=t;updateShow(elapsed);if(keys.size&&!dialog.open&&!document.hidden&&speech.hidden)move(dt);raf=requestAnimationFrame(frame);}
  document.addEventListener('keydown',e=>{if(dialog.open||!speech.hidden||e.target.closest('input,textarea,select')||!['w','a','s','d','arrowleft','arrowright'].includes(e.key.toLowerCase()))return;e.preventDefault();keys.add(e.key.toLowerCase());});
  document.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
  window.addEventListener('blur',()=>keys.clear());document.addEventListener('visibilitychange',()=>keys.clear());

@@ -11,6 +11,9 @@
  let narration=null;function stopVoice(){if(narration){narration.pause();narration=null;}window.speechSynthesis?.cancel();}
  function speak(text){stopVoice();if(!sound||!voice)return;const clip=window.RoundingVoiceClips?.find(c=>c.text===text);const fallback=()=>{if(!sound||!voice||!window.speechSynthesis||!window.SpeechSynthesisUtterance)return;const u=new SpeechSynthesisUtterance(text);u.voice=window.speechSynthesis.getVoices().find(v=>/Zira/i.test(v.name))||null;u.pitch=1.55;u.rate=.9;u.volume=.85;window.speechSynthesis.speak(u);};if(clip){const a=new Audio(clip.src);narration=a;a.play().catch(()=>{if(narration===a)fallback();});}else fallback();}
  function tell(text){$('instruction').textContent=text;speak(text);} window.RoundTalk=tell;
+ window.RoundStageSpeak=speak;window.RoundStopVoice=stopVoice;
+ window.RoundVoiceBusy=()=>Boolean((narration&&!narration.paused&&!narration.ended)||window.speechSynthesis?.speaking);
+ window.RoundBell=()=>{tone(1046,0,.65);tone(1568,.025,.55);tone(2093,0,.35);};
  function refreshSettings(){
   $('sound').textContent=sound?'Sound ON':'Sound OFF';$('sound').setAttribute('aria-pressed',String(sound));
   $('voice').textContent=voice?'Voice ON':'Voice OFF';$('voice').setAttribute('aria-pressed',String(voice));
@@ -74,7 +77,7 @@
  $('hear').onclick=()=>{sound=true;voice=true;ctx();refreshSettings();speak($('instruction').textContent);};
  if(!window.speechSynthesis&&!window.RoundingVoiceClips){$('voice').disabled=true;$('hear').disabled=true;$('hear').textContent='Read the instructions above';}
  $('motion').onclick=()=>{still=!still;refreshSettings();if(opened&&!$('room').hidden&&!window.WarehouseWalk)beeShow();};
- media.addEventListener('change',e=>{still=e.matches;refreshSettings();if(opened&&!$('room').hidden)beeShow();});
+ media.addEventListener('change',e=>{still=e.matches;refreshSettings();if(opened&&!$('room').hidden&&!window.WarehouseWalk)beeShow();});
  document.addEventListener('visibilitychange',()=>{if(document.hidden){stopVoice();audio?.suspend().catch(()=>{});clearTimeout(beeTimer);}else if(opened&&!$('room').hidden)beeShow();});
  window.addEventListener('pagehide',()=>{stopVoice();clearTimeout(beeTimer);clearTimeout(revealTimer);audio?.close().catch(()=>{});});
  window.RoundRestart=reset;refreshSettings();reset();
