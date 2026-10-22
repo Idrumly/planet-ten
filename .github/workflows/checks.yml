@@ -18,3 +18,5 @@ jobs:
       - run: node --test voice-effects.test.js
       - run: node --test block-field.test.js
       - run: node --test super-model.test.js
+
+      - run: node --test rounding-model.test.js

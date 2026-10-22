@@ -2,3 +2,5 @@
 
 body{isolation:isolate;position:relative}.welcome{padding-block:18px 30px}.host img{height:280px}@media(max-width:650px){.host img{height:210px}}
 .glow-rod+.glow-rod{margin-top:8px}
+
+.rounding-art{background:radial-gradient(ellipse,#9e65af44,transparent 70%),#172a42}.warehouse-sign{padding:25px 20px;border:6px solid #8d9d91;border-radius:40px 40px 12px 12px;background:#2a3a51;text-align:center;transform:rotate(-3deg)}.warehouse-sign small{display:block;color:#b8e5db;font-size:9px;letter-spacing:2px}.warehouse-sign strong{display:block;font-size:28px;color:#ffedbd;margin:10px 0}.warehouse-sign>span{display:block;border-radius:40%;padding:10px;background:#ce94e0;color:#352742;font-size:24px;box-shadow:0 0 15px #c884df77;margin-bottom:15px}
