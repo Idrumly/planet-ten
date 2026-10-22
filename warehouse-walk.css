@@ -3,3 +3,26 @@
 .world-object{transform-origin:0 0}
 
 #walk-view{overflow:clip}
+
+/* Alien laboratory artwork and layered animated props. */
+.alien-bee-art{position:absolute;inset:0 0 18px;display:block;animation:alien-hover 5s ease-in-out infinite;filter:drop-shadow(0 8px 13px #35bdb842)}
+.alien-bee-art img{width:100%;height:100%;object-fit:contain;pointer-events:none}
+.alien-variant-1 .alien-bee-art{animation-delay:-1.7s;filter:hue-rotate(25deg) drop-shadow(0 8px 13px #35bdb842)}
+.alien-variant-2 .alien-bee-art{animation-delay:-3.2s;filter:hue-rotate(-25deg) drop-shadow(0 8px 13px #35bdb842)}
+.hover-podium{position:absolute;bottom:4px;left:15%;width:70%;height:22px;border:3px solid #75ffe0;border-radius:50%;background:#162f41;box-shadow:0 7px 0 #061b2a,0 0 24px #45edbf66}
+.specimen-tank{border:7px solid #658c97;border-radius:40px 40px 22px 22px;background:linear-gradient(90deg,#0d314ddd,#69efc944,#102f49dd);box-shadow:inset 12px 0 18px #bbfff633,0 0 20px #64f5d522;color:#befeed;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.tank-cap{position:absolute;top:-15px;background:#264756;border:5px solid #81a6a7;border-radius:50%;width:95px;text-align:center;font-size:30px}
+.specimen-tank b{position:absolute;bottom:12px;font-size:10px;letter-spacing:1px;background:#0d2436;padding:7px}
+.specimen{display:flex;gap:4px;animation:specimen-bob 6s ease-in-out infinite}
+.specimen i{display:block;width:20px;height:65px;background:radial-gradient(circle at 45% 30%,#10303b 0 3px,#e6ffd1 4px 8px,transparent 9px),linear-gradient(#e8a0f2,#8c67bd);border-radius:60% 35% 45% 70%;transform:rotate(-20deg);box-shadow:0 0 15px #dc7df266}
+.specimen i:nth-child(2){transform:rotate(15deg) translateY(-15px);background-color:#aaffbe}.specimen i:nth-child(3){transform:rotate(30deg)}
+.lab-workstation{color:#a9ffe6}.holo-screen{height:145px;border:2px solid #73ffe0;border-radius:15px 4px 15px 4px;background:repeating-linear-gradient(0deg,#77e8cc0c 0 2px,transparent 2px 7px),#0c3d4bd9;padding:12px;box-shadow:0 0 25px #5becd444;transform:rotate(-4deg)}
+.holo-screen small{font-size:10px;letter-spacing:2px}.holo-screen span{display:block;font-size:31px;text-align:center}.holo-screen i{display:block;height:4px;margin:7px 0;background:linear-gradient(90deg,#88ffe4 65%,#164c65 65%)}.holo-screen i:nth-of-type(2){width:70%}.holo-screen em{font-style:normal;font-size:9px}
+.lab-bench{position:absolute;bottom:0;left:-10px;right:-10px;height:75px;background:linear-gradient(#7d9e9e 0 12px,#213c4e 12px 20px,#122a3f 20px);border:4px solid #537787;border-radius:15px 15px 3px 3px;box-shadow:8px 8px 0 #091b2a}.lab-bench b{position:absolute;bottom:10px;left:18px;font-size:11px;letter-spacing:2px}.vial{position:relative;display:inline-block;margin:-30px 7px 0;width:27px;height:40px;border:2px solid #c1f8e4;border-radius:5px 5px 12px 12px;background:linear-gradient(transparent 30%,#9ff676aa 30%);box-shadow:0 0 12px #bcff9877}.vial:nth-child(2){background:linear-gradient(transparent 30%,#dd82ffbb 30%)}
+.floating-molecule{color:#9affdc;font-size:50px;text-shadow:0 0 15px #61ffd0;animation:molecule-glimmer 5s ease-in-out infinite}.floating-molecule i{font-size:30px}.floating-molecule b{display:block;margin-left:40px;font-weight:normal}
+.flower-resident>span{text-shadow:2px 0 #fff4bd,-2px 0 #95ffa8;filter:drop-shadow(0 7px 0 #497857) drop-shadow(0 0 10px #d594cf55)}
+@keyframes alien-hover{50%{transform:translateY(-9px) rotate(1deg)}}
+@keyframes specimen-bob{50%{transform:translateY(-14px) rotate(5deg)}}
+@keyframes molecule-glimmer{50%{opacity:.55}}
+.still .alien-bee-art,.still .specimen,.still .floating-molecule{animation:none}
+@media(prefers-reduced-motion:reduce){.alien-bee-art,.specimen,.floating-molecule{animation:none}}

@@ -15,17 +15,23 @@
  entity('crate',-335,-380,170,160,'<b>FRAGILE</b><span>Possibly opinions.</span>');
  entity('crate',340,-590,170,230,'<b>DO NOT SHAKE</b><span>Already offended.</span>');
  entity('wall-notice',-300,-710,180,100,'WAREHOUSE 01<br><strong>APPROXIMATELY SECURE</strong>');
- const beeHTML=document.querySelector('.bee').outerHTML,chairHTML=document.querySelector('.chair').outerHTML;
+ const beeHTML='<picture class="alien-bee-art"><source srcset="assets/rounding/alien-bee-v2.webp" type="image/webp"><img src="assets/rounding/alien-bee-v2.png" width="880" height="800" alt="" decoding="async"></picture>';
  const remarks=[
   'COMMUNITY. C · O · M · M · U · N · I · T · Y. May I have that in a pollen sentence?',
   'CITIZEN. C · I · T · I · Z · E · N. I pay my taxes in honey.',
   'CULTURE. C · U · L · T · U · R · E. Mine is mostly flower-based.'
  ];
- function bee(ex,ez,i){entity('resident bee-resident',ex,ez,280,350,chairHTML+beeHTML+'<span class="resident-label">'+['CHIEF SPELLER','CITIZENSHIP DIVISION','CULTURE COMMITTEE'][i]+'</span>','Talk to '+['chief spelling bee','citizenship bee','culture bee'][i],()=>say(remarks[i]));}
+ function bee(ex,ez,i){entity('resident bee-resident alien-variant-'+i,ex,ez,350,370,'<span class="hover-podium"></span>'+beeHTML+'<span class="resident-label">'+['CHIEF SPELLER','CITIZENSHIP DIVISION','CULTURE COMMITTEE'][i]+'</span>','Talk to '+['chief spelling bee','citizenship bee','culture bee'][i],()=>say(remarks[i]));}
  bee(0,-1900,0);bee(-320,-1660,1);bee(325,-1740,2);
  [-360,-150,360].forEach((ex,i)=>entity('resident flower-resident',ex,[-1370,-1850,-1430][i],105,170,'<span>✿</span><b>'+['10','10','POLLEN'][i]+'</b>','Talk to flower judge '+(i+1),()=>say(['Ten out of ten. Excellent use of additional legs.','I was told there would be nectar.','Pollen. That is my entire judging system.'][i])));
  const banner=entity('room-banner',0,-2040,690,160,'<small>PLANET TEN CIVIC LITERACY PROGRAMME</small><strong>THE SPELLING BEE</strong><span>Words matter. So do snacks.</span>');
  banner.base=210;
+ // Small layered props remain world objects, so they move with the camera.
+ [-390,390].forEach((ex,i)=>{
+  entity('specimen-tank',ex,-1160,120,240,'<span class="tank-cap">⬡</span><span class="specimen"><i></i><i></i><i></i></span><b>LIVE VOWELS</b>');
+  entity('lab-workstation',ex,-1970,230,250,'<div class="holo-screen"><small>LEXICON ANALYSIS</small><span>⬡ · ⟡ · ⬡</span><i></i><i></i><i></i><em>PHONEMES STABLE</em></div><div class="lab-bench"><span class="vial"></span><span class="vial"></span><span class="vial"></span><b>NECTAR / DATA</b></div>');
+ });
+ const holo=entity('floating-molecule',210,-1530,90,120,'<span>⬡</span><i>✧</i><b>⬡</b>');holo.base=210;
  entity('honey-desk',-330,-1890,180,180,'<span>⬡</span><b>EMERGENCY NECTAR</b>','Inspect nectar supply',()=>say('Emergency nectar. For spelling emergencies. The budget is confidential.'));
  const speech=document.createElement('div');speech.id='resident-speech';speech.hidden=true;speech.setAttribute('role','status');speech.innerHTML='<p></p><button>Close</button>';viewport.append(speech);speech.querySelector('button').onclick=()=>{speech.hidden=true;viewport.focus({preventScroll:true});};
  function say(text){speech.hidden=false;speech.querySelector('p').textContent=text;window.RoundTalk(text);speech.querySelector('button').focus({preventScroll:true});keys.clear();}
@@ -40,6 +46,14 @@
   polygon([[-520,0,-2100],[-520,360,-2100],[520,360,-2100],[520,0,-2100]],'#304c60');
   for(let iz=200;iz> -2100;iz-=100)for(let ix=-520;ix<520;ix+=130)polygon([[ix,0,iz],[ix+130,0,iz],[ix+130,0,iz-100],[ix,0,iz-100]],((ix+520)/130+iz/100)%2?'#223444':'#293e4e','#46617155');
   for(let zz=0;zz> -2100;zz-=350){polygon([[-520,0,zz],[-520,350,zz],[-480,350,zz],[-480,0,zz]],'#56747c');polygon([[480,0,zz],[480,350,zz],[520,350,zz],[520,0,zz]],'#56747c');polygon([[-370,355,zz],[370,355,zz],[370,355,zz-30],[-370,355,zz-30]],'#aeffe0');}
+  for(let zz=-850;zz> -2050;zz-=220){
+   // Inlaid luminous conduits and ribbed wall plates frame the laboratory.
+   [-1,1].forEach(side=>{const edge=side*519;
+    polygon([[edge,80,zz],[edge,270,zz],[edge,270,zz-140],[edge,80,zz-140]],'#122e40','#5c9fa0');
+    polygon([[edge,130,zz-15],[edge,138,zz-15],[edge,138,zz-125],[edge,130,zz-125]],'#56dcca');
+    polygon([[side*450,1,zz],[side*440,1,zz],[side*440,1,zz-185],[side*450,1,zz-185]],'#6ee4cb');
+   });
+  }
   {polygon([[-520,0,-735],[-520,360,-735],[-145,360,-735],[-145,0,-735]],'#355165');polygon([[145,0,-735],[145,360,-735],[520,360,-735],[520,0,-735]],'#355165');}
   entities.forEach(o=>{const p=camera(o.x,o.base||0,o.z),q=project(p),visible=p.z>25&&(!o.room||unlocked)&&!(o===door&&unlocked&&!opening);o.el.hidden=!visible;if(!visible)return;o.el.style.transform=`translate(${q.x}px,${q.y}px) scale(${q.s}) translate(-50%,-100%)`;o.el.style.zIndex=String(Math.max(1,Math.round(10000-p.z)));});
   $('inspect').disabled=unlocked||!near();$('inspect').textContent=near()?'Inspect door':'Move closer to inspect';
