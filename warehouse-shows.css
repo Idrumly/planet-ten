@@ -2,6 +2,27 @@
 .room-exit strong{font-size:19px;padding:6px}.room-exit small{font-size:10px}
 .pun-resident{background:transparent!important;color:#fff;cursor:pointer}.pun-resident>img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 5px #11223966);transform-origin:50% 95%;animation:pun-idle 4s ease-in-out infinite}.pun-resident .resident-label{font-size:12px}
 .cast-board>img{animation:board-groove 2s ease-in-out infinite}.cast-board.actor-1>img{animation-delay:-.7s}.cast-board.actor-2>img{animation-delay:-1.4s}
+.vacuum-riser{background:linear-gradient(#5b9395,#22444b);border:5px solid #d8b773;border-radius:10px;color:#fff0c8;text-align:center;padding-top:80px;font-size:18px;pointer-events:none}
+.cast-vacuum.speaking>img{animation:vacuum-plead 2s ease-in-out infinite}.cast-vacuum .resident-label{font-size:14px;letter-spacing:0;padding:6px 2px}
+.vacuum-worktable{pointer-events:none}.vacuum-worktable img{width:100%;height:100%;object-fit:contain}
+.cast-vacuum.actor-4>img{animation:polish-vacuum 3s ease-in-out infinite}
+.cast-bull.actor-0>img,.cast-bull.actor-2>img{animation:bull-breathe 4s ease-in-out infinite}.cast-bull.actor-2>img{animation-delay:-2s}
+.dozing-letters{color:#fff0c6;font-weight:bold;font-size:28px;pointer-events:none;animation:dozing-drift 4s ease-in-out infinite}
+.cast-coffee>img{animation:coffee-sip 7s ease-in-out infinite}.cast-butter>img{animation:butter-dine 4s ease-in-out infinite}
+.pun-paused .dozing-letters{animation-play-state:paused}.still .dozing-letters{animation:none!important}
+@keyframes polish-vacuum{50%{transform:rotate(3deg) translateX(4px)}}
+@keyframes bull-breathe{50%{transform:scale(1.025,1.045)}}
+@keyframes dozing-drift{50%{transform:translateY(-12px);opacity:.5}}
+@keyframes coffee-sip{50%{transform:rotate(-2deg) translateY(-3px)}}
+@keyframes butter-dine{50%{transform:rotate(2deg) scaleY(.98)}}
+.walk-door[data-lock-count="5"] .illustrated-locks{display:grid;grid-template-columns:repeat(2,1fr);gap:0;inset:100px 15px 20px}
+.walk-door[data-lock-count="5"] .illustrated-locks img{position:static;width:100%;height:75px;object-fit:contain;transform:none}.walk-door[data-lock-count="5"] .illustrated-locks img:last-child{grid-column:1 / -1;justify-self:center;width:50%}
+.review-answer{max-width:480px;margin:12px auto 18px;text-align:left}.review-answer label{display:block;font-size:20px;font-weight:bold;color:#fff0bc}.review-answer p{font-size:14px;line-height:1.4}.review-answer input{width:100%;box-sizing:border-box;min-height:52px;font-size:28px;padding:10px;border:3px solid #92dccd;border-radius:10px;background:#fff9e4;color:#172f40}.review-answer input[aria-invalid="true"]{border-color:#ef9b78}.review-answer input:focus-visible{outline:3px solid #ffe183;outline-offset:3px}
+.review-room #digits,.review-room #help,.review-room #number-help,.review-room .reading{display:none!important}.review-room #lock-inspection .snake{height:120px}.review-room .snake .lock-illustration{height:100%}.review-room .review-answer{margin:8px auto}.review-room .review-answer p{margin:5px 0}.review-room .lock-chatter{margin-top:8px}
+.snake[data-digits="5"] .digits:has(.lock-decimal){left:2%;width:96%;gap:4px}
+@media(prefers-reduced-motion:reduce){.dozing-letters{animation:none!important}}
+@keyframes vacuum-plead{50%{transform:translateY(-8px) rotate(-4deg)}}
+.snake[data-digits="4"] .digits:has(.lock-decimal){left:2%;width:96%;gap:5px}
 [data-action="jump"] .cast-board.actor-0>img{animation:board-jump 2s ease-in-out infinite}[data-action="spin"] .cast-board.actor-1>img{animation:board-spin 3s ease-in-out infinite}[data-action="wave"] .cast-board.actor-2>img{animation:board-wave 2s ease-in-out infinite}
 .disco-orb{border:3px solid #f9e2a9;border-radius:50%;background:repeating-conic-gradient(#93dfd2 0 12deg,#9e8ed3 12deg 24deg);box-shadow:0 0 35px #b9e3d688;text-align:center;color:#fff;font-size:40px;animation:disco-turn 16s linear infinite;pointer-events:none}
 .thought-weather{pointer-events:none;overflow:hidden}.thought-cloud{position:absolute;left:20%;top:-30px;font-size:180px;line-height:1;color:#ada2d5;filter:drop-shadow(0 8px 10px #6e5c9e)}.thought-bolt{position:absolute;left:70%;top:80px;color:#ffe6a1;font-size:90px;opacity:.15;animation:thought-light 9s ease-in-out infinite}

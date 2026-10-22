@@ -1,0 +1,29 @@
+{
+  "mode": "built-in image_gen",
+  "vacuumBackdropEdit": "Edit this Planet Ten room backdrop. Remove ALL vacuum cleaners, vacuum hoses and vacuum parts from every shelf and from floor. This is a comfortable storage/break room for eight alien cleaning workers, not for equipment. Keep same brass and teal room, porthole windows, warm light and camera. Replace shelving contents with folded cloths, small brushes, cubbies, coat hooks and cushions. Keep foreground empty for separately rendered eight aliens. No characters, no text. No vacuums anywhere in backdrop; a separate foreground worktable will be added by the game.",
+  "vacuumTable": "Planet Ten polished whimsical 3D illustrated transparent game prop. ONE small cheerful teal canister vacuum cleaner with hose curled neatly on a low brass worktable, white cleaning cloth draped across vacuum casing, small brush touching casing, polish bottle. Whole table visible with legs, compact three-quarter front view. No face, no character, no other vacuum, no text, no scenery, actual transparent alpha background. The prop will be placed in front of an alien janitor cleaning it.",
+  "coffeeCharacter": "Use this reference as exact identity of Mr. Martian: green skin, smiling bald bearded head, bright blue eyes, glowing cyan glasses and cream/navy hover pod with multiple robot arms. Create a new transparent game sprite of SAME Mr Martian relaxing at a small round cafe table, holding a ceramic coffee cup near his mouth with one robot hand, other hand gesturing thoughtfully, another rests on saucer. Remove green counting rod. Include complete hover pod and complete small brass cafe table, cup, saucer. Polished whimsical 3D illustration, no text, no scenery, actual transparent alpha background, full composition with padding.",
+  "newScenes": [
+    [
+      "bull-backdrop",
+      "Planet Ten whimsical polished 3D illustrated game background, wide 2:1. An alien bulldozer garage that is actually a peaceful sleeping barn for bull-like aliens. Warm twilight, teal steel and brass garage architecture, straw nests, folded blankets, dim amber lamps, rounded garage doors, alien desert through portholes. NO vehicles or construction machines. No characters, empty foreground for separately rendered sleeping bulls and cowboy. No text, no interface."
+    ],
+    [
+      "bull-cast",
+      "Planet Ten polished whimsical 3D illustrated sprite sheet. Exactly THREE separate complete subjects in ONE horizontal row, three equal cells, fully transparent background, generous transparent gaps. Left cell: huge turquoise alien BULL asleep curled on straw cushion, four small horns, closed eyes, six tucked legs. Middle cell: friendly lanky purple alien cowboy in hat, boots and vest, finger to lips saying shhh, standing full body. Right cell: huge lavender alien BULL asleep on a cushion, strange antenna horns, closed eyes. Charming comic grade five science fiction, no text, no scenery, no shadow beyond each sprite, actual alpha transparency."
+    ],
+    [
+      "coffee-backdrop",
+      "Planet Ten polished whimsical 3D illustrated wide 2:1 background. Cozy alien coffee shop interior, curving brass espresso machine and bean grinder behind counter, cups, coffee sacks, teal and amber glowing fixtures, tiny stools and alien world porthole windows. Empty central foreground for separately rendered Mr Martian seated drinking coffee. No characters, no faces, no text, no logos. Warm rich cinematic light."
+    ],
+    [
+      "butter-backdrop",
+      "Planet Ten polished whimsical 3D illustrated wide 2:1 background. Extravagantly fancy alien restaurant interior, burgundy velvet, gold arches, crystal chandelier, round space windows, elegant wall lights, fine dining atmosphere. Clear EMPTY central foreground for three separately rendered giant housefly diners with individual tables. No characters, no insects, no butterflies, no food in background. No text or logos."
+    ],
+    [
+      "butter-cast",
+      "Planet Ten polished whimsical detailed 3D illustration sprite sheet. Exactly THREE separate full body giant gross alien HOUSEFLIES dining, each WITH its own small fancy restaurant table, spaced in ONE horizontal row in three equal cells on fully transparent background. Each has large red compound eyes, bristly iridescent chubby body, six spindly legs, clear housefly wings, silly bib or bow tie, holding cutlery or eating with proboscis. On EACH table a white china plate holds ONE big rectangular yellow BRICK OF BUTTER, with bite marks. Left fly green, middle blue, right purple. Funny and gross but child friendly, no gore. Whole tables and chairs visible. Not butterflies. No text, no scenery, generous padding, actual transparent alpha."
+    ]
+  ],
+  "processing": "Original PNGs preserved. WebP quality 88. Bull sheet split at normalized x=0,855,1180,2048; fly sheet at x=0,680,1366,2048. Preserve source alpha."
+}

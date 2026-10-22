@@ -1,0 +1,18 @@
+/* Reels at the back, cut-out skin above them, a soft lip in the foreground. */
+.has-belly-window .card-digits{--reel-width:clamp(144px,calc(var(--digit-count)*42px),32%);background:none;border:0;box-shadow:none;padding:3px 6px;isolation:auto;transform:none;left:55%;width:var(--reel-width);margin-left:calc(var(--reel-width)/-2);margin-top:-53px}
+.has-belly-window .lock-picture{z-index:1}
+.has-belly-window .card-digits input{position:relative;z-index:0;border:0;border-radius:5px;background:linear-gradient(#090d16,#30403b 26%,#516454 48%,#293b31 53%,#0a1214);box-shadow:inset 0 6px 7px #000b,inset 0 -5px 6px #000b;color:#fff3ba;text-shadow:0 1px 2px #000;font-weight:bold}
+.has-belly-window .card-digit button,.has-belly-window .card-digit label,.has-belly-window .card-decimal{position:relative;z-index:2}
+.has-belly-window .card-digit button{background:transparent;text-shadow:0 2px 3px #14201c;color:#fff7d7}
+.has-belly-window .card-digit label{color:#f4ffe4}
+.has-belly-window input:focus-visible{outline:2px solid #fff3a1;outline-offset:-3px}
+.belly-rim{position:absolute;box-sizing:border-box;z-index:2;pointer-events:none;border:6px solid #a5d3b955;border-radius:17px 20px 16px 19px;box-shadow:inset 0 5px 5px #07141ce0,inset 0 -2px 3px #eaffd87a,0 -1px 2px #f4ffd580,0 3px 4px #142f3577;background:none}
+[data-reaction="0"] .belly-rim{border-color:#b1caae66 #aec1e466 #9db7b166 #d8b2d766}
+[data-reaction="1"] .belly-rim{border-color:#c8d4d366 #9cacb266 #8b9da766 #dce1d366}
+[data-reaction="2"] .belly-rim{border-color:#f28fc566 #dc60b066 #a5499b66 #f69fcd66}
+.has-belly-window.is-unlocked .belly-rim{display:none}
+.has-belly-window.is-unlocked .worm-skin{mask-image:none!important}
+.has-belly-window .card-feedback{z-index:3}
+.review-room .has-belly-window .card-digits{padding:0 8px;--reel-width:25%;margin-top:-22px}
+.review-room .has-belly-window .card-digits>label{color:transparent}
+@media(max-width:760px){.showing-hint .belly-rim{visibility:hidden}.has-belly-window .card-digits{left:59%;--reel-width:54%;margin-top:-55px}.review-room .has-belly-window .card-digits{--reel-width:54%;margin-top:-22px}}

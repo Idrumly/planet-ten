@@ -1,0 +1,75 @@
+/* One door, all locks available. Cards retain their own answer and open state. */
+body #lock-inspection{width:min(1400px,96vw)}
+.door-lock-board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:18px 0;background:linear-gradient(100deg,#405b6b,#152d40);border:8px solid #6e9599;border-radius:24px;padding:16px}
+.door-lock-card{min-width:0;padding:14px;border:2px solid #789cae;border-radius:18px;background:#10283bee;text-align:center}
+.door-lock-card h3{font-size:18px;margin:0}.card-state{color:#ffe6a2;white-space:nowrap}
+.lock-picture{position:relative;height:130px}.lock-picture img{width:100%;height:100%;object-fit:contain}
+.card-question{font-size:20px;margin:0 0 14px}.card-question strong{font-size:32px;color:var(--gold)}
+.card-digits{display:flex;justify-content:center;gap:4px;margin-bottom:14px}.card-digit{display:flex;flex-direction:column;min-width:0;flex:1}
+.card-digit label{font-size:10px;overflow-wrap:anywhere;min-height:28px}.card-digit button{min-height:44px;padding:0}.card-digit input{width:100%;min-width:0;height:46px;text-align:center;font-size:25px;background:#061a2b;color:#fff2c7;border:1px solid #afdccc;border-radius:8px}
+.card-decimal{align-self:center;font-size:25px}.card-digits>label{width:100%;font-size:15px}.card-digits>label input{display:block;width:100%;font-size:25px;margin-top:8px;padding:8px}
+.door-lock-card>.primary{width:100%}.card-feedback{font-size:16px;min-height:46px;color:#c9ffe4}
+.is-unlocked{border-color:#98f6be}.is-unlocked .card-state{color:#b6ffcf}.is-unlocked .lock-picture img{visibility:hidden}.is-unlocked .card-digits{opacity:.65}
+.lock-reaction{display:none}.is-unlocked .lock-reaction{display:grid;place-items:center;position:absolute;inset:0;font-size:clamp(32px,8dvh,76px);line-height:1;animation:lock-pop .45s ease-out}
+.is-unlocked[data-reaction="0"] .lock-reaction{font-size:0;background:url('assets/rounding/spark-butterfly-v1.webp') center/contain no-repeat}
+.is-unlocked[data-reaction="2"] .lock-reaction{inset:50% 25% 8%;font-size:clamp(18px,3dvh,28px);background:radial-gradient(ellipse,#aaa0b5,#59516a 65%,transparent 70%);border-radius:50%;color:#fff2cf}
+@keyframes lock-pop{from{transform:scale(.65);opacity:.3}to{transform:scale(1);opacity:1}}
+.still .lock-reaction{animation:none}
+@media(prefers-reduced-motion:reduce){.lock-reaction{animation:none!important}}
+/* Shrink decorative space first; keep actions in the same visible positions. */
+body #lock-inspection{max-height:calc(100dvh - 16px);padding:10px}
+body #lock-inspection .console{padding:8px 0 0}
+.door-toolbar{display:flex;align-items:center;gap:16px}
+.door-toolbar .leave-lock{flex:none}
+#lock-inspection #question-title{font-size:20px;line-height:1.2;margin:0 0 6px}
+.door-lock-board{grid-template-columns:repeat(var(--lock-count,3),minmax(0,1fr));gap:10px;margin:0;padding:8px;border-width:4px;border-radius:18px}
+.door-lock-card{padding:8px;display:flex;flex-direction:column;gap:6px}
+.lock-card-heading{display:flex;align-items:center;justify-content:space-between;gap:4px;min-height:36px}
+.door-lock-card h3{font-size:15px}.lock-hint-toggle{font-size:13px;padding:4px 8px;min-height:36px}
+.lock-picture,.lock-hint-panel{height:clamp(100px,16dvh,150px);flex:none}
+.lock-picture[hidden],.lock-hint-panel[hidden]{display:none}
+.card-question{font-size:17px;line-height:1.3;margin:0;min-height:57px}.card-question strong{font-size:26px}
+.card-digits{margin:0;gap:3px}.card-digit label{font-size:11px;min-height:28px;line-height:1.2}
+.card-digit button{min-height:36px;height:36px}.card-digit input{height:38px;font-size:24px}
+.door-lock-card>.primary{min-height:44px;padding:6px;font-size:15px}
+.card-feedback{font-size:14px;line-height:1.3;min-height:55px;margin:0}
+.review-room .card-feedback{min-height:75px}.review-room .card-question{min-height:78px}
+.review-room .lock-picture{height:clamp(55px,10dvh,95px)}
+.card-digits>label input{box-sizing:border-box;min-width:0;font-size:22px;margin:4px 0 0}
+.lock-hint-panel{background:#061b2a;border-radius:10px;padding:6px;box-sizing:border-box;text-align:left}
+.hint-toolbar{display:flex;align-items:center;justify-content:space-between;gap:4px;font-size:12px}
+.hint-toolbar button{font-size:12px;min-height:32px;padding:3px 6px}
+.lock-hint-panel .number-line{height:60px;margin:8px 12px 0;padding-top:38px}
+.lock-hint-panel .number-line:before{top:28px}.lock-hint-panel .midpoint{top:38px}
+.lock-hint-panel .endpoint,.lock-hint-panel .midpoint{font-size:13px}
+.lock-hint-panel .marker{top:-6px;font-size:16px;padding:0 3px}.lock-hint-panel .marker:after{top:21px}
+#lock-inspection #enter{position:static;margin-top:8px;min-height:44px}
+.lock-selectors{display:none}
+.place-compact{display:none}
+@media(max-width:1100px){.card-digit .place-long{display:none}.card-digit .place-compact{display:inline}}
+@media(max-height:680px){
+ .lock-picture,.lock-hint-panel{height:100px}
+ .door-lock-card{gap:4px}.card-question{font-size:16px;min-height:49px}.card-question strong{font-size:23px}
+ .card-digit label{font-size:10px;min-height:24px}.card-feedback{font-size:13px;min-height:51px}
+}
+@media(max-height:620px){
+ .card-digit button{min-height:32px;height:32px}.card-digit input{height:34px}
+ .door-lock-card{gap:2px}.card-feedback{min-height:40px}
+}
+@media(max-width:760px){
+ .door-toolbar{gap:8px}.door-toolbar .leave-lock{max-width:110px}
+ .door-lock-board{grid-template-columns:1fr}
+ .lock-selectors{display:flex;flex-wrap:wrap;gap:4px;justify-content:center;max-width:none}
+ .lock-selectors button{min-height:36px;padding:4px 8px;font-size:13px}
+ .lock-selectors [aria-pressed="true"]{background:#ffe1a1;color:#173341}
+ .door-lock-card:not(.selected-lock){display:none}
+ .card-digit button{min-height:40px;height:40px}
+ .card-feedback,.review-room .card-feedback{min-height:44px}
+ .review-room .card-question{min-height:57px}
+}
+/* The warehouse is an app screen too: reserve the remaining height for its view. */
+body.walking-game{height:100dvh;display:flex;flex-direction:column}
+body.walking-game>header{flex:none}
+body.walking-game main{flex:1;min-height:0;width:100%;display:flex;flex-direction:column}
+.walking-game .heading,.walking-game .bot{flex:none}
+body.walking-game #walk-view{height:auto;min-height:220px;flex:1}

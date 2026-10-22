@@ -2,7 +2,7 @@
 // Project illustrated surfaces into the same camera as the residents.
 window.createAuditorium=function(ctx,polygon,camera,project,redraw,hospital=false,theme=null){
  const back=new Image(),outside=new Image();back.onload=outside.onload=redraw;
- back.src=theme?'assets/rounding/'+theme+'-backdrop-v1.webp':hospital?'assets/rounding/band-aid-backdrop-v1.webp':'assets/rounding/auditorium-backdrop-v1.webp';outside.src='assets/planet-background.webp';
+ back.src=theme?'assets/rounding/'+theme+'-backdrop-'+(theme==='vacuum'?'v2':'v1')+'.webp':hospital?'assets/rounding/band-aid-backdrop-v1.webp':'assets/rounding/auditorium-backdrop-v1.webp';outside.src='assets/planet-background.webp';
  function triangle(img,vertices){
   // Clip geometry and its texture coordinates at the near plane.
   let out=[];
@@ -35,7 +35,7 @@ window.createAuditorium=function(ctx,polygon,camera,project,redraw,hospital=fals
   for(const xx of [-430,430])polygon([[xx,1,-810],[xx+5,1,-810],[xx+5,1,-2100],[xx,1,-2100]],'#f2d48b');
  }
  function drawTheme(){
-  const palettes={board:['#193e51','#452b59','#214853','#54757c'],brain:['#354764','#454264','#596e82','#657f90'],court:['#754939','#9b6240','#b88a53','#d2ad75'],shoe:['#70553e','#68453c','#9d7757','#b9946b']},p=palettes[theme];
+  const palettes={board:['#193e51','#452b59','#214853','#54757c'],brain:['#354764','#454264','#596e82','#657f90'],court:['#754939','#9b6240','#b88a53','#d2ad75'],shoe:['#70553e','#68453c','#9d7757','#b9946b'],vacuum:['#245158','#35646b','#9b8865','#b8aa89'],bull:['#35545a','#5a493d','#9c8059','#b69b72'],coffee:['#354f4d','#684b39','#9e7956','#c0a27c'],butter:['#51323c','#67434f','#c5ab7b','#80634e']},p=palettes[theme];
   polygon([[-520,0,-800],[-520,520,-800],[-520,520,-2100],[-520,0,-2100]],p[0]);polygon([[520,0,-2100],[520,520,-2100],[520,520,-800],[520,0,-800]],p[1]);polygon([[-520,520,-800],[520,520,-800],[520,520,-2100],[-520,520,-2100]],p[0]);
   for(const side of [-1,1])for(let zz=-950;zz>-2000;zz-=380){const wall=side*519;polygon([[wall,145,zz],[wall,425,zz],[wall,425,zz-250],[wall,145,zz-250]],'#d8b572','#fff0c1');texture(outside,[[wall-side,410,zz-12],[wall-side,410,zz-238],[wall-side,160,zz-238],[wall-side,160,zz-12]]);}
   polygon([[-520,0,-2100],[-520,520,-2100],[520,520,-2100],[520,0,-2100]],p[1]);texture(back,[[-520,520,-2100],[520,520,-2100],[520,0,-2100],[-520,0,-2100]],8);

@@ -1,0 +1,74 @@
+/* The door is the board. Each creature bridges its central seam. */
+body #lock-inspection{background:#0b2029;border-color:#8ba69d;border-radius:26px}
+.door-lock-board{position:relative;isolation:isolate;height:calc(100dvh - 150px);min-height:420px;max-height:760px;grid-template-columns:1fr;grid-template-rows:repeat(var(--lock-count),minmax(0,1fr));gap:6px;padding:10px 14px;border:8px ridge #73928a;border-radius:32px 32px 12px 12px;background:radial-gradient(ellipse at 25% 30%,#677c5538,transparent 50%),repeating-linear-gradient(90deg,transparent 0 39px,#8fb0a40a 40px 41px),linear-gradient(90deg,#213b42,#112c34 48.8%,#040e17 49%,#040e17 50.4%,#49605b 50.6%,#18363e 51%,#284449);box-shadow:inset 0 0 30px #0009}
+.door-lock-board:before,.door-lock-board:after{content:'';position:absolute;top:5%;bottom:5%;width:15px;border:2px solid #748c7c;border-radius:40%;background:repeating-linear-gradient(#334d47 0 36px,#97b0a1 37px 41px,#203e3a 42px 75px);z-index:-1}
+.door-lock-board:before{left:22%}.door-lock-board:after{right:18%}
+.door-lock-card{position:relative;display:block;padding:0;min-height:0;border:0;border-radius:0;background:none;text-align:left;isolation:isolate}
+.door-lock-card:before,.door-lock-card:after{content:'';position:absolute;top:41%;width:24px;height:24px;border:5px ridge #9cb49f;border-radius:50%;box-shadow:0 3px 5px #0008;z-index:-1}
+.door-lock-card:before{left:21%}.door-lock-card:after{right:17%}
+.lock-card-heading{display:contents}.door-lock-card h3{position:absolute;left:0;top:4px;font-size:14px;color:#d5e3d6;text-shadow:0 2px 3px #000;line-height:1.2}
+.lock-hint-toggle{position:absolute;right:0;top:0;min-height:30px;padding:3px 12px;z-index:3;background:#193f46;font-size:12px}
+.door-lock-card .lock-picture,.review-room .door-lock-card .lock-picture{position:absolute;inset:0 14% 0 18%;height:auto;pointer-events:none;z-index:-1}
+.worm-skin{position:absolute;inset:0;background:url('assets/rounding/living-bolts-atlas-v1.webp') center top/100% 300% no-repeat;filter:drop-shadow(0 7px 4px #0009);transform-origin:center}
+[data-reaction="1"] .worm-skin{background-size:100% 345%;background-position:center 47.4%}
+[data-reaction="2"] .worm-skin{background-size:100% 280%;background-position:center bottom}
+.card-question,.review-room .card-question{position:absolute;left:0;top:29px;width:20%;margin:0;min-height:0;font-size:16px;line-height:1.25;text-shadow:0 2px 4px #000}
+.card-question strong{font-size:25px}.card-question b{color:#c4f5de}
+.card-digits{position:absolute;left:43%;top:46%;transform:translate(-5%,-50%);width:29%;gap:3px;padding:3px 6px;border:2px solid #e4e9b5a6;border-radius:40% / 20%;background:#19303177;box-shadow:0 0 12px #c9ffdc55,inset 0 0 14px #020a1177}
+.card-digit{gap:0}.card-digit .place-long{display:none}.card-digit .place-compact{display:inline}
+.card-digit label{min-height:14px;font-size:10px;color:#fff7d5;text-shadow:0 1px 3px #000}
+.card-digit button{min-height:28px;height:28px;border:0;background:#20352ab3;color:#fff0b5;border-radius:50%;font-size:15px}
+.card-digit input{height:30px;font-size:23px;background:linear-gradient(#253c36,#0c201f 48%,#29443a 52%,#112c29);color:#fff4b5;border:1px solid #d0d59e;border-radius:9px;box-shadow:inset 0 2px 4px #0008}
+.card-digits[hidden]{display:none}
+.card-decimal{color:#fff6bd;text-shadow:0 1px 3px #000;font-weight:bold}
+.door-lock-card>.primary{position:absolute;right:0;top:39px;width:15%;min-height:38px;padding:5px;font-size:13px;border-radius:18px;box-shadow:0 3px 0 #776037}
+.card-feedback,.review-room .card-feedback{position:absolute;bottom:0;left:25%;width:55%;min-height:0;font-size:12px;line-height:1.15;text-align:center;margin:0;color:#e8ffe9;text-shadow:0 2px 3px #000;background:#081c238c;border-radius:8px}
+.card-feedback:empty{background:none}
+.door-lock-card .lock-hint-panel{position:absolute;left:0;bottom:0;top:auto;width:23%;height:82px;z-index:2;border:1px solid #d5ead8;box-shadow:0 4px 12px #0008;padding:3px}
+.showing-hint h3{visibility:hidden}.showing-hint .card-question{top:0;font-size:13px;line-height:1.1;width:24%}.showing-hint .card-question strong{font-size:20px}
+.lock-hint-panel .hint-toolbar>span{display:none}.lock-hint-panel .hint-toolbar{justify-content:center}
+.lock-hint-panel .hint-toolbar button{min-height:24px;font-size:11px;padding:1px 6px}
+.lock-hint-panel .number-line{height:42px;margin-top:7px;padding-top:24px}
+.lock-hint-panel .number-line:before{top:18px}.lock-hint-panel .midpoint{top:24px}
+.lock-hint-panel .endpoint,.lock-hint-panel .midpoint{font-size:11px}
+.lock-hint-panel .endpoint:before,.lock-hint-panel .midpoint:before{top:-10px;height:10px}
+.lock-hint-panel .marker{font-size:12px;top:-7px}.lock-hint-panel .marker:after{top:16px;border-top-width:5px}
+.is-unlocked .worm-skin{opacity:.32;transform:scale(.94) rotate(-2deg);transition:transform .4s,opacity .4s}
+.is-unlocked .card-digits{visibility:hidden}
+.is-unlocked .lock-picture .lock-reaction{inset:8% 28%;font-size:clamp(32px,7dvh,65px)}
+.is-unlocked[data-reaction="2"] .lock-picture .lock-reaction{inset:60% 38% 8%;font-size:20px}
+.review-room .card-question{font-size:14px;top:24px}.review-room .card-question strong{font-size:20px}
+.review-room .card-digits{width:27%;left:44%;padding:0 8px;border-radius:35% / 30%}
+.review-room .card-digits>label{font-size:10px;color:#f7f3cd;text-align:center}
+.review-room .card-digits input{height:32px;margin:0;padding:2px 5px;border-radius:12px;text-align:center;font-size:21px;background:#102b2be6;color:#fff4b5;border:1px solid #c9d6ad}
+.review-room .door-lock-card>.primary{top:24px;min-height:36px}
+.review-room .card-feedback{font-size:11px;left:28%;width:53%}
+.still .worm-skin{transition:none}
+.door-fuzz .door-bolt-sprite{display:block;width:100%;height:75px;background:url('assets/rounding/living-bolts-atlas-v1.webp') center var(--bolt-row)/100% 300% no-repeat;transition:opacity .4s,transform .4s}
+.walk-door[data-lock-count="5"] .door-bolt-sprite{height:45px}
+.door-bolt-sprite:nth-child(3n+2){background-size:100% 345%;background-position:center 47.4%}
+.door-bolt-sprite:nth-child(3n){background-size:100% 280%;background-position:center bottom}
+.door-bolt-sprite.released{opacity:.3;transform:rotate(-6deg) scale(.9)}
+@media(prefers-reduced-motion:reduce){.worm-skin,.door-bolt-sprite{transition:none!important}}
+@media(max-width:1100px){
+ .card-question{font-size:14px}.card-question strong{font-size:22px}
+ .card-digits{left:40%;width:35%}.card-digit input{font-size:20px}
+ .review-room .card-question{font-size:12px}.review-room .card-question strong{font-size:17px}
+ .door-lock-card>.primary{font-size:12px}
+}
+@media(max-width:760px){
+ .door-lock-board{height:auto;min-height:0;grid-template-rows:auto auto;padding:8px;gap:8px;border-width:5px}
+ .door-lock-board:before{left:3%}.door-lock-board:after{right:3%}
+ .door-lock-card{height:400px}
+ .door-lock-card:before{left:2%;top:45%}.door-lock-card:after{right:2%;top:45%}
+ .door-lock-card h3{top:0;font-size:15px}.lock-hint-toggle{top:0;min-height:36px}
+ .card-question,.review-room .card-question{top:42px;left:0;width:100%;text-align:center;font-size:17px}.card-question strong,.review-room .card-question strong{font-size:24px}
+ .door-lock-card .lock-picture,.review-room .door-lock-card .lock-picture{inset:118px 0 auto;height:150px}
+ .card-digits,.review-room .card-digits{left:34%;top:194px;width:52%;transform:translateY(-50%)}
+ .card-digit button{min-height:30px;height:30px}.card-digit input{font-size:20px}.card-digit label{font-size:9px}
+ .door-lock-card>.primary,.review-room .door-lock-card>.primary{left:10%;right:auto;top:290px;width:80%;min-height:44px;font-size:16px}
+ .card-feedback,.review-room .card-feedback{left:4%;bottom:0;width:92%;font-size:14px;min-height:50px}
+ .door-lock-card .lock-hint-panel{top:145px;bottom:auto;left:10%;width:80%;height:100px}
+ .showing-hint h3{visibility:visible}.showing-hint .card-question{top:42px;width:100%;font-size:17px;line-height:1.25}.showing-hint .card-question strong{font-size:24px}
+ .showing-hint .card-digits{visibility:hidden}
+}
