@@ -10,4 +10,4 @@ User-approved presentation rule for all new levels: characters speak in comic-bo
 - Preserve silent play, voice-only controls, reduced motion, keyboard interaction and mobile readability. Automatic conversations should not flood screen-reader live announcements; explicitly requested lines can be announced politely.
 - Puzzle input dialogs remain task interfaces, not dialogue. Learning instructions and validation must remain visible and accessible.
 
-Implemented in the Rounding Department's Spelling Bee and Band Aid rooms through the shared comic-dialogue module. Future rooms should reuse that module. Existing Energy Configuration Assistant scenes have not been migrated in this change.
+Implemented in the Rounding Department's Spelling Bee, Band Aid, Board Room, Brainstorming Department, Food Court and Shoe Box rooms through the shared comic-dialogue module. Future rooms should reuse that module. Existing Energy Configuration Assistant scenes have not been migrated in this change.

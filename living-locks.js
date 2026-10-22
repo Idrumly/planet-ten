@@ -6,7 +6,19 @@
   {name:'Sir Wobbleworth',kind:'jelly-lock',texture:'Glowing jelly worm'},
   {name:'Nurse Fluffernoodle',kind:'velvet-lock',texture:'Velvet moth caterpillar'},
   {name:'Doctor Roly Poly',kind:'pebble-lock',texture:'Porcelain pill bug'},
-  {name:'Madame Frill',kind:'ribbon-lock',texture:'Ribbon nudibranch'}
+  {name:'Madame Frill',kind:'ribbon-lock',texture:'Ribbon nudibranch'},
+  {name:'Disco Noodle',kind:'board-lock-0',texture:'Living alien lock'},
+  {name:'Velvet Voltage',kind:'board-lock-1',texture:'Living alien lock'},
+  {name:'Captain Roller',kind:'board-lock-2',texture:'Living alien lock'},
+  {name:'Nimbus Nibbler',kind:'brain-lock-0',texture:'Living alien lock'},
+  {name:'Professor Jellythought',kind:'brain-lock-1',texture:'Living alien lock'},
+  {name:'Brolly Belly',kind:'brain-lock-2',texture:'Living alien lock'},
+  {name:'Pearl Pickle',kind:'court-lock-0',texture:'Living alien lock'},
+  {name:'Counsellor Curls',kind:'court-lock-1',texture:'Living alien lock'},
+  {name:'Justice Jelly',kind:'court-lock-2',texture:'Living alien lock'},
+  {name:'Sprint Fluff',kind:'shoe-lock-0',texture:'Living alien lock'},
+  {name:'Velvet Lace',kind:'shoe-lock-1',texture:'Living alien lock'},
+  {name:'Madame Frillstep',kind:'shoe-lock-2',texture:'Living alien lock'}
  ];
  const snake=document.getElementById('snake');
  const art=document.createElement('img');art.className='lock-illustration';art.alt='';art.width=1000;art.height=500;snake.prepend(art);

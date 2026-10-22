@@ -9,8 +9,8 @@
  'Last lock. Take your time. Warehouse policy: no lock may remain emotionally undecided.'
  ];
  document.querySelector('#question-title em').textContent=R.unit;
- document.querySelector('.heading > span').textContent=(R.id==='bee'?'ROOM 01':'ROOM 02')+' / ROUND TO THE NEAREST '+R.place.toUpperCase();
- $('enter').textContent='Open the '+R.title+' room →';
+ document.querySelector('.heading > span').textContent=('ROOM '+String(R.number).padStart(2,'0'))+' / ROUND TO THE NEAREST '+R.place.toUpperCase();
+ $('enter').textContent='Open '+R.title+' →';
  $('room-title').textContent=R.title;
  let narration=null;function stopVoice(){if(narration){narration.pause();narration=null;}window.speechSynthesis?.cancel();}
  function speak(text){stopVoice();if(!sound||!voice)return;const clip=window.RoundingVoiceClips?.find(c=>c.text===text);const fallback=()=>{if(!sound||!voice||!window.speechSynthesis||!window.SpeechSynthesisUtterance)return;const u=new SpeechSynthesisUtterance(text);u.voice=window.speechSynthesis.getVoices().find(v=>/Zira/i.test(v.name))||null;u.pitch=1.55;u.rate=.9;u.volume=.85;window.speechSynthesis.speak(u);};if(clip){const a=new Audio(clip.src);narration=a;a.play().catch(()=>{if(narration===a)fallback();});}else fallback();}
@@ -18,6 +18,7 @@
  window.RoundStageSpeak=speak;window.RoundStopVoice=stopVoice;
  window.RoundVoiceBusy=()=>Boolean((narration&&!narration.paused&&!narration.ended)||window.speechSynthesis?.speaking);
  window.RoundSparkle=()=>{[880,1320,1760,2200].forEach((f,i)=>tone(f,i*.1,.18));};
+ window.RoundRoomSound=(room,action)=>{if(room==='board'&&action==='jump')[330,440,550].forEach((f,i)=>tone(f,i*.1,.12,'triangle'));if(room==='brain'&&action==='rumble')tone(65,0,.8,'triangle',35);if(room==='court'&&action==='gavel')tone(95,0,.12,'triangle',45);if(room==='shoe'&&action==='bell')window.RoundBell();};
  window.RoundBell=()=>{tone(1046,0,.65);tone(1568,.025,.55);tone(2093,0,.35);};
  function refreshSettings(){
   try{sessionStorage.setItem('planet-ten-rounding-settings',JSON.stringify({sound,voice,still}));}catch{}
@@ -35,17 +36,19 @@
  function tickle(){chat();clearTimeout(tickleTimer);$('snake').classList.remove('tickled');requestAnimationFrame(()=>$('snake').classList.add('tickled'));tickleTimer=setTimeout(()=>$('snake').classList.remove('tickled'),480);giggle();}
  let rewardEpoch=0;
  const fields=[];
- ['Hundreds','Tens','Ones'].forEach((name,i)=>{
+ M.digits(R.unit).forEach((name,i)=>{
   const segment=document.createElement('div');segment.className='digit';
-  segment.innerHTML=`<label for="digit-${i}">${name}</label><button type="button" aria-label="Increase ${name.toLowerCase()} digit">▲</button><input id="digit-${i}" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" value="0" autocomplete="off" aria-describedby="feedback"><button type="button" aria-label="Decrease ${name.toLowerCase()} digit">▼</button>`;
+  segment.innerHTML=`<label for="digit-${i}"><span class="place-full">${name}</span><span class="place-short" aria-hidden="true">${R.unit>=1000?Math.pow(10,M.digits(R.unit).length-1-i).toLocaleString("en-CA"):name}</span></label><button type="button" aria-label="Increase ${name.toLowerCase()} digit">▲</button><input id="digit-${i}" type="text" inputmode="numeric" pattern="[0-9]" maxlength="1" value="0" autocomplete="off" aria-describedby="feedback"><button type="button" aria-label="Decrease ${name.toLowerCase()} digit">▼</button>`;
   const input=segment.querySelector('input'),buttons=segment.querySelectorAll('button');fields.push(input);
   function turn(delta){if(solved)return;input.value=String((Number(input.value||0)+delta+10)%10);updateAnswer();tickle();}
   buttons[0].onclick=()=>turn(1);buttons[1].onclick=()=>turn(-1);
   input.oninput=()=>{input.value=input.value.replace(/[^0-9]/g,'').slice(-1);updateAnswer();tickle();};
   input.onkeydown=e=>{if(e.key==='ArrowUp'||e.key==='ArrowDown'){e.preventDefault();turn(e.key==='ArrowUp'?1:-1);}};
   $('digits').append(segment);
+  if(R.unit<1&&i===0){const dot=document.createElement('span');dot.className='lock-decimal';dot.textContent='.';dot.setAttribute('aria-label','decimal point');$('digits').append(dot);}
  });
- function updateAnswer(){$('answer-number').value=String(Number(fields.map(f=>f.value||'0').join('')));}
+ $('snake').dataset.digits=fields.length;
+ function updateAnswer(){const raw=fields.map(f=>f.value||'0').join('');$('answer-number').value=R.unit<1?raw[0]+'.'+raw.slice(1):String(Number(raw));}
  let hintLevel=0;
  function showHelp(level){hintLevel=Math.max(0,Math.min(3,level));const state=M.hintState(hintLevel),q=questions[index];
   $('number-help').hidden=!state.line;
@@ -57,7 +60,7 @@
   $('help').disabled=hintLevel===3;$('help').setAttribute('aria-expanded',String(state.line));
  }
  function render(){rewardEpoch++;bubble.textContent="My number is ready. Tickle responsibly.";window.LivingLocks?.show(index+R.lockOffset);const q=questions[index];solved=false;opened=false;$('snake').dataset.lock=String(index);$('snake').classList.remove('accepted');$('target').textContent=q.n;$('lock-number').textContent=`LIVING LOCK ${index+1} / 3`;
-  $('feedback').textContent='';fields.forEach((f,i)=>f.value=String(q.n).padStart(3,'0')[i]);updateAnswer();$('answer-form').querySelectorAll('button,input').forEach(el=>el.disabled=false);
+  $('feedback').textContent='';fields.forEach((f,i)=>f.value=M.format(q.n,R.unit).replace('.','').padStart(fields.length,'0')[i]);updateAnswer();$('answer-form').querySelectorAll('button,input').forEach(el=>el.disabled=false);
   $('next-lock').hidden=true;$('enter').hidden=true;$('help').hidden=false;$('check').hidden=false;
   $('low').textContent=q.low;$('high').textContent=q.high;$('mid').textContent=q.mid;$('marker').textContent=q.n;$('marker').style.setProperty('--position',`${(q.n-q.low)/R.unit*100}%`);
   $('between').textContent=`${q.n} is between ${q.low} and ${q.high}. The midpoint is ${q.mid}.`;

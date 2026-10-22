@@ -1,6 +1,6 @@
 'use strict';
 (()=>{
- const $=id=>document.getElementById(id),R=WarehouseRooms.current,hospital=R.id==='band-aid';
+ const $=id=>document.getElementById(id),R=WarehouseRooms.current,hospital=R.id==='band-aid',extra=Boolean(WarehouseShows[R.id]),other=R.id!=='bee';
  document.body.classList.add('walking-game');
  const viewport=document.createElement('section');viewport.id='walk-view';viewport.tabIndex=0;viewport.setAttribute('aria-label','Warehouse. W A S D to move, arrow left and right to look. Click the nearby door.');
  viewport.innerHTML='<canvas id="architecture" aria-hidden="true"></canvas><div id="inhabitants"></div><div class="walk-crosshair" aria-hidden="true">+</div><p id="walk-caption" role="status">Walk towards the Spelling Bee door. W A S D to move · ← → to look.</p><div class="walk-toolbar"><button id="approach">Walk to door</button><button id="inspect">Inspect door</button><button id="hall-reset" hidden>New codes</button></div><div class="walk-pad" aria-label="Movement controls"><button data-move="arrowleft" aria-label="Look left">↶</button><button data-move="w" aria-label="Walk forward">▲</button><button data-move="arrowright" aria-label="Look right">↷</button><button data-move="a" aria-label="Step left">◀</button><button data-move="s" aria-label="Walk backward">▼</button><button data-move="d" aria-label="Step right">▶</button></div>';
@@ -11,12 +11,14 @@
  let x=0,z=160,yaw=0,unlocked=false,opening=false,last=0,raf=0,width=800,height=600,inspectZoom=0;
  let auditorium,clinic;
  const comic=window.createComicDialogue(viewport);let clickedActor=null;
- const route=document.createElement('button');route.id='room-route';route.hidden=true;route.textContent=hospital?'← Return to Spelling Bee':'Next room: Band Aid →';route.onclick=()=>{location.href=hospital?'rounding.html?room=bee':'rounding.html?room=band-aid';};viewport.append(route);
+ const route=document.createElement('button');route.id='room-route';route.hidden=true;route.textContent=R.next?'Next: '+WarehouseRooms.rooms[R.next].title+' →':'Warehouse tour complete ✓';route.onclick=()=>{location.href=R.next?'rounding.html?room='+R.next:'index.html';};viewport.append(route);
+ const backRoute=document.createElement('button');backRoute.id='room-back';backRoute.hidden=true;backRoute.textContent=R.previous?'← '+WarehouseRooms.rooms[R.previous].title:'';backRoute.onclick=()=>{if(R.previous)location.href='rounding.html?room='+R.previous;};viewport.append(backRoute);
  document.addEventListener('living-lock-released',e=>{const img=document.querySelector('[data-door-lock="'+e.detail.index+'"]');if(img)img.classList.add('released');});
  const near=()=>Math.abs(x)<230&&z< -350&&z> -900;
  function entity(kind,ex,ez,ew,eh,html,label,onClick){const el=document.createElement(onClick?'button':'div');el.className='world-object '+kind;el.style.width=ew+'px';el.style.height=eh+'px';el.innerHTML=html;if(label)el.setAttribute('aria-label',label);else el.setAttribute('aria-hidden','true');if(onClick)el.onclick=()=>{clickedActor=el;onClick();};$('inhabitants').append(el);const obj={el,x:ex,z:ez,w:ew,h:eh,room:ez< -800};entities.push(obj);return obj;}
  const door=entity('walk-door',0,-720,280,410,'<span class="door-sign">PLANET TEN<strong>Spelling Bee</strong><small>AUTHORIZED PERSONNEL &amp; POLLEN</small></span><span class="door-fuzz illustrated-locks"><img data-door-lock="0" src="assets/rounding/fuzzy-lock-v1.webp" alt=""><img data-door-lock="1" src="assets/rounding/slug-lock-v1.webp" alt=""><img data-door-lock="2" src="assets/rounding/jelly-lock-v1.webp" alt=""></span><span class="door-grip">✦</span>','Spelling Bee door',inspect);
- if(hospital){door.el.querySelector('strong').textContent=R.title;door.el.querySelector('small').textContent='ESSENTIAL HARMONIC SERVICES';door.el.setAttribute('aria-label','Band Aid door');['velvet','pebble','ribbon'].forEach((name,i)=>door.el.querySelector('[data-door-lock="'+i+'"]').src='assets/rounding/'+name+'-lock-v1.webp');}
+ door.el.querySelector('strong').textContent=R.title;door.el.querySelector('small').textContent='HIGHLY NECESSARY CIVIC SERVICES';door.el.setAttribute('aria-label',R.title+' door');
+ for(let i=0;i<3;i++)door.el.querySelector('[data-door-lock="'+i+'"]').src='assets/rounding/'+LivingLocks.creatures[R.lockOffset+i].kind+'-v1.webp';
  entity('crate',-335,-380,170,160,'<b>FRAGILE</b><span>Possibly opinions.</span>');
  entity('crate',340,-590,170,230,'<b>DO NOT SHAKE</b><span>Already offended.</span>');
  entity('wall-notice',-300,-710,180,100,'WAREHOUSE 01<br><strong>APPROXIMATELY SECURE</strong>');
@@ -43,8 +45,9 @@
  const holo=entity('floating-molecule',210,-1530,90,120,'<span>⬡</span><i>✧</i><b>⬡</b>');holo.base=210;
  entity('honey-desk',-420,-1930,100,100,'<span>⬡</span><b>EMERGENCY NECTAR</b>','Inspect nectar supply',()=>say('Emergency nectar. For spelling emergencies. The budget is confidential.'));
  entities.forEach(o=>{if(o.room&&o.z<=-1620&&!o.base)o.base=95;});
- if(hospital)entities.forEach(o=>{if(o.room)o.disabled=true;});
- const exit=entity('room-exit',hospital?-375:375,-1600,145,250,'<small>'+ (hospital?'RETURN TO':'NEXT DEPARTMENT')+'</small><strong>'+(hospital?'Spelling Bee':'Band Aid')+'</strong><span>'+(hospital?'←':'→')+'</span><small>ENTER</small>',hospital?'Return to Spelling Bee':'Go to Band Aid room',()=>route.click());
+ if(other)entities.forEach(o=>{if(o.room)o.disabled=true;});
+ if(R.previous)entity('room-exit',-425,-1670,115,225,'<small>RETURN TO</small><strong>'+WarehouseRooms.rooms[R.previous].title+'</strong><span>←</span><small>ENTER</small>','Return to '+WarehouseRooms.rooms[R.previous].title,()=>backRoute.click());
+ entity('room-exit',425,-1670,115,225,'<small>'+(R.next?'NEXT DEPARTMENT':'TOUR COMPLETE')+'</small><strong>'+(R.next?WarehouseRooms.rooms[R.next].title:'Game suite')+'</strong><span>→</span><small>ENTER</small>',R.next?'Go to '+WarehouseRooms.rooms[R.next].title+' room':'Return to game suite',()=>route.click());
  function say(text){const speaker=clickedActor?.getAttribute('aria-label')?.replace(/^Talk to /,'')||'TEN-BOT';comic.show(speaker,text,clickedActor,{manual:true});}
 
  const show=document.createElement('section');show.id='bee-performance';show.hidden=true;show.setAttribute('aria-label','Live spelling bee');show.innerHTML='<div class="show-heading"><strong id="show-speaker"></strong><span id="show-count"></span></div><div class="show-controls"><button id="show-pause">Pause show</button><button id="show-next">Next word</button><button id="show-repeat">Hear line</button></div>';viewport.append(show);
@@ -61,8 +64,8 @@
 
  }
  function updateShow(dt){
-  route.hidden=!unlocked||z>=-800;
-  if(hospital){show.hidden=true;clinic?.update(dt,unlocked&&z< -800,!document.hidden&&!dialog.open);return;}
+  route.hidden=!unlocked||z>=-800;backRoute.hidden=route.hidden||!R.previous;
+  if(other){show.hidden=true;clinic?.update(dt,unlocked&&z< -800,!document.hidden&&!dialog.open);return;}
   const inRoom=unlocked&&z< -800;show.hidden=!inRoom;
   const active=inRoom&&!showPaused&&!document.hidden&&!dialog.open;
   show.classList.toggle('show-paused',!active);viewport.classList.toggle('performance-paused',!active);
@@ -111,11 +114,11 @@
  function caption(text){$('walk-caption').textContent=text;}
  function close(){dialog.close();}
  $('leave-lock').onclick=close;dialog.addEventListener('close',()=>{inspectZoom=0;keys.clear();draw();viewport.focus({preventScroll:true});});
- $('approach').onclick=()=>{x=0;z=unlocked?-1050:-420;yaw=0;draw();caption(unlocked?(hospital?'Band Aid. Meet the instruments. Return doorway on your left.':'Spelling Bee. Meet the judges. Next doorway: Band Aid, on your right.'):'Door reached. Click the door or Inspect door.');viewport.focus({preventScroll:true});};
+ $('approach').onclick=()=>{x=0;z=unlocked?-1050:-420;yaw=0;draw();caption(unlocked?(R.title+'. '+(R.previous?'Back: left. ':'')+(R.next?'Next: '+WarehouseRooms.rooms[R.next].title+' on the right.':'Game suite: right.')):'Door reached. Click the door or Inspect door.');viewport.focus({preventScroll:true});};
  $('inspect').onclick=inspect;
  $('hall-reset').onclick=()=>{window.RoundRestart();};
- function reset(){resetShow();clinic?.reset();route.hidden=true;document.querySelectorAll("[data-door-lock]").forEach(img=>img.classList.remove("released"));unlocked=false;opening=false;x=0;z=160;yaw=0;keys.clear();comic.clear();if(dialog.open)dialog.close();$('hall-reset').hidden=true;$('approach').textContent='Walk to door';$('inspect').hidden=false;caption('Walk towards the '+R.title+' door. W A S D to move · ← → to look.');draw();}
- function open(){if(dialog.open)dialog.close();const transform=door.el.style.transform;opening=!document.body.classList.contains('still');if(opening)door.el.animate([{transform,opacity:1},{transform:transform+' rotateY(-95deg)',opacity:0}],{duration:650,easing:'ease-in'}).finished.then(()=>{opening=false;draw();}).catch(()=>{opening=false;draw();});unlocked=true;$('inspect').hidden=true;$('hall-reset').hidden=false;$('approach').textContent='Step into room';caption(hospital?'Door open! Step into Band Aid. Return doorway on the left.':'Door open! Step inside. The next doorway is on the right: Band Aid.');draw();viewport.focus({preventScroll:true});}
+ function reset(){resetShow();clinic?.reset();route.hidden=true;backRoute.hidden=true;document.querySelectorAll("[data-door-lock]").forEach(img=>img.classList.remove("released"));unlocked=false;opening=false;x=0;z=160;yaw=0;keys.clear();comic.clear();if(dialog.open)dialog.close();$('hall-reset').hidden=true;$('approach').textContent='Walk to door';$('inspect').hidden=false;caption('Walk towards the '+R.title+' door. W A S D to move · ← → to look.');draw();}
+ function open(){if(dialog.open)dialog.close();const transform=door.el.style.transform;opening=!document.body.classList.contains('still');if(opening)door.el.animate([{transform,opacity:1},{transform:transform+' rotateY(-95deg)',opacity:0}],{duration:650,easing:'ease-in'}).finished.then(()=>{opening=false;draw();}).catch(()=>{opening=false;draw();});unlocked=true;$('inspect').hidden=true;$('hall-reset').hidden=false;$('approach').textContent='Step into room';caption('Door open! Step into '+R.title+'. '+(R.next?'Next doorway on the right.':'You reached the last room of this wing!'));draw();viewport.focus({preventScroll:true});}
  window.WarehouseWalk={open,reset};
  function move(dt){const f=(keys.has('w')?1:0)-(keys.has('s')?1:0),r=(keys.has('d')?1:0)-(keys.has('a')?1:0);yaw+=((keys.has('arrowright')?1:0)-(keys.has('arrowleft')?1:0))*dt*1.3;const n=Math.hypot(f,r)||1,speed=210*dt;const nx=x+(Math.sin(yaw)*f+Math.cos(yaw)*r)/n*speed,nz=z+(-Math.cos(yaw)*f+Math.sin(yaw)*r)/n*speed;
   x=Math.max(-420,Math.min(420,nx));const crosses=(z+720)*(nz+720)<=0;if(!crosses||Math.abs(x)<115)z=Math.max(unlocked?-1500:-470,Math.min(180,nz));draw();}
@@ -125,7 +128,8 @@
  window.addEventListener('blur',()=>keys.clear());document.addEventListener('visibilitychange',()=>keys.clear());
  document.querySelectorAll('[data-move]').forEach(b=>{b.onpointerdown=e=>{b.setPointerCapture(e.pointerId);keys.add(b.dataset.move);move(.15);};b.onpointerup=b.onpointercancel=b.onlostpointercapture=()=>keys.delete(b.dataset.move);b.onclick=e=>{if(e.detail===0){keys.add(b.dataset.move);move(.2);keys.delete(b.dataset.move);}};});
  if(hospital)clinic=window.createBandAid(entity,viewport,say,comic);
- auditorium=window.createAuditorium(ctx,polygon,camera,project,draw,hospital);
+ if(extra)clinic=window.createWarehouseShow(R,entity,viewport,say,comic);
+ auditorium=window.createAuditorium(ctx,polygon,camera,project,draw,hospital,extra?R.id:null);
  caption('Walk towards the '+R.title+' door. W A S D to move · ← → to look.');
  new ResizeObserver(resize).observe(viewport);window.addEventListener('pagehide',()=>cancelAnimationFrame(raf));resize();window.RoundRestoreRoom?.();raf=requestAnimationFrame(frame);
 })();
