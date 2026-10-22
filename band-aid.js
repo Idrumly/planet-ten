@@ -1,5 +1,5 @@
 'use strict';
-window.createBandAid=function(entity,viewport,say){
+window.createBandAid=function(entity,viewport,say,comic){
  const lines=[
   ['Doctor Brass','Nobody panic. I have watched nearly three episodes of Emergency Orchestra.','doctor'],
   ['Fergus Flugelhorn','Doctor! Every time I sneeze, I play jazz!','flugelhorn'],
@@ -37,10 +37,11 @@ window.createBandAid=function(entity,viewport,say){
  });
  entity('clinic-sign',0,-2070,510,70,'<small>PLANET TEN HARMONIC HEALTH SERVICE</small><strong>BAND AID</strong><span>Please take a rest.</span>').base=380;
  [-390,390].forEach((x,i)=>entity('clinic-monitor',x,-1870,100,140,'<b>'+(i?'RHYTHM':'HARMONY')+'</b><span>⌁ ♫ ⌁</span><small>RECOVERING NICELY</small>'));
- const panel=document.createElement('section');panel.id='clinic-performance';panel.hidden=true;panel.innerHTML='<div class="show-heading"><strong></strong><span>WARD ROUNDS</span></div><p></p><div class="ward-controls"><button type="button" class="ward-pause">Pause ward rounds</button><button type="button" class="ward-next">Next scene →</button></div>';viewport.append(panel);
+ const panel=document.createElement('section');panel.id='clinic-performance';panel.hidden=true;panel.innerHTML='<div class="ward-controls"><button type="button" class="ward-pause">Pause ward rounds</button><button type="button" class="ward-next">Next scene →</button><button type="button" class="ward-repeat">Hear line</button></div>';viewport.append(panel);
  let index=0,elapsed=0,started=false,paused=false,wasActive=false;
- function perform(){const [speaker,text,actor]=lines[index];panel.querySelector('strong').textContent=speaker;panel.querySelector('p').textContent=text;Object.entries(actors).forEach(([id,obj])=>obj.el.classList.toggle('treating',actor===id||actor==='all'));window.RoundStageSpeak?.(text);if(lines[index][0]==='Bongo')window.RoundBell?.();elapsed=0;}
+ function perform(){const [speaker,text,actor]=lines[index];comic.show(speaker,text,speaker==='TEN-BOT'?null:actors[actor]?.el);Object.entries(actors).forEach(([id,obj])=>obj.el.classList.toggle('treating',actor===id||actor==='all'));if(lines[index][0]==='Bongo')window.RoundBell?.();elapsed=0;}
  panel.querySelector('.ward-pause').onclick=()=>{paused=!paused;panel.querySelector('button').textContent=paused?'Resume ward rounds':'Pause ward rounds';if(paused)window.RoundStopVoice?.();};
+ panel.querySelector('.ward-repeat').onclick=()=>comic.replay();
  panel.querySelector('.ward-next').onclick=()=>{index=(index+1)%lines.length;started=true;perform();if(paused)window.RoundStopVoice?.();};
- return {update(dt,inRoom,available){panel.hidden=!inRoom;const active=inRoom&&available&&!paused;viewport.classList.toggle('clinic-paused',!active);if(!active){if(wasActive)window.RoundStopVoice?.();wasActive=false;return;}wasActive=true;if(!started){started=true;perform();}elapsed+=dt;if(elapsed>8&&!window.RoundVoiceBusy?.()){index=(index+1)%lines.length;perform();}},reset(){index=0;elapsed=0;started=false;paused=false;wasActive=false;panel.hidden=true;panel.querySelector('button').textContent='Pause ward rounds';}};
+ return {update(dt,inRoom,available){panel.hidden=!inRoom;const active=inRoom&&available&&!paused;viewport.classList.toggle('clinic-paused',!active);if(!active){if(wasActive)window.RoundStopVoice?.();wasActive=false;return;}wasActive=true;if(!started){started=true;perform();}if(comic.holding())return;elapsed+=dt;if(elapsed>8&&!window.RoundVoiceBusy?.()){index=(index+1)%lines.length;perform();}},reset(){index=0;elapsed=0;started=false;paused=false;wasActive=false;panel.hidden=true;panel.querySelector('button').textContent='Pause ward rounds';}};
 };

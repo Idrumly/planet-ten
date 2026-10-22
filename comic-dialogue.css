@@ -1,0 +1,15 @@
+.comic-bubble{position:absolute;z-index:11500;width:min(330px,calc(100% - 28px));padding:12px 17px;border:3px solid #163445;border-radius:24px 28px 22px 26px;background:#fff8dc;color:#163445;box-shadow:4px 5px 0 #16344588;pointer-events:none}
+.comic-bubble strong{display:block;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:#37605e;margin-bottom:5px}
+.comic-bubble p{margin:0;font-size:17px;line-height:1.4;font-weight:600}
+.comic-bubble:before,.comic-bubble:after{content:'';position:absolute;top:100%;left:var(--tail-x,50%);border-style:solid;border-width:22px 15px 0 0;border-color:#163445 transparent transparent transparent}
+.comic-bubble:after{margin:0 0 0 3px;border-width:16px 10px 0 0;border-top-color:#fff8dc}
+.comic-bot{position:absolute;left:30px;top:250px;width:65px;height:55px;border:5px solid #87b9b5;border-radius:16px;background:#a8f6df;color:#153a4b;box-shadow:0 6px 0 #365767;z-index:11000;text-align:center}
+.comic-bot i{font-style:normal;font-size:23px}.comic-bot span{display:block;font-size:9px;font-weight:bold}
+.comic-announcer{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+/* Controls stay in a small strip; spoken text belongs to the character. */
+#bee-performance,#clinic-performance{width:auto;max-width:calc(100% - 310px);padding:7px 10px;background:#102e3ae8;border-width:1px}
+#bee-performance .show-heading{margin-bottom:4px}#show-speaker{display:none}
+#clinic-performance .ward-controls,#bee-performance .show-controls{display:flex;justify-content:center;gap:6px}
+#clinic-performance button,#bee-performance button{font-size:12px;min-height:40px;padding:6px 10px}
+.bot{border-radius:26px!important}.bot>div:last-child{position:relative}
+@media(max-width:600px){.comic-bubble{width:min(290px,calc(100% - 28px));padding:9px 12px}.comic-bubble p{font-size:13px;line-height:1.35}.comic-bubble strong{font-size:10px;margin-bottom:3px}.comic-bot{top:230px;left:20px}#bee-performance,#clinic-performance{max-width:calc(100% - 24px);width:max-content;bottom:105px;padding:6px 8px}#clinic-performance button,#bee-performance button{font-size:11px;padding:5px 8px}}
