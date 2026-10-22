@@ -21,3 +21,4 @@ jobs:
 
       - run: node --test rounding-model.test.js
       - run: node --test spelling-bee.test.js
+      - run: node --test auditorium.test.js

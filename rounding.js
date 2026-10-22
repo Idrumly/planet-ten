@@ -13,6 +13,7 @@
  function tell(text){$('instruction').textContent=text;speak(text);} window.RoundTalk=tell;
  window.RoundStageSpeak=speak;window.RoundStopVoice=stopVoice;
  window.RoundVoiceBusy=()=>Boolean((narration&&!narration.paused&&!narration.ended)||window.speechSynthesis?.speaking);
+ window.RoundSparkle=()=>{[880,1320,1760,2200].forEach((f,i)=>tone(f,i*.1,.18));};
  window.RoundBell=()=>{tone(1046,0,.65);tone(1568,.025,.55);tone(2093,0,.35);};
  function refreshSettings(){
   $('sound').textContent=sound?'Sound ON':'Sound OFF';$('sound').setAttribute('aria-pressed',String(sound));
@@ -27,6 +28,7 @@
  let chatterBag=[],lastChatter=0;const bubble=document.createElement('p');bubble.id='lock-chatter';bubble.className='lock-chatter';bubble.textContent='My number is ready. Tickle responsibly.';$('snake').before(bubble);
  function chat(){if(Date.now()-lastChatter<800)return;lastChatter=Date.now();if(!chatterBag.length)chatterBag=chatter.map((_,i)=>i).sort(()=>Math.random()-.5);bubble.textContent=chatter[chatterBag.pop()];}
  function tickle(){chat();clearTimeout(tickleTimer);$('snake').classList.remove('tickled');requestAnimationFrame(()=>$('snake').classList.add('tickled'));tickleTimer=setTimeout(()=>$('snake').classList.remove('tickled'),480);giggle();}
+ let rewardEpoch=0;
  const fields=[];
  ['Hundreds','Tens','Ones'].forEach((name,i)=>{
   const segment=document.createElement('div');segment.className='digit';
@@ -40,7 +42,7 @@
  });
  function updateAnswer(){$('answer-number').value=String(Number(fields.map(f=>f.value||'0').join('')));}
  function showHelp(show){$('number-help').hidden=!show;$('help').textContent=show?'Hide number line':'Show the number line';$('help').setAttribute('aria-expanded',String(show));}
- function render(){const q=questions[index];solved=false;opened=false;$('snake').dataset.lock=String(index);$('snake').classList.remove('accepted');$('target').textContent=q.n;$('lock-number').textContent=`LIVING LOCK ${index+1} / 3`;
+ function render(){rewardEpoch++;bubble.textContent="My number is ready. Tickle responsibly.";window.LivingLocks?.show(index);const q=questions[index];solved=false;opened=false;$('snake').dataset.lock=String(index);$('snake').classList.remove('accepted');$('target').textContent=q.n;$('lock-number').textContent=`LIVING LOCK ${index+1} / 3`;
   $('feedback').textContent='';fields.forEach((f,i)=>f.value=String(q.n).padStart(3,'0')[i]);updateAnswer();$('answer-form').querySelectorAll('button,input').forEach(el=>el.disabled=false);
   $('next-lock').hidden=true;$('enter').hidden=true;$('help').hidden=false;$('check').hidden=false;
   $('low').textContent=q.low;$('high').textContent=q.high;$('mid').textContent=q.mid;$('marker').textContent=q.n;$('marker').style.setProperty('--position',`${(q.n-q.low)*10}%`);
@@ -58,7 +60,8 @@
   const li=document.querySelectorAll('.locks li')[index];li.classList.remove('current');li.classList.add('done');li.querySelector('.lock-state').textContent='Unlocked';
   $('door-progress').textContent=`${index+1} / 3 locks tickled into cooperation`;
   tell(index===2?'All three locks have agreed to stop being a door. Open the Spelling Bee room. I am sure the label is perfectly normal.':'The lock is delighted. Read your rounded number below. We will be hearing about this in its performance review.');
-  const next=$(index===2?'enter':'next-lock');next.hidden=false;next.focus({preventScroll:true});
+  const next=$(index===2?'enter':'next-lock'),epoch=rewardEpoch;
+  window.LivingLocks.celebrate(still).then(completed=>{if(!completed||epoch!==rewardEpoch)return;next.hidden=false;if(document.getElementById('lock-inspection')?.open)next.focus({preventScroll:true});});
  };
  $('help').onclick=()=>showHelp($('number-help').hidden);
  $('next-lock').onclick=()=>{if(!solved||index>=2)return;index++;render();$('question-title').focus();};
@@ -78,7 +81,7 @@
  if(!window.speechSynthesis&&!window.RoundingVoiceClips){$('voice').disabled=true;$('hear').disabled=true;$('hear').textContent='Read the instructions above';}
  $('motion').onclick=()=>{still=!still;refreshSettings();if(opened&&!$('room').hidden&&!window.WarehouseWalk)beeShow();};
  media.addEventListener('change',e=>{still=e.matches;refreshSettings();if(opened&&!$('room').hidden&&!window.WarehouseWalk)beeShow();});
- document.addEventListener('visibilitychange',()=>{if(document.hidden){stopVoice();audio?.suspend().catch(()=>{});clearTimeout(beeTimer);}else if(opened&&!$('room').hidden)beeShow();});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden){stopVoice();audio?.suspend().catch(()=>{});clearTimeout(beeTimer);}else if(opened&&!$('room').hidden&&!window.WarehouseWalk)beeShow();});
  window.addEventListener('pagehide',()=>{stopVoice();clearTimeout(beeTimer);clearTimeout(revealTimer);audio?.close().catch(()=>{});});
  window.RoundRestart=reset;refreshSettings();reset();
 })();

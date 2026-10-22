@@ -42,3 +42,8 @@
 .flower-resident>.judge-desk{font-size:12px;line-height:1.25;filter:none;text-shadow:none}
 #bee-performance{top:auto;bottom:78px;width:min(570px,92%)}#show-line{font-family:system-ui,sans-serif;font-size:14px}
 @media(max-width:600px){#bee-performance{top:45px;bottom:auto;width:92%}#show-line{font-size:12px}}
+
+/* A sterile vestibule opens into a warm, illustrated school auditorium. */
+.door-fuzz.illustrated-locks{width:92%;margin:8px 0 0;line-height:1;display:flex;flex-direction:column;gap:0;letter-spacing:0}.illustrated-locks img{width:100%;height:75px;object-fit:contain;filter:drop-shadow(0 0 5px #a7e8ea44);transition:opacity .4s,transform .4s}.illustrated-locks img.released{opacity:.15;transform:translateX(12px) scale(.6)}
+.room-banner{background:#352545dd;border:3px solid #e4ba79;border-radius:8px;padding:4px;color:#ffebbd;box-shadow:0 3px 10px #392143}.room-banner strong{font-size:24px;line-height:1.1}.room-banner small{font-size:6px;letter-spacing:2px}.room-banner span{font-size:10px}
+.lab-workstation .holo-screen{height:105px;padding:7px}.lab-workstation .holo-screen span{font-size:19px}.lab-workstation .holo-screen small{font-size:7px}.lab-workstation .lab-bench{height:42px}.lab-workstation .lab-bench b{font-size:7px;bottom:4px}.lab-workstation .vial{width:18px;height:25px;margin-top:-23px}.specimen-tank .tank-cap{width:70px;font-size:19px}.specimen-tank .specimen i{width:15px;height:40px}.specimen-tank b{font-size:7px;padding:4px;bottom:6px}.honey-desk{border-width:5px}.honey-desk span{font-size:40px}.honey-desk b{font-size:7px}.bee-resident .resident-label{font-size:9px;padding:5px}.flower-resident .judge-desk b{font-size:10px}
