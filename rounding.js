@@ -16,6 +16,15 @@
  window.RoundVoiceBusy=()=>Boolean((narration&&!narration.paused&&!narration.ended)||window.speechSynthesis?.speaking);
  window.RoundSparkle=()=>{[880,1320,1760,2200].forEach((f,i)=>tone(f,i*.1,.18));};
  window.RoundRoomSound=(room,action)=>{if(room==='board'&&action==='jump')[330,440,550].forEach((f,i)=>tone(f,i*.1,.12,'triangle'));if(room==='brain'&&action==='rumble')tone(65,0,.8,'triangle',35);if(room==='court'&&action==='gavel')tone(95,0,.12,'triangle',45);if(room==='shoe'&&action==='bell')window.RoundBell();};
+ window.RoundGagSound=kind=>{
+  if(['fizz','zip','sneeze'].includes(kind)){tone(900,0,.22,'triangle',80);tone(1300,.08,.18,'sine',100);}
+  else if(kind==='horn'){tone(330,0,.17,'triangle');tone(440,.19,.19,'triangle');}
+  else if(kind==='deflate'){tone(1200,0,.65,'sine',130);tone(390,.3,.22,'triangle',800);}
+  else if(kind==='waltz'||kind==='disco'){[523,659,784].forEach((f,i)=>tone(f,i*.13,.18,'triangle'));}
+  else if(kind==='launch'||kind==='swish'){tone(110,0,.45,'triangle',1000);}
+  else if(kind==='magic'){[660,990,1320].forEach((f,i)=>tone(f,i*.09,.25));}
+  else {tone(260,0,.15,'sine',650);tone(520,.12,.12,'sine',200);}
+ };
  window.RoundBell=()=>{tone(1046,0,.65);tone(1568,.025,.55);tone(2093,0,.35);};
  function refreshSettings(){
   try{sessionStorage.setItem('planet-ten-rounding-settings',JSON.stringify({sound,voice,still}));}catch{}
@@ -44,10 +53,10 @@
   if(still){$('bee-speech').textContent='C · O · M · M · U · N · I · T · Y. “May I have that in a pollen sentence?”';return;}
   const advance=()=>{step++;if(step>=beeLines.length)return;$('bee-speech').textContent=beeLines[step];tone(180+step*35,0,.2,'triangle',250+step*20);beeTimer=setTimeout(advance,step===4?4500:2100);};beeTimer=setTimeout(advance,2500);
  }
- $('enter').onclick=()=>{if(!puzzle?.complete()||opened)return;opened=true;WarehouseRooms.complete();$('enter').disabled=true;$('door').classList.add('unlocking');[523,659,784,1046].forEach((f,i)=>tone(f,i*.14,.55,'triangle'));window.WarehouseWalk?.open();
+ $('enter').onclick=()=>{if(!puzzle?.complete()||opened)return;opened=true;window.LockGags?.finishAll();WarehouseRooms.complete();$('enter').disabled=true;$('door').classList.add('unlocking');[523,659,784,1046].forEach((f,i)=>tone(f,i*.14,.55,'triangle'));window.WarehouseWalk?.open();
   revealTimer=setTimeout(()=>{document.querySelector('.warehouse').hidden=true;$('room').hidden=false;$('summary').textContent=questions.map(q=>`${q.n} → ${q.answer} (nearest ${q.place})`).join('   ·   ');tell(R.reveal);$('room-title').focus();if(!window.WarehouseWalk)beeShow();},still?0:700);
  };
- function reset(){window.WarehouseWalk?.reset();clearTimeout(revealTimer);clearTimeout(beeTimer);stopVoice();questions=M.roomQuestions(R);index=0;$('room').hidden=true;document.querySelector('.warehouse').hidden=false;$('enter').disabled=false;$('door').classList.remove('unlocking');render();}
+ function reset(){window.LockGags?.cancelAll();window.WarehouseWalk?.reset();clearTimeout(revealTimer);clearTimeout(beeTimer);stopVoice();questions=M.roomQuestions(R);index=0;$('room').hidden=true;document.querySelector('.warehouse').hidden=false;$('enter').disabled=false;$('door').classList.remove('unlocking');render();}
  $('again').onclick=()=>{reset();$('question-title').focus();};$('replay').onclick=beeShow;
  $('sound').onclick=()=>{sound=!sound;if(sound){ctx();speak($('instruction').textContent);}else{stopVoice();audio?.suspend().catch(()=>{});}refreshSettings();};
  $('voice').onclick=()=>{voice=!voice;if(!voice)stopVoice();refreshSettings();};

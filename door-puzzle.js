@@ -51,9 +51,8 @@ window.createDoorPuzzle=function({root,questions,room,onUnlock,onReady}){
    if(fields.some(f=>!f.value.trim())){feedback.textContent='Fill in your rounded number first.';return;}
    if(!M.check(answer,q.n,q.unit)){feedback.textContent='Not quite yet. Try the nearest '+q.place+' again.';return;}
    solved.add(index);selector.textContent='Lock '+(index+1)+' ✓';const help=card.querySelector('.lock-hint-panel');if(help){help.hidden=true;digits.hidden=false;card.classList.remove('showing-hint');card.querySelector('.lock-picture').hidden=false;card.querySelector('.lock-hint-toggle').setAttribute('aria-expanded','false');card.querySelector('.lock-hint-toggle').textContent='Hint';card.querySelector('.lock-hint-toggle').setAttribute('aria-label','Hint for lock '+(index+1));}card.classList.add('is-unlocked');card.querySelector('.card-state').textContent='✓ Unlocked';
-   // The joke happens on this lock, in place, with a persistent open-lock sign.
-   card.querySelector('.lock-reaction').textContent=['🦋','✨','◡'][index%3];
-   feedback.textContent=`${q.n} → ${q.answer}. `+['A butterfly! A perfectly normal career change.','Fizz! A sparkling performance.','One delighted little pile of ashes.'][index%3];
+   const celebration=window.LockGags.play(card);depthDisposers.push(celebration.cancel);
+   feedback.textContent=`${q.n} → ${q.answer}. ${celebration.gag.caption}`;
    card.querySelectorAll('input,button').forEach(el=>el.disabled=true);
    card.querySelector('button[type="submit"]').textContent='🔓 Unlocked';
    document.dispatchEvent(new CustomEvent('living-lock-released',{detail:{index}}));
