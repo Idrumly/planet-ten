@@ -1,0 +1,138 @@
+{
+  "basePrompt": "Production animation spritesheet, not a poster. Reference image is the approved cast sheet. Isolate ONLY the named character from specified cell and preserve exact character identity, palette, frills, face, feelers and painted glossy cartoon finish. Create its FULL continuous signature cartoon exit as exactly24 distinct chronological drawings in 6 columns by4 rows on an ACTUAL transparent canvas. Equal square cells. No labels, letters, grid lines, scenery or floor. Each full scene entirely contained in its cell with generous 12% blank padding on ALL sides; no overlaps between cells. Same camera scale, consistent ground baseline at80% cellheight, no camera zoom. Complex actions may include the specified tiny costar inside every affected cell. First frame is just original worm happily in idle side-on pose facing left. All laterframes show the actual worm changing shape/acting with facial expressions, successive inbetweens and a clear punchline. Use frames1-4 for anticipation,5-10 for transformation setup,11-18 main action,19-22 payoff,23-24 final charming souvenir and wink. Do NOT show24near-identical static poses. Same high-quality detailed pearlescent painted3D cartoon art as reference, not vector icons. Keep anatomy consistent during transformation, no recognizable copyrighted costume/character, family-friendly absurd humour. Output1536x1024 or larger same3:2aspect, strictly6x4grid.",
+  "characters": [
+    {
+      "id": "fuse",
+      "name": "Ember",
+      "cell": "row 1 column 1",
+      "design": "orange and charcoal skin, orange flame-tip branching dorsal gills",
+      "action": "A tiny flame lights his tail; he looks back delighted. Flame runs gradually along tail and body like a sparkling fuse, the actual body progressively crumbling to grey soft ash from tail towards head. His face stays cheerful until becoming ash too. Final little grey ash mound with large happy eyes blinks. No injury, no pain. Show continuous burn-away transformation, no explosion."
+    },
+    {
+      "id": "taxi",
+      "name": "Cabby",
+      "cell": "row 1 column 3",
+      "design": "bright yellow, black polka dots, black-tipped fingerlike cerata",
+      "action": "He looks at the time, stands upright on tail, sprouts little waving frill-arms, enthusiastically hails a tiny original rounded yellow alien taxi. The taxi drives in from the right. He bends and squeezes his stretchy whole body into its tiny rear seat, head waving out the window; taxi drives left until offscreen; final abandoned tiny yellow taxi receipt with a smiling Cabby face printed as symbol, no text. Fully acting character, not static cutouts."
+    },
+    {
+      "id": "licorice",
+      "name": "Twist",
+      "cell": "row 1 column 4",
+      "design": "burgundy red twisting licorice-like ridges and crimson feelers",
+      "action": "He proudly twists himself into a shiny red licorice rope, his face and eyes remaining readable. A cute original soft cream and pink rabbit with big dark blue eyes and long pink ears hops in (Cloudbun). Rabbit delicately nibbles the tail end, Twist giggles, rope becomes shorter bite by bite, ending in one tiny red loop. Rabbit eats loop and smiles, one sparkling red hiccup. Playful candy transformation; no animal harm or pain. Final rabbit licking lips."
+    },
+    {
+      "id": "puddle",
+      "name": "Blush",
+      "cell": "row 2 column 1",
+      "design": "translucent bubblegum pink, broad floppy ruffled mantle",
+      "action": "She blissfully sighs and softens from the feelers down, glossy pink skin slowly melting, frills drooping into drips and belly settling. Her happy eyes stay with her as whole body liquefies into a flat strawberry-pink puddle, face floats on puddle, gives contented blink. It is a continuous happy dissolution, never distress. Final smiling pink puddle with two eyes and a tiny frill."
+    },
+    {
+      "id": "bubbles",
+      "name": "Fizz",
+      "cell": "row 2 column 2",
+      "design": "turquoise blue, rounded transparent bubble cerata with gold highlights",
+      "action": "He inhales and giggles; rounded cerata separate into colourful iridescent bubbles, then tail and body dissolve into more bubbles, each carries a tiny smiling face. Last head becomes big bubble with his face. Bubble cluster drifts upwards and apart, little bubble salutes with miniature feeler, pops into small sparkle; final a single happy small bubble. Genuine changing drawn anatomy."
+    },
+    {
+      "id": "hoop",
+      "name": "Loop",
+      "cell": "row 2 column 3",
+      "design": "lime green and orange, long curled tail, orange gills",
+      "action": "He notices delicious-looking tail, curls head around and takes tail into mouth, progressively gulps body into a tighter curved loop, cheeky delighted eyes. Becomes a perfect green/orange hoop with his face, balances upright, wobbles, rolls rapidly offscreen with rolling pose inbetweens. Final tiny smiling green ring. Entirely cartoon self-folding no gore."
+    },
+    {
+      "id": "slipper",
+      "name": "Duchess",
+      "cell": "row 2 column 4",
+      "design": "ivory and lavender, delicate regal branching lacy frills, purple flecks",
+      "action": "An original tiny friendly mint-green prince in a purple coat and gold crown arrives with a glass slipper. Tries shoe at tail tip, too small; Duchess stretches a tiny foot, shoe fits and sparkles. Her ivory frills unfold into a flowing white wedding gown, lavender veil appears, her same slug face beams. Prince and Duchess hold frills/hands and waltz, swirling gown, exit together. Final glass slipper and heart. Cute fairytale parody, no branded characters."
+    },
+    {
+      "id": "wizard",
+      "name": "Hocus",
+      "cell": "row 3 column 1",
+      "design": "violet and gold star-like spots, tall purple gold-pointed feelers",
+      "action": "Tiny original elderly friendly alien wizard in teal robe and crooked purple star hat enters with wooden wand. Hocus eagerly poses; wizard draws sparkling wand arc, magic spirals through actual slug's body, body compresses, develops four froggy legs and bulging eyes. Ends as a small purple gold-spotted frog with original Hocus feelers. Wizard looks surprised, frog gleefully hops twice and waves. Final happy purple frog. No writing or branded wizard."
+    },
+    {
+      "id": "starblade",
+      "name": "Nova",
+      "cell": "row 3 column 2",
+      "design": "dark teal with luminous mint edging and sleek swept fins",
+      "action": "Nova proudly straightens and stretches into an original glowing mint green energy sword with her face still in its small rounded hilt, gills form guard, light grows organically from body. Friendly little original round space adventurer in white teal spacesuit, no robe or recognizable helmet, picks up hilt. Sword tickles and wiggles like spaghetti, adventurer wobbles and twirls, laughs, carries sword away. No combat or violence. Final small smiling star sparkle."
+    },
+    {
+      "id": "disco",
+      "name": "Boogie",
+      "cell": "row 3 column 3",
+      "design": "rainbow iridescent, rounded glossy jewel-like cerata",
+      "action": "Boogie raises feelers as a tiny disco ball descends. Whole worm dances: body contracts and springs, frills wave, expressive goofy face, tail balances upright, spins into a rainbow spiral. Dorsal jewels glow rhythmically, body transforms into a tiny spinning rainbow disco ball, shoots up to join hanging ball. Final small rainbow ball with smiling face. Clear drawn dance poses."
+    },
+    {
+      "id": "popcorn",
+      "name": "Kernel",
+      "cell": "row 3 column 4",
+      "design": "butter yellow and cream, clustered popcorn-like gills",
+      "action": "Kernel puffs cheeks, dorsal gills swell one by one and pop into fluffy popcorn. Each pop makes him bounce and laugh. Body progressively turns into popcorn kernels too, face briefly on one huge fluffy piece, then all tumbles into a small red-striped popcorn carton. Carton gives happy eyes and wink, one kernel jumps out and lands. No text. Final smiling popcorn bucket."
+    },
+    {
+      "id": "rocket",
+      "name": "Comet",
+      "cell": "row 4 column 1",
+      "design": "red orange with swept-back flame-like cerata",
+      "action": "Comet crouches for launch, body straightens nose upward, frills fold into red-orange fins, belly becomes rounded rocket body while face stays on cockpit. Eyes widen excitedly, feet tuck in, harmless cartoon orange exhaust puffs from tail, rocket shakes then launches with accelerating drawn movement upward, loops with curved trail, exits. Final tiny red star sparkle."
+    },
+    {
+      "id": "zipper",
+      "name": "Zippy",
+      "cell": "row 4 column 2",
+      "design": "cobalt blue with orange zipper-like rows of dorsal gills",
+      "action": "Zippy discovers a little zipper pull on his nose. Grins and pulls it with a feeler, blue body unzips down middle as orange dorsal teeth separate, revealing a very tiny blue Zippy inside a hollow soft costume. Tiny Zippy steps out, waves, folds outer skin neatly like a jacket, stuffs it into little orange bag, trots away. No injury. Final little orange zipped bag with smiling face."
+    },
+    {
+      "id": "portal",
+      "name": "Socks",
+      "cell": "row 4 column 3",
+      "design": "purple teal body, long striped tubular dangling cerata",
+      "action": "A turquoise oval portal opens. Socks curiously stretches head into it, gets pulled progressively through; tail frills wave goodbye. Portal spits him back out wearing comically mismatched tiny socks on every cerata, he looks delighted, poses, jumps back through while striped socks trail behind like confetti. Portal shrinks shut. Final two cheerful mismatched striped socks."
+    },
+    {
+      "id": "origami",
+      "name": "Fold",
+      "cell": "row 4 column 4",
+      "design": "ivory blue, sharp folded-leaf-like fins and blue spots",
+      "action": "Fold turns papery with visible blue crease lines, neatly folds tail under body, folds sides into triangles, bends face into a nose cone, fins become wings. Actual worm transforms progressively into an elegant ivory-blue paper airplane, friendly eyes remain on nose. Plane tests little wing flap, takes off, loops once and glides away. Final miniature blue paper airplane."
+    },
+    {
+      "id": "magician",
+      "name": "Tada",
+      "cell": "row 5 column 1",
+      "design": "inky plum, fluffy white gills and bright red natural collar",
+      "action": "A black top hat pops up. Tada bows, lowers head into hat, then stretches rest of slug into it until only tail sticks out. Hat bulges absurdly. Instead of a rabbit, a tiny original purple magician pops out, surprised. Tada's face emerges on the hat itself, hat sprouts her same plum frills, hops away while magician scrambles after it. Final grinning hat with red band and white tuft."
+    },
+    {
+      "id": "sneeze",
+      "name": "Achoo",
+      "cell": "row 5 column 2",
+      "design": "peach with freckles, feathery cerata, enormous rounded funny snout",
+      "action": "A tiny feather lands on Achoo's enormous snout. Nose twitches, eyes squeeze, whole body scrunches in three progressively exaggerated inhale poses. Huge comic sneeze releases colourful little curled moustaches, actual worm stretches backward then slingshots forward into a soft flattened moustache shape, original eyes peek above. Final peach curly moustache with cheerful eyes. No words."
+    },
+    {
+      "id": "skate",
+      "name": "Kickflip",
+      "cell": "row 5 column 3",
+      "design": "electric green pink broad foot, bright swept frill",
+      "action": "A tiny teal skateboard rolls in. Kickflip puts front foot on it, stretches tail to push, mantle becomes a cool sweeping cape. Rides, crouches, jumps, board rotates underneath in a kickflip, body bends dynamically while frills trail, lands proudly but wobbles, recovers with smug grin and rolls out. Final small skateboard with smiling green face sticker, no words."
+    },
+    {
+      "id": "pancake",
+      "name": "Flapjack",
+      "cell": "row 5 column 4",
+      "design": "caramel cream, broad layered pancake-like scalloped mantle",
+      "action": "Tiny friendly mint green alien chef with white hat brings a pan. Flapjack happily jumps in, whole slug flattens smoothly into a caramel pancake, frills become scalloped pancake edges, face stays adorable on top. Chef flips pancake upward, full rotation, lands, flips once more. Butter pat lands on top like a hat, syrup flows over, pancake winks. Final smiling pancake on pan, no eating or harm."
+    }
+  ]
+}

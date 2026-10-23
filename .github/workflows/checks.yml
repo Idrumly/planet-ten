@@ -23,3 +23,4 @@ jobs:
       - run: node --test spelling-bee.test.js
       - run: node --test auditorium.test.js
       - run: node --test lock-gag-model.test.js
+      - run: node --test worm-cartoons.test.js

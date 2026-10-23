@@ -44,6 +44,8 @@ window.createDoorPuzzle=function({root,questions,room,onUnlock,onReady}){
    next.onclick=()=>{level=Math.min(3,level+1);showHint();};
    card.querySelector('.lock-card-heading').append(hint);picture.after(help);
   }
+  const cast=window.LockGags.assign?.(card);
+  if(cast)card.querySelector('h3').insertBefore(document.createTextNode(cast.name+' · '),card.querySelector('.card-state'));
   depthDisposers.push(window.mountLivingLockDepth(card));
   card.onsubmit=e=>{
    e.preventDefault();if(solved.has(index))return;
@@ -60,5 +62,6 @@ window.createDoorPuzzle=function({root,questions,room,onUnlock,onReady}){
    if(solved.size===questions.length)onReady();
   };
  });
+ document.dispatchEvent(new CustomEvent('living-lock-cast'));
  return {complete:()=>solved.size===questions.length};
 };

@@ -1,0 +1,15 @@
+/* Illustrated bodies and performances share each lock's own space on the door. */
+.cartoon-worm .worm-skin{background-image:var(--worm-idle);background-size:contain;background-position:center;inset:3% 22% 7% 22%}
+.cartoon-stage{inset:-3% 0 0;overflow:hidden}
+.cartoon-stage canvas{display:block;width:100%;height:100%;object-fit:contain}
+.cartoon-worm .lock-picture>.lock-reaction{display:none}
+.cartoon-worm .lock-picture:before,.cartoon-worm .lock-picture:after{content:'';position:absolute;top:65%;width:27%;height:10px;border-top:2px solid #9ebba0;border-bottom:2px solid #6f8e78;border-radius:6px;background:repeating-linear-gradient(90deg,#1c393e 0 10px,#90a995 11px 14px);z-index:-1}
+.cartoon-worm .lock-picture:before{left:7%}.cartoon-worm .lock-picture:after{right:3%}
+.cartoon-worm.is-unlocked .lock-picture:before,.cartoon-worm.is-unlocked .lock-picture:after{display:none}
+.cartoon-worm.gag-played .worm-skin{visibility:hidden!important}
+.cartoon-worm h3{max-width:22%}
+.cartoon-worm.has-belly-window .card-digits{left:50%;top:70%}
+.cartoon-worm .card-feedback{left:23%;width:59%}
+.door-bolt-sprite.cast-bolt{background-image:var(--worm-idle);background-size:contain!important;background-position:center!important}
+@media(min-width:1500px){.cartoon-worm h3{font-size:18px}.cartoon-worm .card-question{font-size:20px}.cartoon-worm .card-question strong{font-size:32px}.cartoon-worm>.primary{min-height:44px;font-size:17px}.cartoon-worm .lock-hint-toggle{min-height:40px;font-size:16px}.cartoon-worm .card-feedback{font-size:16px}}
+@media(max-width:760px){.cartoon-worm h3{max-width:75%}.cartoon-worm .worm-skin{inset:0 9%}.cartoon-stage{inset:-20px 0;height:190px}.cartoon-worm.has-belly-window .card-digits{left:46%;top:220px}.cartoon-worm .card-feedback{left:4%;width:92%}}
