@@ -18,7 +18,7 @@ async function build(spec){
  await sharp(source).extract(bounds[0]).webp({quality:90,alphaQuality:100}).toFile(path.join(dir,'idle.webp'));
  fs.writeFileSync(path.join(dir,'bounds.json'),JSON.stringify({scale,rowCuts,bounds},null,2));console.log(spec.name+': 24 poses packaged');
 }
-(async()=>{for(const spec of specs)await build(spec);
+(async()=>{for(const spec of specs)await build(spec);await build({id:'jiggles-dancer',name:'Jiggles individual dancer'});
  const puff=path.join(root,'balloon');fs.mkdirSync(puff,{recursive:true});fs.copyFileSync('assets/rounding/puff-v1/puff-atlas.webp',path.join(puff,'atlas.webp'));await sharp('assets/rounding/puff-v1/frames/01.png').trim({threshold:10}).webp({quality:90}).toFile(path.join(puff,'idle.webp'));
  const records=[{id:'balloon',name:'Puff'},...specs.map(({id,name})=>({id,name}))];fs.writeFileSync('worm-cast.js',`'use strict';\nwindow.WormCast=Object.freeze(${JSON.stringify(records)});\n`);
 })().catch(e=>{console.error(e);process.exitCode=1});

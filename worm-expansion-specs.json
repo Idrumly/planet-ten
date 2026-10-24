@@ -1,0 +1,138 @@
+{
+  "basePrompt": "Use case: illustration-story. Production game animation spritesheet: exactly 24 distinct chronological drawings, strict 6 columns by 4 rows, 1536x1024 landscape canvas with ACTUAL transparency. Each complete scene fits in its equal square cell with 12 percent transparent padding on all sides. No grid, scenery, labels or text unless specified. Detailed pearlescent painted cartoon finish, friendly expressive alien nudibranch worm, clear silhouette readable at game scale. Same character, palette, facing direction and camera scale throughout. Frames 1-4 original intact worm anticipating, 5-10 transformation, 11-18 action, 19-22 exit, 23-24 charming small souvenir. Complete evolving action, never 24 nearly identical poses. All characters enjoy their absurd outcomes. No injury or distress.",
+  "characters": [
+    {
+      "id": "jiggles",
+      "name": "Jiggles",
+      "design": "emerald green worm with six rounded body segments and orange feelers",
+      "action": "Six body segments separate and sprout legs, becoming six tiny Irish alien dancers. They line up with arms down, perform synchronized rapid step dancing with kicking feet, then dance sideways away. Last dancer hurries after them. Final green dancing shoe souvenir.",
+      "title": "Six steps to freedom",
+      "caption": "Six dancers. Twelve feet. Absolutely no security.",
+      "duration": 4000
+    },
+    {
+      "id": "rahrah",
+      "name": "Rah-Rah",
+      "design": "pink and turquoise fluffy worm with enormous feathery gills",
+      "action": "Gills expand and worm divides into two living fluffy pom-poms with little eyes. The Zargon alien cheerleader from the reference grabs both, makes a celebratory leap and cartwheels away. Preserve reference cheerleader identity. Final two tiny cheerful pompoms.",
+      "title": "Give me an unlocked!",
+      "caption": "The pompoms keep cheering after the cheerleader stops.",
+      "duration": 3600
+    },
+    {
+      "id": "crumpet",
+      "name": "Crumpet",
+      "design": "warm golden butter-yellow worm with toast-shaped dorsal frills",
+      "action": "Three tiny cheerful baby toasters from the reference arrive, lift the worm like a crowd surfer and carry it away. Worm waves regally. One toaster pops toast confetti. Match the baby toaster design in reference. Final small smiling toast slice.",
+      "title": "Toast of the department",
+      "caption": "Carried away by enthusiastic breakfast appliances.",
+      "duration": 3600
+    },
+    {
+      "id": "howlie",
+      "name": "Howlie",
+      "design": "lavender worm with fluffy silver frills and oversized ears",
+      "action": "Full moon rises above worm. Fur grows progressively, tiny claws and huge ears emerge, transforming worm into a very small friendly purple werewolf. It gives an adorable squeaky howl and bounds away. Final little furry paw print beneath tiny moon.",
+      "title": "A very small howl",
+      "caption": "Terrifying. If you happen to be a biscuit.",
+      "duration": 3600
+    },
+    {
+      "id": "roswell",
+      "name": "Roswell",
+      "design": "bright green alien worm with large black eyes and green antennae",
+      "action": "A recognizably Earth-made white space shuttle with black nose arrives. Tiny astronaut lowers transparent specimen jar, scoops up delighted green worm and attaches a specimen tag with a worm symbol. Worm waves inside jar as shuttle departs. Final small specimen tag. Reversal of aliens abducting humans.",
+      "title": "Earthlings are strange",
+      "caption": "Earth has collected a highly qualified specimen.",
+      "duration": 4000
+    },
+    {
+      "id": "splat",
+      "name": "Splat",
+      "design": "happy coral pink worm with yellow frills and very stretchy body",
+      "action": "A giant green reptilian foot wearing a broad sandal stamps down like a rubber stamp. Foot lifts and tilts sole toward viewer, revealing smiling flattened worm stuck underneath giving tiny thumbs-up. Foot walks away with delighted worm sticker. Final tiny pink smiling footprint. Entirely harmless cartoon squash.",
+      "title": "A sole promotion",
+      "caption": "Delighted with the new position in footwear.",
+      "duration": 3400
+    },
+    {
+      "id": "encore",
+      "name": "Encore",
+      "design": "purple theatrical worm with gold frills and absurdly long red scarf",
+      "action": "Three tiny alien talent-show judges appear behind desk, raise three separate X paddles. Worm bows extravagantly with grateful expression, mouths thanks, drags comically long scarf away. One judge secretly claps. Final three little X paddles and gold star. Only text is X on paddles.",
+      "title": "Thank you for the opportunity",
+      "caption": "Three Xs. One unforgettable exit interview.",
+      "duration": 4000
+    },
+    {
+      "id": "drippy",
+      "name": "Drippy",
+      "design": "worm striped in glossy cyan magenta yellow paint with dripping frills",
+      "action": "Colours begin running before worm notices. It looks down, happily shrugs, body dissolves into flowing wet paint streaks dripping down and off cell. Eyes slide down last riding a final colourful paint drop. Final tiny smiling paint droplet.",
+      "title": "Still wet",
+      "caption": "Please allow security to dry before handling.",
+      "duration": 3200
+    },
+    {
+      "id": "eightball",
+      "name": "Eightball",
+      "design": "worm with glossy coloured spherical segments, black tail ball and white expressive eyes",
+      "action": "Segments turn into a triangle rack of colourful billiard balls. One eye detaches and becomes white cue ball with determined face. Cue ball takes a run-up and strikes triangle, balls scatter to cell edges and offscreen. Cue ball winks and follows. Final small billiard chalk cube.",
+      "title": "A lucky break",
+      "caption": "Security has been comprehensively scattered.",
+      "duration": 3400
+    },
+    {
+      "id": "peepers",
+      "name": "Peepers",
+      "design": "lime and violet translucent worm with big blinking eyes and pearly egg-like frills",
+      "action": "Body separates into six translucent eggs each containing blinking eye. Eggs crack and hatch tiny cute slimy baby worms. Babies slither away in different directions. Last hatchling wears half eggshell as helmet and cheerfully follows. Final empty iridescent eggshell. Mildly strange and funny, not horror.",
+      "title": "An eggsellent escape",
+      "caption": "The last hatchling remembered its safety helmet.",
+      "duration": 3800
+    },
+    {
+      "id": "clank",
+      "name": "Clank",
+      "design": "shiny silver metallic worm with copper rivets and flexible steel frills",
+      "action": "Giant red horseshoe magnet enters above. Metallic worm stretches toward it while gripping below with increasingly tiny fingers. Finally lets go, sticks to magnet with delighted expression and waves as magnet leaves. Final small smiling metal fridge decoration.",
+      "title": "Magnetic personality",
+      "caption": "A promising new career as a fridge decoration.",
+      "duration": 3600
+    },
+    {
+      "id": "byte",
+      "name": "Byte",
+      "design": "electric cyan and violet worm with squared pixel-like gills",
+      "action": "Smooth worm progressively becomes a chunky retro eight-bit pixel version of itself. Original orange square pixel chomper with two antennae enters and eats it square by square. Chomper burps one blinking cyan pixel then chases it away. Final blinking pixel. Original square creature, no existing game character.",
+      "title": "Eight bits of security",
+      "caption": "One last pixel refuses to be digested.",
+      "duration": 3400
+    },
+    {
+      "id": "lobat",
+      "name": "Lo-Bat",
+      "design": "glossy cobalt and neon green worm with geometric frills",
+      "action": "Small low-battery icon flashes once above worm. Glossy colours disappear progressively revealing unpainted grey blocky low-poly 3D model. It gives one stiff wave, tips over like wooden toy, drops down out of cell. Final little grey geometric block and empty battery icon. No rapid flashing.",
+      "title": "Please recharge your worm",
+      "caption": "Texture subscription expired at a difficult moment.",
+      "duration": 3200
+    },
+    {
+      "id": "click",
+      "name": "Click",
+      "design": "bright tangerine worm with turquoise cursor-shaped frills",
+      "action": "Giant white mouse pointer enters, grabs worm and stretches it like sticky putty before it pops loose. Pointer drags it into small recycling bin with recycling symbol. Lid lifts briefly and worm cheerfully waves, bin rolls away. Final tiny recycling symbol with smiling eyes.",
+      "title": "Drag to recycle",
+      "caption": "Thank you for recycling your security responsibly.",
+      "duration": 3600
+    }
+  ],
+  "zippyAction": "Zippy is a cobalt blue worm with orange zipper-like gills. Nose zipper unzips worm suit down middle. A miniature green alien DEPARTMENT HEAD steps out wearing oversized tie, round glasses and tiny office jacket. Straightens glasses, stamps clipboard APPROVED, folds blue worm suit into briefcase, marches proudly away. Final tiny stamped clipboard and blue briefcase. Only text APPROVED. Friendly glossy painted cartoon, actual transformation.",
+  "additionalAssets": [
+    {
+      "id": "jiggles-dancer",
+      "prompt": "Transparent 24-pose spritesheet, 6 columns by 4 rows. One emerald alien Irish step dancer per cell, orange antennae, green and gold costume, black and gold shoes. Fixed scale and bottom baseline, 15% padding. Arms down; alternating taps, crossed feet, hops, knee lifts, heel clicks and sideways steps. Loop last pose to first. No text, floor, shadows or grid. Pearlescent painted cartoon. Runtime draws six instances in two rows of three."
+    }
+  ]
+}

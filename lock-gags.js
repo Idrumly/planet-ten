@@ -99,6 +99,10 @@
     piece('chef',65,0,25,100,0,3200,[frame('translateX(150%)'),frame('translateX(0)'),frame('rotate(-10deg)'),frame('rotate(10deg)'),frame('translateX(150%)')]);
     piece('pan',34,25,32,75,500,3200,[frame('scale(.1)',0),frame('scale(1)'),frame('rotate(-20deg)'),frame('rotate(20deg)'),frame('rotate(0deg)')]);
     piece('pancake',33,10,28,65,1100,3200,[frame('scale(.1)',0),frame('scale(1)'),frame('translateY(-80%) rotateX(180deg)'),frame('translateY(15%) rotateX(360deg)'),frame('translateY(-40%) rotateX(540deg)'),frame('translateY(15%) rotateX(720deg)')]);sound(1500,'boing');break;
+   default:
+    // Download failure: keep a visible celebration without blocking the answer.
+    worm(0,gag.duration,[frame('scale(1)'),frame('scale(.9,1.1)'),frame('scale(1)'),frame('scale(.1)',0)]);
+    piece('spark',35,5,30,90,300,gag.duration,pop);sound(500,'pop');break;
   }
  }
  function render(run){
