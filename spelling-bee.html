@@ -3,39 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Planet Ten: The Spelling Bee's Journey is under development. A spelling adventure for students is coming soon.">
+  <meta name="description" content="Enter your bee code to find your place in Planet Ten: The Spelling Bee's Journey.">
   <title>Planet Ten: The Spelling Bee's Journey</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 2rem 1.25rem;
-      background: radial-gradient(ellipse at top, #24395b, #101b30 75%);
-      color: #fff7e5;
-      font-family: system-ui, sans-serif;
-      text-align: center;
-    }
-    main { width: 100%; max-width: 46rem; }
-    .bee { margin: 0 0 1.5rem; font-size: 4rem; }
-    .eyebrow { color: #f5ca69; font-size: 1rem; font-weight: 700; letter-spacing: .2em; }
-    h1 { margin: 1rem 0 1.5rem; font-size: clamp(2rem, 6vw, 3.75rem); line-height: 1.15; }
-    .status { display: inline-block; margin: 0; padding: .65rem 1.25rem; border: 1px solid #f5ca69; border-radius: 2rem; color: #f5ca69; font-size: 1.25rem; font-weight: 650; }
-    .message { margin: 1.5rem auto 0; max-width: 32rem; color: #d2deec; font-size: 1.125rem; line-height: 1.7; }
-    a { display: inline-block; margin-top: 2.5rem; padding: .75rem; color: #d2deec; text-underline-offset: .25em; }
-    a:hover { color: #f5ca69; }
-    a:focus-visible { outline: 3px solid #f5ca69; outline-offset: 4px; border-radius: .25rem; }
-  </style>
+  <link rel="stylesheet" href="student-entry.css">
+  <script type="module" src="student-entry.mjs"></script>
 </head>
 <body>
   <main>
     <p class="bee" aria-hidden="true">🐝</p>
-    <p class="eyebrow">STUDENT LANDING</p>
-    <h1>Planet Ten:<br>The Spelling Bee's Journey</h1>
-    <p class="status">Under development</p>
-    <p class="message">A spelling adventure for students is coming soon.<br>Check back for the beginning of the journey!</p>
+    <p class="eyebrow">WELCOME TO PLANET TEN</p>
+    <h1>The Spelling Bee’s Journey</h1>
+    <form id="bee-entry" action="spelling-bee.html" method="get" aria-labelledby="entry-heading">
+      <h2 id="entry-heading">Find your bee</h2>
+      <label for="bee-code">Your bee code</label>
+      <input id="bee-code" name="code" type="text" required maxlength="40" autocapitalize="none" autocorrect="off" spellcheck="false" autocomplete="off" enterkeyhint="go" aria-describedby="code-help entry-error">
+      <p class="hint" id="code-help">Type the bee code your teacher gave you, including the z’s at the end.</p>
+      <p id="entry-error" class="error" role="alert"></p>
+      <button type="submit">Find my bee</button>
+    </form>
+    <section id="bee-welcome" class="welcome" hidden aria-labelledby="welcome-heading">
+      <h2 id="welcome-heading" tabindex="-1"></h2>
+      <p>You’ve found your place on Planet Ten.</p>
+      <p class="status">Your spelling adventure is under development.</p>
+      <p>Keep this link. Your teacher will let you know when the flowers are ready!</p>
+      <a href="spelling-bee.html">Use a different bee code</a>
+    </section>
+    <noscript><p>Turn on JavaScript in your browser to use your bee code or link.</p></noscript>
+    <p class="footer">No student name or email needed.</p>
     <a href="./">Explore Planet Ten</a>
   </main>
 </body>
