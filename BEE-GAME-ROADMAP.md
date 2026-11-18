@@ -128,3 +128,6 @@ Closing Clover’s advice now returns to an editable learning attempt; the refle
 
 ## Clue policy update
 All clues and replays are free. Correct first attempts earn five HoneyHexes regardless of clue use; correction retries do not duplicate prizes. Word history & origin is one clue, using history first and origin as fallback. This supersedes earlier clue-cost proposals.
+
+## Recorded flower trial
+The ?recordings=1 playground uses a published snapshot of ten approved words and 29 cached Speechify clips. Test me speaks the target prompt, clues use matching saved audio, and the human button uses the stored MW/Wikimedia pronunciation. Missing recordings explicitly fall back to device speech. Public files contain only the approved word content and recordings, never teacher identity, keys or bee assignments. Teacher edits require a fresh audio-pack export and publication; there is no automatic private-to-public sync.

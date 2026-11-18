@@ -1,16 +1,24 @@
+import {recordedQuestions} from './bee-flower-recordings.mjs';
 import {createLetterPlayer} from './bee-letter-audio.mjs';
 import {feedbackFor,wisdom,learningResult,detectiveChoices,detectiveTip,canLeaveFlower} from './bee-tutor.mjs';
 import {options,newProfile,restoreProfile,makeover,potential,settle,appendLetter,questions,clueNames,drawTutorial,restartTutorial} from './bee-playground-rules.mjs?v=free-clues-1';
 import {beeAvatar} from './bee-avatar.mjs';
-const $=id=>document.getElementById(id),storageKey='planetTen.designPlayground.v1';
+const recordingTrial=new URLSearchParams(location.search).get('recordings')==='1';
+if(recordingTrial)questions.splice(0,questions.length,...recordedQuestions);
+const $=id=>document.getElementById(id),storageKey=recordingTrial?'planetTen.recordingTrial.v1':'planetTen.designPlayground.v1';
 let profile=newProfile(),draft,answer='',unlocked=[],finished=false,heard=false,clueBusy=false,voices=[],active=new Set(),speechChannel='',learningRetry=false,wisdomIndex=0,listeningEpoch=0;
-try{profile=restoreProfile(JSON.parse(localStorage.getItem(storageKey)));}catch{}
+if(recordingTrial){profile.round=recordedQuestions.map(q=>q.word);document.querySelector('.prototype-note').textContent='Ten words with your saved flower recordings. Test me begins each word; Human speaks offers a second listen. Missing recordings use device speech. Demo progress stays in this browser.';}
+try{const saved=localStorage.getItem(storageKey);if(saved)profile=restoreProfile(JSON.parse(saved));}catch{}
 learningRetry=!!profile.correction;
 const letterPlayer=createLetterPlayer();
 const currentQuestion=()=>{const q=questions.find(q=>q.word===profile.round[profile.index]);return {...q,wordHistory:q.wordHistory||q.languageOrigin};};
 const tell=text=>{$('message').textContent=text;};
 function persist(){try{localStorage.setItem(storageKey,JSON.stringify(profile));$('save-state').textContent='Saved on this browser · demo only';}catch{$('save-state').textContent='Browser saving is unavailable. Keep this page open to keep your demo.';}}
 function paint(){
+ const credit=$('human-credit'),human=currentQuestion().human;credit.replaceChildren();
+ if(human?.source==='mw'){const link=document.createElement('a');link.href='https://www.merriam-webster.com/';link.textContent='Human pronunciation: Merriam-Webster';credit.append(link);}
+ if(human?.source==='wikimedia'){credit.append(document.createTextNode((human.artist||'Wikimedia contributor')+' · '));const link=document.createElement('a');link.href=human.pageUrl;link.textContent='Recording source';credit.append(link,document.createTextNode(' · '));const license=document.createElement('a');license.href=human.licenseUrl;license.textContent=human.license;credit.append(license);}
+
  $('hero').innerHTML=beeAvatar(profile.look,'hero');$('balance').textContent=profile.balance;
  $('progress').textContent=`Flower ${profile.index+1} / ${profile.round.length}`;
  $('answer').textContent=answer||'Tap the honeycomb letters';$('answer').classList.toggle('typed',!!answer);
@@ -18,6 +26,7 @@ function paint(){
  $('freebee').textContent='All clues are free';
  $('submit').hidden=finished;$('next').hidden=!canLeaveFlower(finished,profile.correction);$('next').textContent=profile.index===9?'Practise again →':'Next flower →';
  for(const node of document.querySelectorAll('#keyboard button, #erase, #clear, #space, #apostrophe, #hyphen'))node.disabled=finished;
+ $('test-me').disabled=clueBusy||finished;
  $('submit').disabled=!answer.trim()||!heard||clueBusy;$('stop-listening').hidden=!clueBusy;
  for(const [key,label] of Object.entries(clueNames)){const b=$('clue-'+key);b.disabled=finished||clueBusy||!currentQuestion()[key];b.querySelector('small').textContent=!currentQuestion()[key]?'Not available':unlocked.includes(key)?'Replay · free':'Listen · free';}
 }
@@ -27,7 +36,7 @@ function speech(text,channel='human',look=profile.look){
  if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){ $('sound-status').textContent='Speech is unavailable in this browser. Try a browser with English speech voices. No clue was charged.';return Promise.resolve(false);}
  if(channel!=='letter'||speechChannel!=='letter')stopSpeech();speechChannel=channel;
  return new Promise(resolve=>{
-  const u=new SpeechSynthesisUtterance(text);u.lang='en-CA';u.rate=channel==='letter'?.95:.88;u.pitch=channel==='human'?1:look.voice==='lower'?.75:1.35;
+  const u=new SpeechSynthesisUtterance(text);u.lang='en-CA';u.rate=channel==='letter'?.95:.88;u.pitch=channel!=='letter'?1:look.voice==='lower'?.75:1.35;
   u.voice=voices.find(v=>v.voiceURI===$('device-voice').value)||voices.find(v=>v.lang==='en-CA')||voices.find(v=>/^en\b/.test(v.lang))||null;
   let ended=false,timeout;
   const end=ok=>{if(ended)return;ended=true;clearTimeout(timeout);active.delete(end);if(!active.size){$('hero').parentElement.classList.remove('speaking');document.querySelector('.hologram').classList.remove('speaking');}resolve(ok);};active.add(end);
@@ -37,6 +46,27 @@ function speech(text,channel='human',look=profile.look){
   try{speechSynthesis.speak(u);}catch{end(false);$('sound-status').textContent='Speech could not start. No clue was charged.';}
  });
 }
+function recordedSpeech(url){
+ stopSpeech();speechChannel='recording';
+ return new Promise(resolve=>{
+  const audio=new Audio(url);audio.preload='none';audio.playbackRate=Number($('recording-speed').value)||1;audio.preservesPitch=true;
+  let ended=false;const end=ok=>{if(ended)return;ended=true;clearTimeout(timer);audio.pause();audio.removeAttribute('src');audio.load();active.delete(end);resolve(ok);};
+  const timer=setTimeout(()=>end(false),90000);active.add(end);audio.onended=()=>end(true);audio.onerror=()=>end(false);
+  audio.play().catch(()=>end(false));
+ });
+}
+async function flowerSpeech(kind,text){
+ const clip=currentQuestion().audio?.[kind];
+ $('sound-status').textContent=clip?'Playing saved flower recording.':'No saved recording for this section yet. Using device speech.';
+ return clip?recordedSpeech(clip.url):speech(text,'flower');
+}
+$('test-me').addEventListener('click',async()=>{
+ if(clueBusy||finished)return;const epoch=++listeningEpoch;clueBusy=true;paint();tell('The flower is speaking…');
+ let ok=await flowerSpeech('flowerPrompt',`Spell the word ${currentQuestion().word}.`);
+ if(epoch!==listeningEpoch)return;
+ if(ok&&currentQuestion().needsFreeContext){ok=await flowerSpeech('sentence',currentQuestion().sentence);if(epoch!==listeningEpoch)return;}
+ heard=heard||ok;clueBusy=false;paint();tell(ok?'Your turn. Use any clues you need.':'Audio stopped or unavailable. Press Test me to try again.');
+});
 function loadVoices(){const selected=$('device-voice').value;voices=window.speechSynthesis?.getVoices().filter(v=>/^en\b/.test(v.lang))||[];$('device-voice').replaceChildren(new Option('Device default',''),...voices.map(v=>new Option(`${v.name} · ${v.lang}`,v.voiceURI)));if(voices.some(v=>v.voiceURI===selected))$('device-voice').value=selected;}
 window.speechSynthesis?.addEventListener('voiceschanged',loadVoices);loadVoices();
 const letterNames={a:'ay',b:'bee',c:'see',d:'dee',e:'ee',f:'eff',g:'jee',h:'aitch',i:'eye',j:'jay',k:'kay',l:'ell',m:'em',n:'en',o:'oh',p:'pee',q:'cue',r:'ar',s:'ess',t:'tee',u:'you',v:'vee',w:'double you',x:'ex',y:'why',z:'zed',"'":'apostrophe','-':'hyphen',' ':'space'};
@@ -52,9 +82,9 @@ function enter(key){if(finished)return;const next=appendLetter(answer,key);if(ne
 for(const row of ['qwertyuiop','asdfghjkl','zxcvbnm']){const div=document.createElement('div');div.className='key-row';for(const letter of row){const b=document.createElement('button');b.textContent=letter.toUpperCase();b.setAttribute('aria-label',`Letter ${letter.toUpperCase()}`);b.addEventListener('click',()=>enter(letter));div.append(b);}$('keyboard').append(div);}
 for(const [key,label] of Object.entries(clueNames)){const b=document.createElement('button');b.id='clue-'+key;b.append(document.createTextNode(label),document.createElement('small'));b.addEventListener('click',async()=>{
  if(finished||clueBusy||!currentQuestion()[key])return;const epoch=++listeningEpoch;clueBusy=true;paint();tell(`Listening to ${label.toLowerCase()}…`);
- const delivered=await speech(currentQuestion()[key]);if(epoch!==listeningEpoch)return;if(delivered&&!unlocked.includes(key))unlocked.push(key);clueBusy=false;paint();tell(delivered?'Clue heard. Replay it any time for free.':'Clue stopped or unavailable. Try listening again.');
+ const delivered=await flowerSpeech(key,currentQuestion()[key]);if(epoch!==listeningEpoch)return;if(delivered&&!unlocked.includes(key))unlocked.push(key);clueBusy=false;paint();tell(delivered?'Clue heard. Replay it any time for free.':'Clue stopped or unavailable. Try listening again.');
  });$('clues').append(b);}
-$('hear').addEventListener('click',async()=>{if(clueBusy)return;const epoch=++listeningEpoch;clueBusy=true;paint();$('earth-state').textContent='Earth connection open · listen closely';const ok=await speech(currentQuestion().word);if(epoch!==listeningEpoch)return;heard=heard||ok;clueBusy=false;paint();$('earth-state').textContent=ok?'Human transmission received':'Connection interrupted · try again';tell(ok?'Now tap the letters to build your spelling.':'The word did not finish playing. Try Hear again.');});
+$('hear').addEventListener('click',async()=>{if(clueBusy)return;const epoch=++listeningEpoch;clueBusy=true;paint();$('earth-state').textContent='Earth connection open · listen closely';const q=currentQuestion();const ok=q.human?.url?await recordedSpeech(q.human.url):await speech(q.word);if(epoch!==listeningEpoch)return;heard=heard||ok;clueBusy=false;paint();$('earth-state').textContent=ok?'Human transmission received':'Connection interrupted · try again';tell(ok?'Now tap the letters to build your spelling.':'The word did not finish playing. Try Hear again.');});
 for(const id of ['stop-sound','stop-listening'])$(id).addEventListener('click',()=>{cancelListening();tell('Audio stopped. You can keep typing; hear the word again before checking your spelling if needed.');});
 $('erase').addEventListener('click',()=>{cancelListening();answer=answer.slice(0,-1);paint();});$('clear').addEventListener('click',()=>{cancelListening();answer='';paint();});
 $('space').addEventListener('click',()=>enter(' '));$('apostrophe').addEventListener('click',()=>enter("'"));$('hyphen').addEventListener('click',()=>enter('-'));

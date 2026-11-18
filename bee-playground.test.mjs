@@ -31,3 +31,10 @@ test('the answer is assembled from individual controls, never an editable input'
  const first=settle(p,'hive',true,[]);assert.equal(settle({...first.profile,round:drawTutorial()},'hive',true,[]).award,0);
  const old=restoreProfile({version:1,balance:35,madeOver:true,look:p.look,earned:[0],index:3});assert.equal(old.balance,35);assert.equal(old.madeOver,true);assert.equal(old.index,0);assert.deepEqual(old.earned,[]);
  });
+
+import {recordedQuestions} from './bee-flower-recordings.mjs';
+test('published recording trial has ten unique words and valid local MP3s',()=>{
+ assert.equal(recordedQuestions.length,10);assert.equal(new Set(recordedQuestions.map(q=>q.word)).size,10);
+ const files=new Set();for(const q of recordedQuestions){assert.ok(Object.keys(q.audio).some(k=>k!=='partOfSpeech'));for(const c of Object.values(q.audio)){assert.match(c.url,/^bee-audio\/flowers\/clip-\d+\.mp3$/);const bytes=readFileSync(new URL(c.url,import.meta.url));assert.ok(bytes.length>16);assert.ok(bytes.subarray(0,3).toString()==='ID3'||(bytes[0]===255&&(bytes[1]&224)===224));files.add(c.url);}if(q.human.url)assert.match(q.human.url,/^https:\/\/(media.merriam-webster.com|upload.wikimedia.org)\//);}
+ assert.equal(files.size,29);assert.ok(!JSON.stringify(recordedQuestions).includes('teacher_id'));
+});
