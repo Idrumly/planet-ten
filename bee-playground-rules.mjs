@@ -183,3 +183,5 @@ export const questions=[
 ];
 export function drawTutorial(random=Math.random){const words=questions.map(q=>q.word);for(let i=words.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[words[i],words[j]]=[words[j],words[i]];}return words.slice(0,10);}
 export const clueNames={sentence:'Sentence',partOfSpeech:'Part of speech',definition:'Definition',languageOrigin:'Word origin',wordHistory:'Word history'};
+
+export function restartTutorial(profile){return {...profile,round:drawTutorial(),index:0,correction:null};}
