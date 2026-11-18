@@ -110,3 +110,8 @@ Evidence-informed design, not a validated intervention: IES/What Works Clearingh
 Origin examples are deliberately narrow: action/nation share a Latin-derived -tion ending (Merriam-Webster dictionary entries); knee preserves a formerly pronounced k (Vrije Universiteit Amsterdam, https://www.sgw.fsg.vu.nl/english-pronunciation/silent-letters/silent-letters-nojs.htm). Do not invent etymologies when source data is missing.
 
 The private teacher vocabulary tool now seeds an editable **Bee and Game Start Words** unit once, preserving edits and cached clues. **Needs free context sentence** defaults off and requires a sentence before approval when enabled. The sample journey exposes this separately from optional hints. Connecting approved teacher data to the public student runtime remains a separate integration step; this public playground still uses its authored sample bank.
+
+### Spelling Detective reflection
+After a miss, the learner compares their attempt with the model, chooses one of six self-reflection categories (or “I’m not sure yet”), and sees one matching strategy. The category is not scored or treated as a diagnosis. Categories can overlap. The student then uses the honeycomb keyboard to produce the correct spelling before advancing. Failed retries return to Clover; no currency changes. Pending corrections and their selected reflection survive refresh on the same browser. These reflections are not yet sent to a teacher dashboard.
+
+Meaning examples use “their” for possession, “there” for place, and “its” in “The cat licked its paw”; “it’s” expands to “it is” or “it has.” Word-part and doubling tips use specific examples rather than claiming that every word follows one rule.

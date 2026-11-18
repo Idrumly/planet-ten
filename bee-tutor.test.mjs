@@ -5,3 +5,8 @@ import {questions,newProfile} from './bee-playground-rules.mjs';
 test('every tutorial word has a specific feature to practise',()=>{for(const q of questions)assert.ok(wordTips[q.word]);});
 test('feedback compares an attempt without diagnosing the child',()=>{const f=feedbackFor('comb','com');assert.match(f.comparison,/com.*comb/);assert.match(f.tip,/silent b/);});
 test('learning retries never change wallet or earned words',()=>{const p=newProfile();for(const correct of [true,false]){const r=learningResult(p,correct);assert.equal(r.award,0);assert.deepEqual(r.profile,p);}});
+import {detectiveChoices,detectiveTip,canLeaveFlower} from './bee-tutor.mjs';
+import {restoreProfile} from './bee-playground-rules.mjs';
+test('reflection offers six categories and an honest unsure choice without grading',()=>{assert.equal(detectiveChoices.length,7);assert.equal(new Set(detectiveChoices.map(c=>c.id)).size,7);assert.ok(detectiveTip('unsure'));assert.equal(detectiveTip('made-up'),'');});
+test('a missed flower cannot advance until its correction is completed',()=>{const correction={word:'comb',attempt:'com',choice:'silent'};assert.equal(canLeaveFlower(true,correction),false);assert.equal(canLeaveFlower(false,null),false);assert.equal(canLeaveFlower(true,null),true);});
+test('refresh preserves the current correction and rejects unrelated or invalid reflection data',()=>{const p=newProfile();p.correction={word:p.round[0],attempt:'x',choice:'unsure'};assert.deepEqual(restoreProfile(p).correction,p.correction);assert.equal(restoreProfile({...p,correction:{...p.correction,word:'unrelated'}}).correction,null);assert.equal(restoreProfile({...p,correction:{...p.correction,choice:'injected'}}).correction.choice,'');});

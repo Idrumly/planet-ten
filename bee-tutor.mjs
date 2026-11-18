@@ -42,3 +42,16 @@ export const wisdom = [
  'When writing a story, keep your ideas flowing. Mark a spelling you want to check, then check it while editing. Try today’s word again tomorrow without looking.'
 ];
 export function learningResult(profile,correct){return {profile,award:0,correct};}
+
+// These are student reflections, never automatically scored diagnoses.
+export const detectiveChoices = [
+ {id:'sound',title:'Missing Sound',question:'Did I miss letters for a sound I said?',tip:'Say the word slowly and tap each sound. Match each sound to a letter or letter team. In jump, listen for m before p.'},
+ {id:'vowel',title:'Vowel Swap',question:'Did I choose the wrong vowel spelling?',tip:'Say the vowel, then study its spelling here. Boat uses oa; rain uses ai. The same vowel sound can have different spellings.'},
+ {id:'silent',title:'Ghost Letter',question:'Did I miss a silent letter?',tip:'Point to a letter you cannot hear, such as b in comb. Remember its place. Use a checked history clue when one is available.'},
+ {id:'parts',title:'Word Builder',question:'Did I change a word part or ending?',tip:'Find the base word and any prefix or suffix. Happy + ness becomes happiness: y changes to i. Some parts change when joined.'},
+ {id:'meaning',title:'Twin Trap',question:'Did I choose a word with the wrong meaning?',tip:'Hear the sentence and picture its meaning. Their means belonging to them; there can name a place. “The cat licked its paw” uses its. It’s means it is or it has.'},
+ {id:'pattern',title:'Rule Check',question:'Did I miss a spelling pattern I know?',tip:'Check a pattern that fits this word. Hop has one syllable, one short vowel, then one final consonant: double p before ing. Hope drops e before ing. Hopping and hoping are different words.'},
+ {id:'unsure',title:'I’m not sure yet',question:'Can we look at it together?',tip:'That is an honest answer. Compare your attempt with the correct spelling. Choose one different letter or letter team to notice, then try again.'}
+];
+export function detectiveTip(id){return detectiveChoices.find(choice=>choice.id===id)?.tip||'';}
+export function canLeaveFlower(finished,correction){return finished&&!correction;}
