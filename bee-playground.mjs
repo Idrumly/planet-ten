@@ -1,20 +1,21 @@
-import {options,newProfile,restoreProfile,makeover,potential,settle,appendLetter,questions,clueNames} from './bee-playground-rules.mjs';
+import {options,newProfile,restoreProfile,makeover,potential,settle,appendLetter,questions,clueNames,drawTutorial} from './bee-playground-rules.mjs';
 import {beeAvatar} from './bee-avatar.mjs';
 const $=id=>document.getElementById(id),storageKey='planetTen.designPlayground.v1';
 let profile=newProfile(),draft,answer='',unlocked=[],finished=false,heard=false,clueBusy=false,voices=[],active=new Set(),speechChannel='';
 try{profile=restoreProfile(JSON.parse(localStorage.getItem(storageKey)));}catch{}
+const currentQuestion=()=>questions.find(q=>q.word===profile.round[profile.index]);
 const tell=text=>{$('message').textContent=text;};
 function persist(){try{localStorage.setItem(storageKey,JSON.stringify(profile));$('save-state').textContent='Saved on this browser · demo only';}catch{$('save-state').textContent='Browser saving is unavailable. Keep this page open to keep your demo.';}}
 function paint(){
  $('hero').innerHTML=beeAvatar(profile.look,'hero');$('balance').textContent=profile.balance;
- $('progress').textContent=`Flower ${profile.index+1} / ${questions.length}`;
+ $('progress').textContent=`Flower ${profile.index+1} / ${profile.round.length}`;
  $('answer').textContent=answer||'Tap the honeycomb letters';$('answer').classList.toggle('typed',!!answer);
- $('prize').textContent=profile.earned.includes(profile.index)?'Practice again · prize already earned':`This word: up to ${potential(unlocked)} HoneyHexes`;
+ $('prize').textContent=profile.earned.includes(currentQuestion().word)?'Practice again · prize already earned':`This word: up to ${potential(unlocked)} HoneyHexes`;
  $('freebee').textContent=unlocked.length?'Freebee used · replays free':'1 freebee clue';
  $('submit').hidden=finished;$('next').hidden=!finished;$('next').textContent=profile.index===9?'Practise again →':'Next flower →';
  for(const node of document.querySelectorAll('#keyboard button, #erase, #clear, #space, #apostrophe, #hyphen'))node.disabled=finished||clueBusy;
  $('submit').disabled=!answer.trim()||!heard||clueBusy;
- for(const [key,label] of Object.entries(clueNames)){const b=$('clue-'+key);const free=unlocked.includes(key)||!unlocked.length;b.disabled=finished||clueBusy;b.querySelector('small').textContent=unlocked.includes(key)?'Replay · free':free?'Use freebee':`Prize −1 → ${Math.max(0,potential([...unlocked,key]))}`;}
+ for(const [key,label] of Object.entries(clueNames)){const b=$('clue-'+key);const free=unlocked.includes(key)||!unlocked.length;b.disabled=finished||clueBusy||!currentQuestion()[key];b.querySelector('small').textContent=!currentQuestion()[key]?'Not available':unlocked.includes(key)?'Replay · free':free?'Use freebee':`Prize −1 → ${Math.max(0,potential([...unlocked,key]))}`;}
 }
 function stopSpeech(){window.speechSynthesis?.cancel();for(const end of [...active])end(false);$('hero').parentElement.classList.remove('speaking');document.querySelector('.hologram').classList.remove('speaking');}
 function speech(text,channel='human',look=profile.look){
@@ -37,15 +38,15 @@ const letterNames={a:'ay',b:'bee',c:'see',d:'dee',e:'ee',f:'eff',g:'jee',h:'aitc
 function enter(key){if(finished||clueBusy)return;const next=appendLetter(answer,key);if(next===answer)return;answer=next;paint();if($('letter-sound').checked)speech(letterNames[key],'letter');}
 for(const row of ['qwertyuiop','asdfghjkl','zxcvbnm']){const div=document.createElement('div');div.className='key-row';for(const letter of row){const b=document.createElement('button');b.textContent=letter.toUpperCase();b.setAttribute('aria-label',`Letter ${letter.toUpperCase()}`);b.addEventListener('click',()=>enter(letter));div.append(b);}$('keyboard').append(div);}
 for(const [key,label] of Object.entries(clueNames)){const b=document.createElement('button');b.id='clue-'+key;b.append(document.createTextNode(label),document.createElement('small'));b.addEventListener('click',async()=>{
- if(finished||clueBusy)return;clueBusy=true;paint();tell(`Listening to ${label.toLowerCase()}…`);
- const delivered=await speech(questions[profile.index][key]);if(delivered&&!unlocked.includes(key))unlocked.push(key);clueBusy=false;paint();tell(delivered?'Clue heard. Replay it any time for free.':'Clue stopped or unavailable. Your freebee and prize are unchanged.');
+ if(finished||clueBusy||!currentQuestion()[key])return;clueBusy=true;paint();tell(`Listening to ${label.toLowerCase()}…`);
+ const delivered=await speech(currentQuestion()[key]);if(delivered&&!unlocked.includes(key))unlocked.push(key);clueBusy=false;paint();tell(delivered?'Clue heard. Replay it any time for free.':'Clue stopped or unavailable. Your freebee and prize are unchanged.');
  });$('clues').append(b);}
-$('hear').addEventListener('click',async()=>{if(clueBusy)return;clueBusy=true;paint();$('earth-state').textContent='Earth connection open · listen closely';const ok=await speech(questions[profile.index].word);heard=heard||ok;clueBusy=false;paint();$('earth-state').textContent=ok?'Human transmission received':'Connection interrupted · try again';tell(ok?'Now tap the letters to build your spelling.':'The word did not finish playing. Try Hear again.');});
+$('hear').addEventListener('click',async()=>{if(clueBusy)return;clueBusy=true;paint();$('earth-state').textContent='Earth connection open · listen closely';const ok=await speech(currentQuestion().word);heard=heard||ok;clueBusy=false;paint();$('earth-state').textContent=ok?'Human transmission received':'Connection interrupted · try again';tell(ok?'Now tap the letters to build your spelling.':'The word did not finish playing. Try Hear again.');});
 $('stop-sound').addEventListener('click',stopSpeech);
 $('erase').addEventListener('click',()=>{stopSpeech();answer=answer.slice(0,-1);paint();});$('clear').addEventListener('click',()=>{stopSpeech();answer='';paint();});
 $('space').addEventListener('click',()=>enter(' '));$('apostrophe').addEventListener('click',()=>enter("'"));$('hyphen').addEventListener('click',()=>enter('-'));
-$('submit').addEventListener('click',()=>{if(finished||clueBusy||!heard||!answer.trim())return;stopSpeech();const correct=answer.trim().toLowerCase()===questions[profile.index].word;const result=settle(profile,profile.index,correct,unlocked);profile=result.profile;finished=true;persist();paint();tell(correct?(result.award?`You did it! +${result.award} demo HoneyHexes. Your bee is finding its wings.`:'Correct! You already earned this flower’s prize.'):'Not quite this time. No Hexes lost. Listen again, then try a fresh flower.');});
-$('next').addEventListener('click',()=>{stopSpeech();profile.index=(profile.index+1)%questions.length;answer='';unlocked=[];finished=false;heard=false;persist();paint();tell('A new flower. Hear the word, then choose your freebee.');});
+$('submit').addEventListener('click',()=>{if(finished||clueBusy||!heard||!answer.trim())return;stopSpeech();const correct=answer.trim().toLowerCase()===currentQuestion().word;const result=settle(profile,currentQuestion().word,correct,unlocked);profile=result.profile;finished=true;persist();paint();tell(correct?(result.award?`You did it! +${result.award} demo HoneyHexes. Your bee is finding its wings.`:'Correct! You already earned this flower’s prize.'):'Not quite this time. No Hexes lost. Listen again, then try a fresh flower.');});
+$('next').addEventListener('click',()=>{stopSpeech();if(profile.index===9){profile.round=drawTutorial();profile.index=0;}else profile.index++;answer='';unlocked=[];finished=false;heard=false;persist();paint();tell('A new flower. Hear the word, then choose your freebee.');});
 function open(id){stopSpeech();$(id).showModal();}
 $('open-salon').addEventListener('click',()=>{draft={...profile.look};for(const key of Object.keys(options))$('look-'+key).value=draft[key];paintSalon();$('salon-status').textContent='';open('salon');});
 for(const [key,option] of Object.entries(options)){const label=document.createElement('label');label.htmlFor='look-'+key;label.textContent=option.label;const select=document.createElement('select');select.id='look-'+key;for(const [value,text] of Object.entries(option.choices))select.add(new Option(text,value));select.addEventListener('change',()=>{draft[key]=select.value;paintSalon();});label.append(select);$('makeover-options').append(label);}
