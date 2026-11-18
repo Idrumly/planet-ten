@@ -100,3 +100,13 @@ The interactive bee is an original layered SVG, allowing independent appearance 
 The tutorial now draws ten distinct words at random from: hive, honey, wing, sting, pollen, buzz, comb, fly, queen, swarm, wax, clover, garden, planet, ten, baby, papa, fire, bloom, egg, hum, sweet, summer, nectar, human, spell, quest.
 
 A saved round survives reload. Completing flower ten and choosing Practise again draws another set; words can recur between runs. Rewards are tracked by word identity, so a new position in a new draw does not duplicate a previously earned prize. Existing demo appearance and wallet survive the migration; old numeric reward IDs referred to the retired sample bank and are discarded. Sentences, definitions and parts of speech are supplied; origin/history buttons are disabled rather than filled with unverified claims. These remain public prototype words, not private teacher data.
+
+## Elder Clover: learning after a miss
+
+Implemented in the public sample playground: each of the 27 starter words has one authored spelling feature. After a miss, Clover compares the attempt with the correct word, offers one feature, and lets the learner cover it and retrieve the spelling. Learning retries earn no coins. Successful retries invite an original sentence and a later recall attempt. The game does not yet schedule spaced review or assess the sentence.
+
+Evidence-informed design, not a validated intervention: IES/What Works Clearinghouse, *Teaching Elementary School Students to Be Effective Writers*, Recommendation 3, pp. 29–31 (https://ies.ed.gov/ncee/wwc/Docs/practiceguide/writing_pg_062612.pdf), supports explicit sound–letter, spelling-pattern, and word-part instruction and connecting spelling to actual writing. Tips are authored examples of those approaches; one miss does not diagnose a learning difficulty. Future work: teacher-editable strategy prompts, delayed review, and classroom writing follow-up.
+
+Origin examples are deliberately narrow: action/nation share a Latin-derived -tion ending (Merriam-Webster dictionary entries); knee preserves a formerly pronounced k (Vrije Universiteit Amsterdam, https://www.sgw.fsg.vu.nl/english-pronunciation/silent-letters/silent-letters-nojs.htm). Do not invent etymologies when source data is missing.
+
+The private teacher vocabulary tool now seeds an editable **Bee and Game Start Words** unit once, preserving edits and cached clues. **Needs free context sentence** defaults off and requires a sentence before approval when enabled. The sample journey exposes this separately from optional hints. Connecting approved teacher data to the public student runtime remains a separate integration step; this public playground still uses its authored sample bank.

@@ -1,7 +1,8 @@
+import {feedbackFor,wisdom,learningResult} from './bee-tutor.mjs';
 import {options,newProfile,restoreProfile,makeover,potential,settle,appendLetter,questions,clueNames,drawTutorial} from './bee-playground-rules.mjs';
 import {beeAvatar} from './bee-avatar.mjs';
 const $=id=>document.getElementById(id),storageKey='planetTen.designPlayground.v1';
-let profile=newProfile(),draft,answer='',unlocked=[],finished=false,heard=false,clueBusy=false,voices=[],active=new Set(),speechChannel='';
+let profile=newProfile(),draft,answer='',unlocked=[],finished=false,heard=false,clueBusy=false,voices=[],active=new Set(),speechChannel='',learningRetry=false,wisdomIndex=0;
 try{profile=restoreProfile(JSON.parse(localStorage.getItem(storageKey)));}catch{}
 const currentQuestion=()=>questions.find(q=>q.word===profile.round[profile.index]);
 const tell=text=>{$('message').textContent=text;};
@@ -10,12 +11,12 @@ function paint(){
  $('hero').innerHTML=beeAvatar(profile.look,'hero');$('balance').textContent=profile.balance;
  $('progress').textContent=`Flower ${profile.index+1} / ${profile.round.length}`;
  $('answer').textContent=answer||'Tap the honeycomb letters';$('answer').classList.toggle('typed',!!answer);
- $('prize').textContent=profile.earned.includes(currentQuestion().word)?'Practice again · prize already earned':`This word: up to ${potential(unlocked)} HoneyHexes`;
- $('freebee').textContent=unlocked.length?'Freebee used · replays free':'1 freebee clue';
+ $('prize').textContent=learningRetry?'Learning retry · no prize at stake':profile.earned.includes(currentQuestion().word)?'Practice again · prize already earned':`This word: up to ${potential(unlocked)} HoneyHexes`;
+ $('freebee').textContent=learningRetry?'All learning clues free':unlocked.length?'Freebee used · replays free':'1 freebee clue';
  $('submit').hidden=finished;$('next').hidden=!finished;$('next').textContent=profile.index===9?'Practise again →':'Next flower →';
  for(const node of document.querySelectorAll('#keyboard button, #erase, #clear, #space, #apostrophe, #hyphen'))node.disabled=finished||clueBusy;
  $('submit').disabled=!answer.trim()||!heard||clueBusy;
- for(const [key,label] of Object.entries(clueNames)){const b=$('clue-'+key);const free=unlocked.includes(key)||!unlocked.length;b.disabled=finished||clueBusy||!currentQuestion()[key];b.querySelector('small').textContent=!currentQuestion()[key]?'Not available':unlocked.includes(key)?'Replay · free':free?'Use freebee':`Prize −1 → ${Math.max(0,potential([...unlocked,key]))}`;}
+ for(const [key,label] of Object.entries(clueNames)){const b=$('clue-'+key);const free=learningRetry||unlocked.includes(key)||!unlocked.length;b.disabled=finished||clueBusy||!currentQuestion()[key];b.querySelector('small').textContent=!currentQuestion()[key]?'Not available':unlocked.includes(key)?'Replay · free':free?(learningRetry?'Learning help · free':'Use freebee'):`Prize −1 → ${Math.max(0,potential([...unlocked,key]))}`;}
 }
 function stopSpeech(){window.speechSynthesis?.cancel();for(const end of [...active])end(false);$('hero').parentElement.classList.remove('speaking');document.querySelector('.hologram').classList.remove('speaking');}
 function speech(text,channel='human',look=profile.look){
@@ -45,8 +46,21 @@ $('hear').addEventListener('click',async()=>{if(clueBusy)return;clueBusy=true;pa
 $('stop-sound').addEventListener('click',stopSpeech);
 $('erase').addEventListener('click',()=>{stopSpeech();answer=answer.slice(0,-1);paint();});$('clear').addEventListener('click',()=>{stopSpeech();answer='';paint();});
 $('space').addEventListener('click',()=>enter(' '));$('apostrophe').addEventListener('click',()=>enter("'"));$('hyphen').addEventListener('click',()=>enter('-'));
-$('submit').addEventListener('click',()=>{if(finished||clueBusy||!heard||!answer.trim())return;stopSpeech();const correct=answer.trim().toLowerCase()===currentQuestion().word;const result=settle(profile,currentQuestion().word,correct,unlocked);profile=result.profile;finished=true;persist();paint();tell(correct?(result.award?`You did it! +${result.award} demo HoneyHexes. Your bee is finding its wings.`:'Correct! You already earned this flower’s prize.'):'Not quite this time. No Hexes lost. Listen again, then try a fresh flower.');});
-$('next').addEventListener('click',()=>{stopSpeech();if(profile.index===9){profile.round=drawTutorial();profile.index=0;}else profile.index++;answer='';unlocked=[];finished=false;heard=false;persist();paint();tell('A new flower. Hear the word, then choose your freebee.');});
+$('submit').addEventListener('click',()=>{if(finished||clueBusy||!heard||!answer.trim())return;stopSpeech();const correct=answer.trim().toLowerCase()===currentQuestion().word;const result=learningRetry?learningResult(profile,correct):settle(profile,currentQuestion().word,correct,unlocked);profile=result.profile;finished=true;persist();paint();tell(correct?(learningRetry?'You remembered it! Now use this word in a sentence of your own. Try it again tomorrow.':result.award?`You did it! +${result.award} demo HoneyHexes. Your bee is finding its wings.`:'Correct! You already earned this flower’s prize.'):'Not quite this time. No Hexes lost. Let’s find one thing to remember.');if(!correct)showTutorFeedback();});
+$('next').addEventListener('click',()=>{stopSpeech();if(profile.index===9){profile.round=drawTutorial();profile.index=0;}else profile.index++;answer='';unlocked=[];finished=false;heard=false;learningRetry=false;persist();paint();tell('A new flower. Hear the word, then choose your freebee.');});
+function showTutorFeedback(){
+ const feedback=feedbackFor(currentQuestion().word,answer);
+ $('tutor-comparison').textContent=feedback.comparison;$('tutor-tip').textContent=feedback.tip;$('tutor-action').textContent=feedback.action;
+ $('tutor-retry').hidden=false;$('tutor-more').hidden=true;open('tutor');
+}
+$('tutor-bee').innerHTML=beeAvatar({...profile.look,hair:'curls',hairColour:'silver',voice:'lower'},'elder');
+$('open-tutor').addEventListener('click',()=>{
+ if(finished&&answer.trim().toLowerCase()!==currentQuestion().word){showTutorFeedback();return;}
+ $('tutor-comparison').textContent='One small piece of wisdom';$('tutor-tip').textContent=wisdom[wisdomIndex];$('tutor-action').textContent='Take what helps you today.';$('tutor-retry').hidden=true;$('tutor-more').hidden=false;open('tutor');
+});
+$('tutor-more').addEventListener('click',()=>{stopSpeech();wisdomIndex=(wisdomIndex+1)%wisdom.length;$('tutor-tip').textContent=wisdom[wisdomIndex];});
+$('tutor-speak').addEventListener('click',()=>speech([$ ('tutor-comparison').textContent,$('tutor-tip').textContent,$('tutor-action').textContent].join(' '),'bee',{...profile.look,voice:'lower'}));
+$('tutor-retry').addEventListener('click',()=>{stopSpeech();learningRetry=true;answer='';finished=false;unlocked=[];$('tutor').close();$('tutor-comparison').textContent='';$('tutor-tip').textContent='';paint();tell('Try from memory. You can hear the word and use clues for free.');$('hear').focus();});
 function open(id){stopSpeech();$(id).showModal();}
 $('open-salon').addEventListener('click',()=>{draft={...profile.look};for(const key of Object.keys(options))$('look-'+key).value=draft[key];paintSalon();$('salon-status').textContent='';open('salon');});
 for(const [key,option] of Object.entries(options)){const label=document.createElement('label');label.htmlFor='look-'+key;label.textContent=option.label;const select=document.createElement('select');select.id='look-'+key;for(const [value,text] of Object.entries(option.choices))select.add(new Option(text,value));select.addEventListener('change',()=>{draft[key]=select.value;paintSalon();});label.append(select);$('makeover-options').append(label);}
@@ -56,7 +70,7 @@ $('save-makeover').addEventListener('click',()=>{try{profile=makeover(profile,dr
 for(const button of document.querySelectorAll('[data-close]'))button.addEventListener('click',()=>$(button.dataset.close).close());
 for(const dialog of document.querySelectorAll('dialog'))dialog.addEventListener('close',stopSpeech);
 $('open-tailors').addEventListener('click',()=>open('tailors'));$('open-story').addEventListener('click',()=>open('story'));
-$('reset-demo').addEventListener('click',()=>open('reset'));$('confirm-reset').addEventListener('click',()=>{stopSpeech();profile=newProfile();answer='';unlocked=[];finished=false;heard=false;persist();paint();$('reset').close();tell('A fresh beginning. Your first makeover is free.');});
+$('reset-demo').addEventListener('click',()=>open('reset'));$('confirm-reset').addEventListener('click',()=>{stopSpeech();profile=newProfile();answer='';unlocked=[];finished=false;heard=false;learningRetry=false;persist();paint();$('reset').close();tell('A fresh beginning. Your first makeover is free.');});
 let focusEnabled=false,returnPending=false,away=false,interruptions=0,intentionalExit=false;
 function showReturn(){if(returnPending&&!document.hidden&&!document.querySelector('dialog[open]')){returnPending=false;open('fair-return');}}
 function noteInterruption(){if(!focusEnabled||away)return;away=true;returnPending=true;interruptions++;$('focus-note').textContent=`${interruptions} focus interruption${interruptions===1?'':'s'} · no penalty`;stopSpeech();}
