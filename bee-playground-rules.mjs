@@ -14,7 +14,7 @@ export function cleanLook(value){return Object.fromEntries(Object.keys(options).
 export function newProfile(){return {version:2,round:drawTutorial(),look:{...defaultLook},madeOver:false,balance:20,earned:[],index:0,correction:null};}
 export function restoreProfile(data){const p=newProfile();if(!data||![1,2].includes(data.version))return p;const validRound=data.version===2&&Array.isArray(data.round)&&data.round.length===10&&new Set(data.round).size===10&&data.round.every(w=>questions.some(q=>q.word===w));const index=validRound&&Number.isInteger(data.index)&&data.index>=0&&data.index<10?data.index:0;const correction=validRound&&data.correction?.word===data.round[index]&&typeof data.correction.attempt==='string'?{word:data.correction.word,attempt:data.correction.attempt.slice(0,80),choice:['sound','vowel','silent','parts','meaning','pattern','unsure'].includes(data.correction.choice)?data.correction.choice:''}:null;return {...p,correction,look:cleanLook(data.look),madeOver:data.madeOver===true,balance:Number.isSafeInteger(data.balance)&&data.balance>=0&&data.balance<=10000?data.balance:20,earned:data.version===2&&Array.isArray(data.earned)?[...new Set(data.earned.filter(w=>questions.some(q=>q.word===w)))]:[],round:validRound?data.round:p.round,index:validRound&&Number.isInteger(data.index)&&data.index>=0&&data.index<10?data.index:0};}
 export function makeover(profile,draft){const look=cleanLook(draft);const changed=Object.keys(options).some(k=>look[k]!==profile.look[k]);const cost=profile.madeOver&&changed?10:0;if(profile.balance<cost)throw new Error('A new makeover costs 10 Hexes. Keep this look for now, or earn a few more in the garden.');return {...profile,look,madeOver:true,balance:profile.balance-cost};}
-export function potential(unlocked){return Math.max(0,5-Math.max(0,new Set(unlocked).size-1));}
+export function potential(unlocked){return 5;}
 export function settle(profile,index,correct,unlocked){if(!correct||profile.earned.includes(index))return {profile,award:0};const award=potential(unlocked);return {profile:{...profile,balance:profile.balance+award,earned:[...profile.earned,index]},award};}
 export function appendLetter(answer,key){return /^[a-z '-]$/.test(key)&&answer.length<80?answer+key:answer;}
 export const questions=[
@@ -182,6 +182,6 @@ export const questions=[
   }
 ];
 export function drawTutorial(random=Math.random){const words=questions.map(q=>q.word);for(let i=words.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[words[i],words[j]]=[words[j],words[i]];}return words.slice(0,10);}
-export const clueNames={sentence:'Sentence',partOfSpeech:'Part of speech',definition:'Definition',languageOrigin:'Word origin',wordHistory:'Word history'};
+export const clueNames={sentence:'Sentence',partOfSpeech:'Part of speech',definition:'Definition',wordHistory:'Word history & origin'};
 
 export function restartTutorial(profile){return {...profile,round:drawTutorial(),index:0,correction:null};}

@@ -125,3 +125,6 @@ Newest letter interrupts older playback to avoid a delayed queue. Stop, mute, di
 
 ### Tutorial lockup fix
 Closing Clover’s advice now returns to an editable learning attempt; the reflection still must be completed before checking the correction. Word and clue playback no longer disables letter entry. A visible Stop listening button cancels a stuck voice. Restart tutorial is available in navigation and Clover’s dialog, preserves the bee and wallet, clears pending correction state, and cancels audio. Listening requests carry a generation token so interrupted old callbacks cannot overwrite a restarted round. Chrome UI checks covered closing advice then entering planet, and restarting during clue playback then entering a letter in the fresh round.
+
+## Clue policy update
+All clues and replays are free. Correct first attempts earn five HoneyHexes regardless of clue use; correction retries do not duplicate prizes. Word history & origin is one clue, using history first and origin as fallback. This supersedes earlier clue-cost proposals.

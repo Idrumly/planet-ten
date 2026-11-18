@@ -1,13 +1,13 @@
 import {createLetterPlayer} from './bee-letter-audio.mjs';
 import {feedbackFor,wisdom,learningResult,detectiveChoices,detectiveTip,canLeaveFlower} from './bee-tutor.mjs';
-import {options,newProfile,restoreProfile,makeover,potential,settle,appendLetter,questions,clueNames,drawTutorial,restartTutorial} from './bee-playground-rules.mjs?v=restart-fix-1';
+import {options,newProfile,restoreProfile,makeover,potential,settle,appendLetter,questions,clueNames,drawTutorial,restartTutorial} from './bee-playground-rules.mjs?v=free-clues-1';
 import {beeAvatar} from './bee-avatar.mjs';
 const $=id=>document.getElementById(id),storageKey='planetTen.designPlayground.v1';
 let profile=newProfile(),draft,answer='',unlocked=[],finished=false,heard=false,clueBusy=false,voices=[],active=new Set(),speechChannel='',learningRetry=false,wisdomIndex=0,listeningEpoch=0;
 try{profile=restoreProfile(JSON.parse(localStorage.getItem(storageKey)));}catch{}
 learningRetry=!!profile.correction;
 const letterPlayer=createLetterPlayer();
-const currentQuestion=()=>questions.find(q=>q.word===profile.round[profile.index]);
+const currentQuestion=()=>{const q=questions.find(q=>q.word===profile.round[profile.index]);return {...q,wordHistory:q.wordHistory||q.languageOrigin};};
 const tell=text=>{$('message').textContent=text;};
 function persist(){try{localStorage.setItem(storageKey,JSON.stringify(profile));$('save-state').textContent='Saved on this browser · demo only';}catch{$('save-state').textContent='Browser saving is unavailable. Keep this page open to keep your demo.';}}
 function paint(){
@@ -15,11 +15,11 @@ function paint(){
  $('progress').textContent=`Flower ${profile.index+1} / ${profile.round.length}`;
  $('answer').textContent=answer||'Tap the honeycomb letters';$('answer').classList.toggle('typed',!!answer);
  $('prize').textContent=learningRetry?'Learning retry · no prize at stake':profile.earned.includes(currentQuestion().word)?'Practice again · prize already earned':`This word: up to ${potential(unlocked)} HoneyHexes`;
- $('freebee').textContent=learningRetry?'All learning clues free':unlocked.length?'Freebee used · replays free':'1 freebee clue';
+ $('freebee').textContent='All clues are free';
  $('submit').hidden=finished;$('next').hidden=!canLeaveFlower(finished,profile.correction);$('next').textContent=profile.index===9?'Practise again →':'Next flower →';
  for(const node of document.querySelectorAll('#keyboard button, #erase, #clear, #space, #apostrophe, #hyphen'))node.disabled=finished;
  $('submit').disabled=!answer.trim()||!heard||clueBusy;$('stop-listening').hidden=!clueBusy;
- for(const [key,label] of Object.entries(clueNames)){const b=$('clue-'+key);const free=learningRetry||unlocked.includes(key)||!unlocked.length;b.disabled=finished||clueBusy||!currentQuestion()[key];b.querySelector('small').textContent=!currentQuestion()[key]?'Not available':unlocked.includes(key)?'Replay · free':free?(learningRetry?'Learning help · free':'Use freebee'):`Prize −1 → ${Math.max(0,potential([...unlocked,key]))}`;}
+ for(const [key,label] of Object.entries(clueNames)){const b=$('clue-'+key);b.disabled=finished||clueBusy||!currentQuestion()[key];b.querySelector('small').textContent=!currentQuestion()[key]?'Not available':unlocked.includes(key)?'Replay · free':'Listen · free';}
 }
 function cancelListening(){listeningEpoch++;clueBusy=false;stopSpeech();paint();}
 function stopSpeech(){letterPlayer.stop();window.speechSynthesis?.cancel();for(const end of [...active])end(false);$('hero').parentElement.classList.remove('speaking');document.querySelector('.hologram').classList.remove('speaking');}
@@ -52,14 +52,14 @@ function enter(key){if(finished)return;const next=appendLetter(answer,key);if(ne
 for(const row of ['qwertyuiop','asdfghjkl','zxcvbnm']){const div=document.createElement('div');div.className='key-row';for(const letter of row){const b=document.createElement('button');b.textContent=letter.toUpperCase();b.setAttribute('aria-label',`Letter ${letter.toUpperCase()}`);b.addEventListener('click',()=>enter(letter));div.append(b);}$('keyboard').append(div);}
 for(const [key,label] of Object.entries(clueNames)){const b=document.createElement('button');b.id='clue-'+key;b.append(document.createTextNode(label),document.createElement('small'));b.addEventListener('click',async()=>{
  if(finished||clueBusy||!currentQuestion()[key])return;const epoch=++listeningEpoch;clueBusy=true;paint();tell(`Listening to ${label.toLowerCase()}…`);
- const delivered=await speech(currentQuestion()[key]);if(epoch!==listeningEpoch)return;if(delivered&&!unlocked.includes(key))unlocked.push(key);clueBusy=false;paint();tell(delivered?'Clue heard. Replay it any time for free.':'Clue stopped or unavailable. Your freebee and prize are unchanged.');
+ const delivered=await speech(currentQuestion()[key]);if(epoch!==listeningEpoch)return;if(delivered&&!unlocked.includes(key))unlocked.push(key);clueBusy=false;paint();tell(delivered?'Clue heard. Replay it any time for free.':'Clue stopped or unavailable. Try listening again.');
  });$('clues').append(b);}
 $('hear').addEventListener('click',async()=>{if(clueBusy)return;const epoch=++listeningEpoch;clueBusy=true;paint();$('earth-state').textContent='Earth connection open · listen closely';const ok=await speech(currentQuestion().word);if(epoch!==listeningEpoch)return;heard=heard||ok;clueBusy=false;paint();$('earth-state').textContent=ok?'Human transmission received':'Connection interrupted · try again';tell(ok?'Now tap the letters to build your spelling.':'The word did not finish playing. Try Hear again.');});
 for(const id of ['stop-sound','stop-listening'])$(id).addEventListener('click',()=>{cancelListening();tell('Audio stopped. You can keep typing; hear the word again before checking your spelling if needed.');});
 $('erase').addEventListener('click',()=>{cancelListening();answer=answer.slice(0,-1);paint();});$('clear').addEventListener('click',()=>{cancelListening();answer='';paint();});
 $('space').addEventListener('click',()=>enter(' '));$('apostrophe').addEventListener('click',()=>enter("'"));$('hyphen').addEventListener('click',()=>enter('-'));
 $('submit').addEventListener('click',()=>{if(finished||clueBusy||!heard||!answer.trim())return;if(profile.correction&&!detectiveTip(profile.correction.choice)){showTutorFeedback();return;}stopSpeech();const correct=answer.trim().toLowerCase()===currentQuestion().word;const result=learningRetry?learningResult(profile,correct):settle(profile,currentQuestion().word,correct,unlocked);profile=result.profile;if(correct)profile.correction=null;else profile.correction={word:currentQuestion().word,attempt:answer,choice:profile.correction?.choice||''};finished=true;persist();paint();tell(correct?(learningRetry?'You remembered it! Now use this word in a sentence of your own. Try it again tomorrow.':result.award?`You did it! +${result.award} demo HoneyHexes. Your bee is finding its wings.`:'Correct! You already earned this flower’s prize.'):'Not quite this time. No Hexes lost. Let’s find one thing to remember.');if(!correct)showTutorFeedback();});
-$('next').addEventListener('click',()=>{if(!canLeaveFlower(finished,profile.correction))return;cancelListening();if(profile.index===9){profile.round=drawTutorial();profile.index=0;}else profile.index++;answer='';unlocked=[];finished=false;heard=false;learningRetry=false;persist();paint();tell('A new flower. Hear the word, then choose your freebee.');});
+$('next').addEventListener('click',()=>{if(!canLeaveFlower(finished,profile.correction))return;cancelListening();if(profile.index===9){profile.round=drawTutorial();profile.index=0;}else profile.index++;answer='';unlocked=[];finished=false;heard=false;learningRetry=false;persist();paint();tell('A new flower. Hear the word, then use any clues you need.');});
 function showTutorFeedback(){
  const feedback=feedbackFor(currentQuestion().word,profile.correction?.attempt||answer);
  $('tutor-comparison').textContent=feedback.comparison;$('tutor-tip').textContent=feedback.tip;$('tutor-action').textContent=feedback.action;
