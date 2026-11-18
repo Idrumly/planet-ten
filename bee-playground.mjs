@@ -1,3 +1,4 @@
+import {createLetterPlayer} from './bee-letter-audio.mjs';
 import {feedbackFor,wisdom,learningResult,detectiveChoices,detectiveTip,canLeaveFlower} from './bee-tutor.mjs';
 import {options,newProfile,restoreProfile,makeover,potential,settle,appendLetter,questions,clueNames,drawTutorial} from './bee-playground-rules.mjs';
 import {beeAvatar} from './bee-avatar.mjs';
@@ -5,6 +6,7 @@ const $=id=>document.getElementById(id),storageKey='planetTen.designPlayground.v
 let profile=newProfile(),draft,answer='',unlocked=[],finished=false,heard=false,clueBusy=false,voices=[],active=new Set(),speechChannel='',learningRetry=false,wisdomIndex=0;
 try{profile=restoreProfile(JSON.parse(localStorage.getItem(storageKey)));}catch{}
 learningRetry=!!profile.correction;
+const letterPlayer=createLetterPlayer();
 const currentQuestion=()=>questions.find(q=>q.word===profile.round[profile.index]);
 const tell=text=>{$('message').textContent=text;};
 function persist(){try{localStorage.setItem(storageKey,JSON.stringify(profile));$('save-state').textContent='Saved on this browser · demo only';}catch{$('save-state').textContent='Browser saving is unavailable. Keep this page open to keep your demo.';}}
@@ -19,7 +21,7 @@ function paint(){
  $('submit').disabled=!answer.trim()||!heard||clueBusy;
  for(const [key,label] of Object.entries(clueNames)){const b=$('clue-'+key);const free=learningRetry||unlocked.includes(key)||!unlocked.length;b.disabled=finished||clueBusy||!currentQuestion()[key];b.querySelector('small').textContent=!currentQuestion()[key]?'Not available':unlocked.includes(key)?'Replay · free':free?(learningRetry?'Learning help · free':'Use freebee'):`Prize −1 → ${Math.max(0,potential([...unlocked,key]))}`;}
 }
-function stopSpeech(){window.speechSynthesis?.cancel();for(const end of [...active])end(false);$('hero').parentElement.classList.remove('speaking');document.querySelector('.hologram').classList.remove('speaking');}
+function stopSpeech(){letterPlayer.stop();window.speechSynthesis?.cancel();for(const end of [...active])end(false);$('hero').parentElement.classList.remove('speaking');document.querySelector('.hologram').classList.remove('speaking');}
 function speech(text,channel='human',look=profile.look){
  if(!('speechSynthesis' in window)||!('SpeechSynthesisUtterance' in window)){ $('sound-status').textContent='Speech is unavailable in this browser. Try a browser with English speech voices. No clue was charged.';return Promise.resolve(false);}
  if(channel!=='letter'||speechChannel!=='letter')stopSpeech();speechChannel=channel;
@@ -37,7 +39,15 @@ function speech(text,channel='human',look=profile.look){
 function loadVoices(){const selected=$('device-voice').value;voices=window.speechSynthesis?.getVoices().filter(v=>/^en\b/.test(v.lang))||[];$('device-voice').replaceChildren(new Option('Device default',''),...voices.map(v=>new Option(`${v.name} · ${v.lang}`,v.voiceURI)));if(voices.some(v=>v.voiceURI===selected))$('device-voice').value=selected;}
 window.speechSynthesis?.addEventListener('voiceschanged',loadVoices);loadVoices();
 const letterNames={a:'ay',b:'bee',c:'see',d:'dee',e:'ee',f:'eff',g:'jee',h:'aitch',i:'eye',j:'jay',k:'kay',l:'ell',m:'em',n:'en',o:'oh',p:'pee',q:'cue',r:'ar',s:'ess',t:'tee',u:'you',v:'vee',w:'double you',x:'ex',y:'why',z:'zed',"'":'apostrophe','-':'hyphen',' ':'space'};
-function enter(key){if(finished||clueBusy)return;const next=appendLetter(answer,key);if(next===answer)return;answer=next;paint();if($('letter-sound').checked)speech(letterNames[key],'letter');}
+async function recordedLetter(key,look=profile.look){
+ stopSpeech();
+ const result=await letterPlayer.play(key,look.voice);
+ if(result==='unavailable'){$('sound-status').textContent='Using the device voice for this character.';return await speech(letterNames[key],'letter',look);}
+ if(result==='played')$('sound-status').textContent='Recorded letter played.';
+ return result==='played';
+}
+$('letter-sound').addEventListener('change',()=>{if(!$('letter-sound').checked)stopSpeech();});
+function enter(key){if(finished||clueBusy)return;const next=appendLetter(answer,key);if(next===answer)return;answer=next;paint();if($('letter-sound').checked)recordedLetter(key);}
 for(const row of ['qwertyuiop','asdfghjkl','zxcvbnm']){const div=document.createElement('div');div.className='key-row';for(const letter of row){const b=document.createElement('button');b.textContent=letter.toUpperCase();b.setAttribute('aria-label',`Letter ${letter.toUpperCase()}`);b.addEventListener('click',()=>enter(letter));div.append(b);}$('keyboard').append(div);}
 for(const [key,label] of Object.entries(clueNames)){const b=document.createElement('button');b.id='clue-'+key;b.append(document.createTextNode(label),document.createElement('small'));b.addEventListener('click',async()=>{
  if(finished||clueBusy||!currentQuestion()[key])return;clueBusy=true;paint();tell(`Listening to ${label.toLowerCase()}…`);
@@ -78,7 +88,7 @@ function open(id){stopSpeech();$(id).showModal();}
 $('open-salon').addEventListener('click',()=>{draft={...profile.look};for(const key of Object.keys(options))$('look-'+key).value=draft[key];paintSalon();$('salon-status').textContent='';open('salon');});
 for(const [key,option] of Object.entries(options)){const label=document.createElement('label');label.htmlFor='look-'+key;label.textContent=option.label;const select=document.createElement('select');select.id='look-'+key;for(const [value,text] of Object.entries(option.choices))select.add(new Option(text,value));select.addEventListener('change',()=>{draft[key]=select.value;paintSalon();});label.append(select);$('makeover-options').append(label);}
 function paintSalon(){$('salon-bee').innerHTML=beeAvatar(draft,'mirror');const changed=Object.keys(options).some(k=>draft[k]!==profile.look[k]);const cost=profile.madeOver&&changed?10:0;$('salon-price').textContent=!profile.madeOver?'Your first makeover is free.':'Try anything. Save a changed look for 10 Hexes.';$('save-makeover').textContent=!profile.madeOver?'Save my free makeover':cost?'Save makeover · 10 Hexes':'Keep this look · free';}
-$('preview-voice').addEventListener('click',()=>speech('Ay. Bee. See. I am ready for my first flight.','bee',draft));
+$('preview-voice').addEventListener('click',async()=>{const look={...draft};for(const key of ['a','b','c'])if(!await recordedLetter(key,look))break;});
 $('save-makeover').addEventListener('click',()=>{try{profile=makeover(profile,draft);persist();paint();stopSpeech();$('salon').close();tell('Looking like yourself. Ready for an adventure!');}catch(e){$('salon-status').textContent=e.message;}});
 for(const button of document.querySelectorAll('[data-close]'))button.addEventListener('click',()=>$(button.dataset.close).close());
 for(const dialog of document.querySelectorAll('dialog'))dialog.addEventListener('close',stopSpeech);

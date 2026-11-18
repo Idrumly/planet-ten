@@ -7,7 +7,7 @@ export const options={
  hair:{label:'Hair style',choices:{tuft:'Little tuft',curls:'Pollen curls',smooth:'Smooth'}},
  hairColour:{label:'Hair colour',choices:{gold:'Honey gold',brown:'Chestnut',pink:'Petal pink',silver:'Moon silver'}},
  lips:{label:'Lip colour',choices:{rose:'Rose',berry:'Berry',amber:'Amber',natural:'Natural'}},
- voice:{label:'Bee voice style',choices:{lower:'Lower · male-style',higher:'Higher · female-style'}}
+ voice:{label:'Bee voice style',choices:{lower:'Lower bee · altered recording',higher:'Natural female recording'}}
 };
 export const defaultLook={wings:'petal',pattern:'veins',stripes:'classic',eyes:'teal',hair:'tuft',hairColour:'gold',lips:'natural',voice:'higher'};
 export function cleanLook(value){return Object.fromEntries(Object.keys(options).map(k=>[k,Object.hasOwn(options[k].choices,value?.[k])?value[k]:defaultLook[k]]));}

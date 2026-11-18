@@ -115,3 +115,10 @@ The private teacher vocabulary tool now seeds an editable **Bee and Game Start W
 After a miss, the learner compares their attempt with the model, chooses one of six self-reflection categories (or “I’m not sure yet”), and sees one matching strategy. The category is not scored or treated as a diagnosis. Categories can overlap. The student then uses the honeycomb keyboard to produce the correct spelling before advancing. Failed retries return to Clover; no currency changes. Pending corrections and their selected reflection survive refresh on the same browser. These reflections are not yet sent to a teacher dashboard.
 
 Meaning examples use “their” for possession, “there” for place, and “its” in “The cat licked its paw”; “it’s” expands to “it is” or “it has.” Word-part and doubling tips use specific examples rather than claiming that every word follows one rule.
+
+### Recorded alphabet voices
+The playground bundles 26 public MP3 previews from tim.kahn’s *The Alphabet* pack, each individually verified as CC BY 4.0. Per-letter source links and licence URLs are in `bee-audio/letters/sources.json`; credits are also visible under Voice & sound. No Freesound account or API key is needed during gameplay. Original WAV downloads remain an optional future quality upgrade.
+
+The natural female recording is unmodified. The lower bee plays the same files at 0.86 speed with pitch preservation disabled, so it is slightly slower and lower, not a separate male speaker. A natural male candidate for future comparison is dersuperanton’s *Alphabet Letters ABC Male*: https://freesound.org/people/dersuperanton/sounds/434730/ (CC BY 4.0; a single clip requiring segmentation and listening checks). The current sources are described as American English. A Canadian “zed” recording remains a possible replacement.
+
+Newest letter interrupts older playback to avoid a delayed queue. Stop, mute, dialogue changes, navigation and clue speech cancel recordings. Unsupported characters and failed playback use device speech. All files are fetched only when played; the Salon previews A, B and C.

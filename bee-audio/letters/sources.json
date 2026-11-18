@@ -1,0 +1,214 @@
+{
+  "creator": "tim.kahn",
+  "pack": "https://freesound.org/people/tim.kahn/packs/4371/",
+  "files": [
+    {
+      "letter": "a",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67712/",
+      "preview": "https://cdn.freesound.org/previews/67/67712_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/a.mp3",
+      "bytes": 19528
+    },
+    {
+      "letter": "b",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67713/",
+      "preview": "https://cdn.freesound.org/previews/67/67713_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/b.mp3",
+      "bytes": 16479
+    },
+    {
+      "letter": "c",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67714/",
+      "preview": "https://cdn.freesound.org/previews/67/67714_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/c.mp3",
+      "bytes": 21845
+    },
+    {
+      "letter": "d",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67715/",
+      "preview": "https://cdn.freesound.org/previews/67/67715_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/d.mp3",
+      "bytes": 19031
+    },
+    {
+      "letter": "e",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67716/",
+      "preview": "https://cdn.freesound.org/previews/67/67716_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/e.mp3",
+      "bytes": 16950
+    },
+    {
+      "letter": "f",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67717/",
+      "preview": "https://cdn.freesound.org/previews/67/67717_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/f.mp3",
+      "bytes": 16010
+    },
+    {
+      "letter": "g",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67718/",
+      "preview": "https://cdn.freesound.org/previews/67/67718_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/g.mp3",
+      "bytes": 21484
+    },
+    {
+      "letter": "h",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67719/",
+      "preview": "https://cdn.freesound.org/previews/67/67719_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/h.mp3",
+      "bytes": 16485
+    },
+    {
+      "letter": "i",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67720/",
+      "preview": "https://cdn.freesound.org/previews/67/67720_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/i.mp3",
+      "bytes": 20231
+    },
+    {
+      "letter": "j",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67721/",
+      "preview": "https://cdn.freesound.org/previews/67/67721_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/j.mp3",
+      "bytes": 20435
+    },
+    {
+      "letter": "k",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67722/",
+      "preview": "https://cdn.freesound.org/previews/67/67722_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/k.mp3",
+      "bytes": 19475
+    },
+    {
+      "letter": "l",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67723/",
+      "preview": "https://cdn.freesound.org/previews/67/67723_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/l.mp3",
+      "bytes": 17543
+    },
+    {
+      "letter": "m",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67724/",
+      "preview": "https://cdn.freesound.org/previews/67/67724_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/m.mp3",
+      "bytes": 16375
+    },
+    {
+      "letter": "n",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67725/",
+      "preview": "https://cdn.freesound.org/previews/67/67725_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/n.mp3",
+      "bytes": 20151
+    },
+    {
+      "letter": "o",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67726/",
+      "preview": "https://cdn.freesound.org/previews/67/67726_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/o.mp3",
+      "bytes": 17048
+    },
+    {
+      "letter": "p",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67727/",
+      "preview": "https://cdn.freesound.org/previews/67/67727_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/p.mp3",
+      "bytes": 18280
+    },
+    {
+      "letter": "q",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67728/",
+      "preview": "https://cdn.freesound.org/previews/67/67728_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/q.mp3",
+      "bytes": 18486
+    },
+    {
+      "letter": "r",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67729/",
+      "preview": "https://cdn.freesound.org/previews/67/67729_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/r.mp3",
+      "bytes": 18252
+    },
+    {
+      "letter": "s",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67730/",
+      "preview": "https://cdn.freesound.org/previews/67/67730_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/s.mp3",
+      "bytes": 17991
+    },
+    {
+      "letter": "t",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67731/",
+      "preview": "https://cdn.freesound.org/previews/67/67731_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/t.mp3",
+      "bytes": 15960
+    },
+    {
+      "letter": "u",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67732/",
+      "preview": "https://cdn.freesound.org/previews/67/67732_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/u.mp3",
+      "bytes": 16800
+    },
+    {
+      "letter": "v",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67733/",
+      "preview": "https://cdn.freesound.org/previews/67/67733_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/v.mp3",
+      "bytes": 19166
+    },
+    {
+      "letter": "w",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67734/",
+      "preview": "https://cdn.freesound.org/previews/67/67734_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/w.mp3",
+      "bytes": 15410
+    },
+    {
+      "letter": "x",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67735/",
+      "preview": "https://cdn.freesound.org/previews/67/67735_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/x.mp3",
+      "bytes": 13720
+    },
+    {
+      "letter": "y",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67736/",
+      "preview": "https://cdn.freesound.org/previews/67/67736_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/y.mp3",
+      "bytes": 17180
+    },
+    {
+      "letter": "z",
+      "source": "https://freesound.org/people/tim.kahn/sounds/67737/",
+      "preview": "https://cdn.freesound.org/previews/67/67737_7037-lq.mp3",
+      "licence": "https://creativecommons.org/licenses/by/4.0/",
+      "file": "bee-audio/letters/z.mp3",
+      "bytes": 15279
+    }
+  ]
+}

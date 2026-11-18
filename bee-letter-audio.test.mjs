@@ -1,0 +1,7 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync,statSync} from 'node:fs';
+import {letterAudioSpec,createLetterPlayer} from './bee-letter-audio.mjs';
+test('all 26 recordings exist with individual attribution',()=>{const sources=JSON.parse(readFileSync(new URL('./bee-audio/letters/sources.json',import.meta.url)));assert.equal(sources.files.length,26);for(const letter of 'abcdefghijklmnopqrstuvwxyz'){const spec=letterAudioSpec(letter,'higher');assert.ok(statSync(new URL(spec.src,import.meta.url)).size>1000);assert.ok(sources.files.some(f=>f.letter===letter&&f.licence==='https://creativecommons.org/licenses/by/4.0/'));}assert.equal(letterAudioSpec('../secret','higher'),null);assert.equal(letterAudioSpec('a','lower').rate,.86);});
+test('a new letter cancels the old letter and stop resolves playback',async()=>{const media=[];const player=createLetterPlayer(()=>{const audio={preservesPitch:true,play:()=>Promise.resolve(),pause:()=>{}};media.push(audio);return audio;});const a=player.play('a','higher');const b=player.play('b','lower');assert.equal(await a,'stopped');assert.equal(media[1].preservesPitch,false);player.stop();assert.equal(await b,'stopped');});
+test('failed playback requests fallback; cancelled playback does not',async()=>{const player=createLetterPlayer(()=>({preservesPitch:true,play:()=>Promise.reject(Error('blocked')),pause:()=>{}}));assert.equal(await player.play('a','higher'),'unavailable');});
