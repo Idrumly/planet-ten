@@ -1,13 +1,13 @@
 {
   "name": "Puddlehopper",
-  "version": 1,
+  "version": 2,
   "units": "metres",
   "up": "Y",
   "forward": "+Z",
-  "triangles": 182168,
+  "triangles": 208880,
   "materials": 9,
-  "meshes": 62,
-  "bytes": 6920776,
+  "meshes": 61,
+  "bytes": 7748056,
   "anchors": [
     "anchor_sentence",
     "anchor_definition",
@@ -22,5 +22,6 @@
   "textures": "Original 1024px colour, normal and roughness maps; WebP packaging",
   "optimization": "glTF Transform 4.5.1: dedup, prune --keep-leaves true, tangents, webp --quality 90",
   "validation": "No glTF errors or warnings. Intentional empty nodes retain clue anchors.",
-  "status": "Character study. Not rigged or connected to spelling interactions."
+  "status": "Character study. Not rigged or connected to spelling interactions.",
+  "face": "Anatomically mapped moss, pollen and rose pigments; sculpted nose and brow volumes; forehead and temple sepals."
 }

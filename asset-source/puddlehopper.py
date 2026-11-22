@@ -27,7 +27,19 @@ def texture(name, petal=False, face=False):
     for k in range(3): color[:,:,k]=np.interp(y,[0,.23,.70,1],[s[k] for s in stops])
     mottling=(np.sin(x*47+np.sin(y*23)*2)*np.sin(y*70+x*29)*.025+noise*.035)
     color+=mottling[:,:,None]+ridge[:,:,None]*(0 if face else .06)+branching[:,:,None]*(0 if face else .025)
-    if face:color[noise>.993]*=.65
+    if face:
+        # Face UVs are authored from the sculpt's width/height, so pigment follows anatomy.
+        u=x*2-1;v=y*2-1
+        pollen=np.exp(-(u/.60)**2-((v-.02)/.88)**2)
+        color=color*(1-pollen[:,:,None]*.68)+np.array([.70,.65,.29])*pollen[:,:,None]*.68
+        cheeks=(np.exp(-((u-.53)/.25)**2-((v+.20)/.22)**2)+np.exp(-((u+.53)/.25)**2-((v+.20)/.22)**2))*.28
+        color=color*(1-cheeks[:,:,None])+np.array([.65,.34,.25])*cheeks[:,:,None]
+        edge=np.clip((abs(u)-.50)*1.4,0,.55)
+        color=color*(1-edge[:,:,None])+np.array([.12,.29,.19])*edge[:,:,None]
+        leaflines=np.exp(-(np.sin((v+abs(u)*.8)*15)/.09)**2)*np.clip((abs(u)-.35)*1.7,0,1)
+        color-=leaflines[:,:,None]*.025
+        color[(noise>.997)&(abs(v)<.5)]*=.75
+        h=noise*.003+leaflines*.007
     if petal:
         freckles=(noise>.997)*(np.sin(y*97+x*177)>.2)*(y<.65)
         color[freckles]*=.60
@@ -57,7 +69,7 @@ def material(name,color,rough=.5,textures=None):
     return m
 leaf=material('Leaf • emerald wax and fine veins',(1,1,1),textures=texture('leaf'))
 petal=material('Petal • rose, cream and pollen freckles',(1,1,1),textures=texture('petal',True))
-skin=material('Face • soft sage',(.25,.43,.25),.65)
+skin=material('Face • soft sage',(.38,.49,.25),.65)
 face_skin=material('Face • botanical freckles',(1,1,1),textures=texture('face',face=True))
 stem=material('Stem • deep jade',(.08,.23,.16),.63)
 gold=material('Pollen • antique gold',(.61,.39,.10),.45)
@@ -152,22 +164,29 @@ for v in head.data.vertices:
         weight=max(0,-y/.235)
         sockets=sum(math.exp(-((x-side*.112)/.075)**2-((z-.065)/.07)**2) for side in [-1,1])
         cheek=sum(math.exp(-((x-side*.14)/.10)**2-((z+.06)/.11)**2) for side in [-1,1])
-        v.co.y+=sockets*.035*weight-cheek*.019*weight
+        nose=math.exp(-(x/.040)**2-((z+.04)/.105)**2)
+        brow=sum(math.exp(-((x-side*.112)/.09)**2-((z-.14)/.035)**2) for side in [-1,1])
+        v.co.y+=sockets*.035*weight-cheek*.019*weight-nose*.043*weight-brow*.014*weight
     v.co.x*=1-.18*max(0,-z/.365)
+for poly in head.data.polygons:
+    for loop in poly.loop_indices:
+        co=head.data.vertices[head.data.loops[loop].vertex_index].co
+        head.data.uv_layers.active.data[loop].uv=((co.x/.265+1)/2,(co.z/.365+1)/2)
 for side in [-1,1]:
     x=side*.113
-    ellipsoid('Recessed eye', (x,-.276,2.555),(.078,.035,.057),dark)
-    ellipsoid('Amber iris',(x,-.308,2.552),(.039,.011,.044),iris)
+    ellipsoid('Recessed eye', (x,-.276,2.555),(.074,.035,.053),dark)
+    ellipsoid('Amber iris',(x,-.308,2.552),(.035,.011,.039),iris)
     ellipsoid('Vertical pupil',(x,-.319,2.552),(.015,.006,.032),dark)
-    ellipsoid('Eye glint',(x-.012,-.325,2.57),(.009,.004,.009),shine,16,12)
-    tube('Upper leaf eyelid',[(x-.078,-.285,2.555),(x-.015,-.316,2.613),(x+.077,-.283,2.568)],.013,skin)
+    ellipsoid('Eye glint',(x-.012,-.325,2.57),(.006,.004,.006),shine,16,12)
+    tube('Upper leaf eyelid',[(x-.078,-.285,2.555),(x-.015,-.316,2.613),(x+.077,-.283,2.568)],.009,skin)
     tube('Lower leaf eyelid',[(x-.070,-.281,2.548),(x,-.306,2.504),(x+.070,-.283,2.555)],.009,skin)
-    tube('Botanical brow',[(x-.085,-.258,2.638),(x,-.275,2.665),(x+.070,-.25,2.63)],.006,stem)
-ellipsoid('Nose ridge',(0,-.287,2.475),(.026,.025,.062),skin)
-tube('Mouth crease',[(-.073,-.263,2.365),(0,-.283,2.348),(.079,-.255,2.373)],.009,dark)
-tube('Lower lip tissue',[(-.052,-.261,2.34),(0,-.274,2.329),(.055,-.258,2.347)],.008,skin)
-for i in range(13):
-    a=i*2.4;ellipsoid('Pollen crown bead',(math.sin(a)*.12,-.20,2.75+(i%3)*.027),(.012,.010,.019),gold,12,8)
+    blade('Growing leaf brow',(side*.04,-.258,2.65),(side*.23,-.22,2.63),.022,leaf,cup=.035,ruffle=.004)
+    blade('Temple sepal',(side*.15,-.09,2.81),(side*.245,-.16,2.52),.085,leaf,cup=.045,ruffle=.008)
+    blade('Forehead sepal',(side*.09,-.095,2.85),(side*.115,-.237,2.69),.075,leaf,cup=.025,ruffle=.007)
+tube('Mouth crease',[(-.073,-.279,2.365),(0,-.287,2.348),(.079,-.276,2.373)],.005,dark)
+tube('Lower lip tissue',[(-.052,-.277,2.34),(0,-.280,2.329),(.055,-.278,2.347)],.006,skin)
+for i in range(5):
+    a=i*2.4;ellipsoid('Pollen crown bead',(math.sin(a)*.07,-.17,2.79+(i%3)*.017),(.008,.007,.011),gold,12,8)
 
 # Stable logical anchors for later clue integration; this asset studio has no game state.
 for name,loc in [('anchor_sentence',(-.33,-.12,3.17)),('anchor_definition',(.38,-.12,3.15)),('anchor_show',(-.57,-.12,2.72)),('anchor_human',(.57,-.12,2.68)),('anchor_history',(-.25,-.22,1.13)),('anchor_part_of_speech',(.25,-.22,1.13)),('anchor_hear',(0,-.28,1.76)),('anchor_test',(0,-.25,.73))]:
