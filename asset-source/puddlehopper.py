@@ -39,8 +39,26 @@ def texture(name, petal=False, face=False):
         leaflines=np.exp(-(np.sin((v+abs(u)*.8)*15)/.09)**2)*np.clip((abs(u)-.35)*1.7,0,1)
         color-=leaflines[:,:,None]*.025
         color[(noise>.997)&(abs(v)<.5)]*=.75
-        h=noise*.003+leaflines*.007
+        # Sweeping pigment bands grow outwards from the bridge of the nose.
+        # Broad translucent washes and finer veins share the same curved direction.
+        sweep=abs(u)-(.16+.48*np.clip(v+.25,0,1.3))
+        copper=np.exp(-(sweep/.20)**2)*np.clip((v+.50)*1.3,0,.82)
+        color=color*(1-copper[:,:,None])+np.array([.72,.25,.11])*copper[:,:,None]
+        plum=np.exp(-((sweep-.23)/.16)**2)*np.clip((v+.25)*1.1,0,.64)
+        color=color*(1-plum[:,:,None])+np.array([.30,.095,.19])*plum[:,:,None]
+        coral=np.exp(-((abs(u)-.62)/.24)**2-((v+.2)/.32)**2)*.55
+        color=color*(1-coral[:,:,None])+np.array([.77,.35,.23])*coral[:,:,None]
+        jade=np.exp(-((u+.055*np.sin(v*7))/.12)**2)*np.clip((v+.25),0,.55)
+        color=color*(1-jade[:,:,None])+np.array([.20,.60,.43])*jade[:,:,None]
+        goldline=np.exp(-((sweep+.11)/.035)**2)*np.clip((v+.3),0,.25)
+        color+=goldline[:,:,None]*np.array([.35,.25,.08])
+        color+=np.sin(u*26+v*11)[:,:,None]*.012
+        h=noise*.003+leaflines*.007+goldline*.012
     if petal:
+        warm=np.exp(-((x-.22-.10*np.sin(y*7))/.19)**2)*np.sin(y*math.pi)*.32
+        color=color*(1-warm[:,:,None])+np.array([.87,.43,.18])*warm[:,:,None]
+        jade=np.exp(-((x-.75)/.13)**2)*(1-y)**2*.48
+        color=color*(1-jade[:,:,None])+np.array([.18,.45,.30])*jade[:,:,None]
         freckles=(noise>.997)*(np.sin(y*97+x*177)>.2)*(y<.65)
         color[freckles]*=.60
     def image(label,pixels,space):
@@ -189,6 +207,17 @@ for i in range(5):
     a=i*2.4;ellipsoid('Pollen crown bead',(math.sin(a)*.07,-.17,2.79+(i%3)*.017),(.008,.007,.011),gold,12,8)
 
 # Stable logical anchors for later clue integration; this asset studio has no game state.
+# Project a common facial pigment field onto the brows and sepals to blend their joins.
+for obj in list(bpy.context.scene.objects):
+    if obj.name.startswith(('Growing leaf brow','Temple sepal','Forehead sepal','Upper leaf eyelid','Lower leaf eyelid','Lower lip tissue')):
+        if obj.type=='CURVE':
+            bpy.ops.object.select_all(action='DESELECT');obj.select_set(True);bpy.context.view_layer.objects.active=obj;bpy.ops.object.convert(target='MESH')
+        if not obj.data.uv_layers:obj.data.uv_layers.new(name='FaceBlendUV')
+        obj.data.materials.clear();obj.data.materials.append(face_skin)
+        for poly in obj.data.polygons:
+            for loop in poly.loop_indices:
+                co=obj.data.vertices[obj.data.loops[loop].vertex_index].co
+                obj.data.uv_layers.active.data[loop].uv=((co.x/.265+1)/2,((co.z-2.49)/.365+1)/2)
 for name,loc in [('anchor_sentence',(-.33,-.12,3.17)),('anchor_definition',(.38,-.12,3.15)),('anchor_show',(-.57,-.12,2.72)),('anchor_human',(.57,-.12,2.68)),('anchor_history',(-.25,-.22,1.13)),('anchor_part_of_speech',(.25,-.22,1.13)),('anchor_hear',(0,-.28,1.76)),('anchor_test',(0,-.25,.73))]:
     o=bpy.data.objects.new(name,None);o.location=loc;bpy.context.collection.objects.link(o)
 

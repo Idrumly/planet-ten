@@ -1,13 +1,13 @@
 {
   "name": "Puddlehopper",
-  "version": 2,
+  "version": 3,
   "units": "metres",
   "up": "Y",
   "forward": "+Z",
   "triangles": 208880,
-  "materials": 9,
+  "materials": 8,
   "meshes": 61,
-  "bytes": 7748056,
+  "bytes": 7776512,
   "anchors": [
     "anchor_sentence",
     "anchor_definition",
@@ -23,5 +23,5 @@
   "optimization": "glTF Transform 4.5.1: dedup, prune --keep-leaves true, tangents, webp --quality 90",
   "validation": "No glTF errors or warnings. Intentional empty nodes retain clue anchors.",
   "status": "Character study. Not rigged or connected to spelling interactions.",
-  "face": "Anatomically mapped moss, pollen and rose pigments; sculpted nose and brow volumes; forehead and temple sepals."
+  "face": "Continuous projected copper, coral, plum, pollen and jade pigments across the face, eyelids, lip, brow leaves and forehead sepals."
 }
