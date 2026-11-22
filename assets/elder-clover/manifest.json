@@ -1,0 +1,30 @@
+{
+  "name": "Elder Clover",
+  "version": 1,
+  "units": "metres",
+  "up": "Y",
+  "forward": "+Z",
+  "bytes": 5588428,
+  "meshes": 269,
+  "materials": 14,
+  "triangles": 206912,
+  "authoring": "Original script-authored Blender 4.5.9 geometry and packed procedural textures",
+  "textures": "512px original colour and normal maps; WebP packaging",
+  "optimization": "glTF Transform dedup, prune --keep-leaves true, tangents, webp --quality 90",
+  "validation": "No glTF errors or warnings; desktop and mobile Chrome preview passed",
+  "status": "Static character study; not rigged or connected to tutor speech or game state.",
+  "features": [
+    "Six limbs",
+    "Four veined translucent wings",
+    "Silver brows, moustache and beard",
+    "Amber and charcoal abdomen",
+    "Teal waistcoat",
+    "Word journal",
+    "Walking staff"
+  ],
+  "anchors": [
+    "anchor_voice",
+    "anchor_journal",
+    "anchor_staff"
+  ]
+}
