@@ -174,42 +174,59 @@ for side in [-1,1]:
     blade('Lower blossom collar',(side*.14,.03,2.39),(side*.39,-.08,2.02),.17,petal,cup=.12)
     tube('Curling crown tendril',[(side*.21,.13,2.86),(side*.48,.18,3.22),(side*.76,.15,3.30),(side*.82,.10,3.20)],.012,gold)
 
-# Shaped face. Vertex displacement defines cheek pads, brow and recessed eye beds.
-head=ellipsoid('Face sculpt',(0,-.055,2.49),(.265,.235,.365),face_skin,64,48)
-for v in head.data.vertices:
-    x,y,z=v.co
-    if y<0:
-        weight=max(0,-y/.235)
-        sockets=sum(math.exp(-((x-side*.112)/.075)**2-((z-.065)/.07)**2) for side in [-1,1])
-        cheek=sum(math.exp(-((x-side*.14)/.10)**2-((z+.06)/.11)**2) for side in [-1,1])
-        nose=math.exp(-(x/.040)**2-((z+.04)/.105)**2)
-        brow=sum(math.exp(-((x-side*.112)/.09)**2-((z-.14)/.035)**2) for side in [-1,1])
-        v.co.y+=sockets*.035*weight-cheek*.019*weight-nose*.043*weight-brow*.014*weight
-    v.co.x*=1-.18*max(0,-z/.365)
+# Elfin head: narrow jaw, angular cheek planes and an integrated nose bridge.
+levels=[-.40,-.35,-.28,-.20,-.10,.015,.09,.17,.25,.32,.365]
+widths=[.012,.055,.095,.143,.185,.226,.232,.207,.195,.155,.012]
+depths=[.018,.060,.092,.125,.151,.175,.181,.181,.17,.12,.012]
+def face_y(x,z):
+    w=float(np.interp(z,levels,widths));d=float(np.interp(z,levels,depths))
+    y=-d*math.sqrt(max(0,1-(x/max(w,.001))**2))
+    sockets=sum(math.exp(-((x-side*.10)/.065)**2-((z-.065)/.045)**2) for side in [-1,1])
+    cheek=sum(math.exp(-((x-side*.15)/.055)**2-((z+.035)/.055)**2) for side in [-1,1])
+    bridge=math.exp(-(x/.032)**2-((z+.015)/.125)**2)
+    tip=math.exp(-(x/.038)**2-((z+.105)/.040)**2)
+    muzzle=math.exp(-(x/.085)**2-((z+.205)/.045)**2)
+    return y+sockets*.022-cheek*.018-bridge*.060-tip*.034-muzzle*.015-.055
+head=ellipsoid('Face sculpt',(0,-.055,2.49),(.265,.235,.365),face_skin,96,64)
+for vert in head.data.vertices:
+    x,y,z=vert.co;z=z*(.40/.365) if z<0 else z
+    theta=math.atan2(x/.265,y/.235)
+    w=float(np.interp(z,levels,widths));d=float(np.interp(z,levels,depths))
+    nx=w*math.sin(theta);ny=d*math.cos(theta)
+    if math.cos(theta)<0:
+        base=-d*math.sqrt(max(0,1-(nx/max(w,.001))**2))
+        ny+=(face_y(nx,z)+.055-base)*(-math.cos(theta))**2
+    vert.co=(nx,ny,z)
 for poly in head.data.polygons:
     for loop in poly.loop_indices:
         co=head.data.vertices[head.data.loops[loop].vertex_index].co
         head.data.uv_layers.active.data[loop].uv=((co.x/.265+1)/2,(co.z/.365+1)/2)
 for side in [-1,1]:
-    x=side*.113
-    ellipsoid('Recessed eye', (x,-.276,2.555),(.074,.035,.053),dark)
-    ellipsoid('Amber iris',(x,-.308,2.552),(.035,.011,.039),iris)
-    ellipsoid('Vertical pupil',(x,-.319,2.552),(.015,.006,.032),dark)
-    ellipsoid('Eye glint',(x-.012,-.325,2.57),(.006,.004,.006),shine,16,12)
-    tube('Upper leaf eyelid',[(x-.078,-.285,2.555),(x-.015,-.316,2.613),(x+.077,-.283,2.568)],.009,skin)
-    tube('Lower leaf eyelid',[(x-.070,-.281,2.548),(x,-.306,2.504),(x+.070,-.283,2.555)],.009,skin)
-    blade('Growing leaf brow',(side*.04,-.258,2.65),(side*.23,-.22,2.63),.022,leaf,cup=.035,ruffle=.004)
-    blade('Temple sepal',(side*.15,-.09,2.81),(side*.245,-.16,2.52),.085,leaf,cup=.045,ruffle=.008)
-    blade('Forehead sepal',(side*.09,-.095,2.85),(side*.115,-.237,2.69),.075,leaf,cup=.025,ruffle=.007)
-tube('Mouth crease',[(-.073,-.279,2.365),(0,-.287,2.348),(.079,-.276,2.373)],.005,dark)
-tube('Lower lip tissue',[(-.052,-.277,2.34),(0,-.280,2.329),(.055,-.278,2.347)],.006,skin)
+    x=side*.10;z=.065;ey=face_y(x,z)-.013
+    eye=ellipsoid('Almond eye',(x,ey,2.49+z),(.060,.022,.029),dark)
+    eye.rotation_euler.y=-side*.16
+    ellipsoid('Amber iris',(x,ey-.021,2.49+z),(.022,.008,.025),iris)
+    ellipsoid('Vertical pupil',(x,ey-.029,2.49+z),(.008,.004,.019),dark)
+    ellipsoid('Eye glint',(x-.008,ey-.034,2.49+z+.010),(.004,.003,.004),shine,16,12)
+    inner=x-side*.060;outer=x+side*.060
+    tube('Upper leaf eyelid',[(inner,ey+.001,2.543),(x-side*.008,ey-.021,2.584),(outer,ey+.004,2.567)],.006,skin)
+    tube('Lower leaf eyelid',[(inner,ey+.001,2.543),(x,ey-.021,2.527),(outer,ey+.004,2.567)],.005,skin)
+    tube('Upper botanical brow',[(side*.040,ey-.005,2.613),(side*.11,ey-.004,2.625),(side*.18,ey+.030,2.617)],.006,skin)
+    blade('Temple sepal',(side*.14,-.07,2.81),(side*.22,-.11,2.56),.070,leaf,cup=.035,ruffle=.008)
+    blade('Forehead sepal',(side*.08,-.06,2.85),(side*.10,-.20,2.70),.060,leaf,cup=.020,ruffle=.006)
+    blade('Pointed leaf ear',(side*.185,-.025,2.51),(side*.46,-.025,2.68),.080,leaf,cup=.075,ruffle=.006)
+    blade('Ear petal lining',(side*.22,-.080,2.54),(side*.425,-.043,2.65),.043,petal,cup=.025,ruffle=.003)
+def lip_point(x,z,forward=.006):return (x,face_y(x,z)-forward,2.49+z)
+tube('Mouth crease',[lip_point(-.064,-.202),lip_point(-.026,-.207),lip_point(0,-.212),lip_point(.027,-.207),lip_point(.064,-.200)],.0035,dark)
+tube('Upper lip tissue',[lip_point(-.056,-.199),lip_point(-.020,-.192,.008),lip_point(0,-.199,.009),lip_point(.020,-.192,.008),lip_point(.056,-.197)],.0045,skin)
+tube('Lower lip tissue',[lip_point(-.050,-.213),lip_point(0,-.226,.009),lip_point(.050,-.212)],.005,skin)
 for i in range(5):
     a=i*2.4;ellipsoid('Pollen crown bead',(math.sin(a)*.07,-.17,2.79+(i%3)*.017),(.008,.007,.011),gold,12,8)
 
 # Stable logical anchors for later clue integration; this asset studio has no game state.
 # Project a common facial pigment field onto the brows and sepals to blend their joins.
 for obj in list(bpy.context.scene.objects):
-    if obj.name.startswith(('Growing leaf brow','Temple sepal','Forehead sepal','Upper leaf eyelid','Lower leaf eyelid','Lower lip tissue')):
+    if obj.name.startswith(('Growing leaf brow','Temple sepal','Forehead sepal','Upper leaf eyelid','Lower leaf eyelid','Lower lip tissue','Upper lip tissue','Upper botanical brow')):
         if obj.type=='CURVE':
             bpy.ops.object.select_all(action='DESELECT');obj.select_set(True);bpy.context.view_layer.objects.active=obj;bpy.ops.object.convert(target='MESH')
         if not obj.data.uv_layers:obj.data.uv_layers.new(name='FaceBlendUV')

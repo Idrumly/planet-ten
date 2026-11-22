@@ -1,13 +1,13 @@
 {
   "name": "Puddlehopper",
-  "version": 3,
+  "version": 4,
   "units": "metres",
   "up": "Y",
   "forward": "+Z",
-  "triangles": 208880,
+  "triangles": 227152,
   "materials": 8,
-  "meshes": 61,
-  "bytes": 7776512,
+  "meshes": 66,
+  "bytes": 8364868,
   "anchors": [
     "anchor_sentence",
     "anchor_definition",
@@ -23,5 +23,6 @@
   "optimization": "glTF Transform 4.5.1: dedup, prune --keep-leaves true, tangents, webp --quality 90",
   "validation": "No glTF errors or warnings. Intentional empty nodes retain clue anchors.",
   "status": "Character study. Not rigged or connected to spelling interactions.",
-  "face": "Continuous projected copper, coral, plum, pollen and jade pigments across the face, eyelids, lip, brow leaves and forehead sepals."
+  "face": "Continuous projected copper, coral, plum, pollen and jade pigments across the face, eyelids, lip, brow leaves and forehead sepals.",
+  "form": "Elfin head: tapered jaw and chin, cheek planes, integrated nose bridge, smaller slanted eyes, shaped lips and leaf ears. Approved botanical pigments retained."
 }
