@@ -27,6 +27,12 @@ def texture(name, petal=False, face=False):
     for k in range(3): color[:,:,k]=np.interp(y,[0,.23,.70,1],[s[k] for s in stops])
     mottling=(np.sin(x*47+np.sin(y*23)*2)*np.sin(y*70+x*29)*.025+noise*.035)
     color+=mottling[:,:,None]+ridge[:,:,None]*(0 if face else .06)+branching[:,:,None]*(0 if face else .025)
+    if not face and not petal:
+        ribs=np.exp(-(np.sin((x-.5)*math.pi*9+.35*np.sin(y*9))/.18)**2)
+        h+=ribs*.08
+        color+=ribs[:,:,None]*np.array([.055,.065,.025])
+        blush=np.exp(-((abs(x-.5)-.34)/.10)**2)*.28
+        color=color*(1-blush[:,:,None])+np.array([.55,.24,.18])*blush[:,:,None]
     if face:
         # Face UVs are authored from the sculpt's width/height, so pigment follows anatomy.
         u=x*2-1;v=y*2-1
@@ -132,7 +138,7 @@ def tube(name,points,radius,mat=stem):
     for p,co in zip(s.bezier_points,points):p.co=co;p.handle_left_type=p.handle_right_type='AUTO'
     o=bpy.data.objects.new(name,curve);bpy.context.collection.objects.link(o);return finish(o,name,mat)
 
-def blade(name,base,tip,width,mat=leaf,cup=.12,ruffle=.025):
+def blade(name,base,tip,width,mat=leaf,cup=.12,ruffle=.025,flowing=False):
     # Organic thick petal with a curved spine, hand-shaped edge and authored UVs.
     base,tip=Vector(base),Vector(tip);direction=tip-base
     sideways=Vector((direction.z,0,-direction.x)).normalized()
@@ -145,6 +151,10 @@ def blade(name,base,tip,width,mat=leaf,cup=.12,ruffle=.025):
             u=i/M*2-1;p=center+sideways*(u*w)
             p.y+=u*u*.10*math.sin(math.pi*v)+abs(u)**4*ruffle*math.sin(v*33)
             p.y+=v**6*.12
+            if flowing:
+                p.x+=.045*math.sin(v*math.pi*1.6)*v
+                p.y+=.014*math.sin(u*math.pi*5)*(1-u*u)*math.sin(v*math.pi)
+                p.y-=.09*v**5
             verts.append(tuple(p));uv.append((i/M,j/N))
             if i<M and j<N:
                 a=j*(M+1)+i;faces.append((a,a+1,a+M+2,a+M+1))
@@ -159,30 +169,43 @@ def blade(name,base,tip,width,mat=leaf,cup=.12,ruffle=.025):
 
 # Branching body, roots and shoulder structure are fused into one continuous skin.
 body=[]
-body.append(ellipsoid('Torso volume',(0,.06,1.55),(.25,.20,.57),stem))
-body.append(ellipsoid('Neck volume',(0,.035,2.12),(.11,.12,.22),stem))
+body.append(ellipsoid('Torso volume',(0,.06,1.55),(.145,.12,.57),stem))
+body.append(ellipsoid('Neck volume',(0,.035,2.12),(.075,.08,.22),stem))
 for side in [-1,1]:
-    body.append(tube('Root leg',[(side*.13,.05,1.20),(side*.22,.07,.65),(side*.22,-.02,.15),(side*.39,-.22,.065)],.075))
-    body.append(ellipsoid('Root foot',(side*.30,-.16,.075),(.13,.27,.065),stem))
-    body.append(tube('Branch arm',[(side*.19,.04,1.86),(side*.43,.015,1.68),(side*.65,-.08,1.80),(side*.77,-.14,1.96)],.052))
-    body.append(ellipsoid('Palm',(side*.77,-.14,1.96),(.065,.045,.10),stem))
-    for f in range(3):tube('Tendril finger',[(side*(.75+f*.025),-.14,1.98),(side*(.76+f*.06),-.15,2.08),(side*(.73+f*.085),-.13,2.14-f*.018)],.014)
+    body.append(tube('Root leg',[(side*.075,.05,1.20),(side*.22,.07,.65),(side*.22,-.02,.15),(side*.39,-.22,.065)],.042))
+    body.append(ellipsoid('Root foot',(side*.30,-.16,.075),(.065,.16,.042),stem))
+    body.append(tube('Branch arm',[(side*.10,.04,1.86),(side*.43,.015,1.68),(side*.65,-.08,1.80),(side*.77,-.14,1.96)],.029))
+    body.append(ellipsoid('Palm',(side*.77,-.14,1.96),(.044,.029,.075),stem))
+    for f in range(3):tube('Tendril finger',[(side*(.75+f*.025),-.14,1.98),(side*(.76+f*.06),-.15,2.08),(side*(.73+f*.085),-.13,2.14-f*.018)],.009)
 bpy.ops.object.select_all(action='DESELECT')
 for o in body:o.select_set(True)
 bpy.context.view_layer.objects.active=body[0];bpy.ops.object.convert(target='MESH');bpy.ops.object.join()
 body_obj=bpy.context.object;body_obj.name='Puddlehopper • continuous branching body'
-remesh=body_obj.modifiers.new('Organic joint fusion','REMESH');remesh.mode='VOXEL';remesh.voxel_size=.018;bpy.ops.object.modifier_apply(modifier=remesh.name)
+remesh=body_obj.modifiers.new('Organic joint fusion','REMESH');remesh.mode='VOXEL';remesh.voxel_size=.010;remesh.use_remove_disconnected=False;bpy.ops.object.modifier_apply(modifier=remesh.name)
 smooth=body_obj.modifiers.new('Soft tissue sculpt','SMOOTH');smooth.factor=.8;smooth.iterations=5;bpy.ops.object.modifier_apply(modifier=smooth.name)
 for p in body_obj.data.polygons:p.use_smooth=True
 
-# Layered leaf coat, collar and arm cuffs.
-for i in range(9):
-    a=i*math.tau/9
-    blade('Coat leaf %02d'%i,(math.sin(a)*.13,math.cos(a)*.13+.04,1.48),(math.sin(a)*(.37+(i%2)*.07),math.cos(a)*.31+.04,.42+(i%3)*.13),.19,cup=.08)
+# Shared botanical pigmentation on the slender body and fingers.
+for obj in [body_obj]+[o for o in bpy.data.objects if o.name.startswith('Tendril finger')]:
+    if obj.type=='CURVE':
+        bpy.ops.object.select_all(action='DESELECT');obj.select_set(True);bpy.context.view_layer.objects.active=obj;bpy.ops.object.convert(target='MESH')
+    obj.data.materials.clear();obj.data.materials.append(face_skin)
+    layer=obj.data.uv_layers.new(name='BodyPigmentUV')
+    for poly in obj.data.polygons:
+        for loop in poly.loop_indices:
+            co=obj.matrix_world @ obj.data.vertices[obj.data.loops[loop].vertex_index].co
+            layer.data[loop].uv=(.5+co.x*.52,co.z/2.25)
+
+# Long, draping living leaves radiate from the waist with open spaces between tips.
+for i in range(8):
+    a=i*math.tau/8
+    skirt=blade('Flowing skirt leaf %02d'%i,(0,0,0),(.04,-.30-(i%2)*.08,-.73-(i%3)*.09),.145,leaf,cup=.10,ruffle=.012,flowing=True)
+    skirt.location=(math.sin(a)*.10,math.cos(a)*.10+.04,1.43)
+    skirt.rotation_euler.z=a
 for side in [-1,1]:
-    blade('Shoulder collar', (0,.04,2.03),(side*.47,-.02,1.73),.16,cup=.09)
-    blade('Forearm leaf cuff',(side*.40,0,1.73),(side*.70,-.13,1.94),.12,cup=.04)
-    blade('Chest lapel',(side*.16,-.10,1.92),(side*.08,-.25,1.17),.13,cup=.045)
+    blade('Shoulder collar',(0,.04,2.03),(side*.29,-.02,1.81),.085,cup=.06)
+    blade('Forearm leaf cuff',(side*.49,-.025,1.72),(side*.68,-.11,1.90),.055,cup=.025)
+    blade('Chest lapel',(side*.10,-.07,1.94),(side*.055,-.13,1.39),.067,cup=.025)
 
 # Deliberately unequal crown petals: a hood, side lobes and curling lower sepals.
 crown_specs=[(-.30,3.55,.29),(.12,3.72,.30),(.43,3.45,.32),(-.69,3.18,.31),(.76,3.08,.32),(-.80,2.72,.27),(.83,2.57,.28)]

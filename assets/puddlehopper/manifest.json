@@ -1,13 +1,13 @@
 {
   "name": "Puddlehopper",
-  "version": 7,
+  "version": 8,
   "units": "metres",
   "up": "Y",
   "forward": "+Z",
-  "triangles": 265360,
-  "materials": 8,
-  "meshes": 69,
-  "bytes": 9967244,
+  "triangles": 274956,
+  "materials": 7,
+  "meshes": 66,
+  "bytes": 10674924,
   "anchors": [
     "anchor_sentence",
     "anchor_definition",
@@ -24,5 +24,6 @@
   "validation": "No glTF errors or warnings. Intentional empty nodes retain clue anchors.",
   "status": "Character study. Not rigged or connected to spelling interactions.",
   "face": "Continuous projected copper, coral, plum, pollen and jade pigments across the face, eyelids, lip, brow leaves and forehead sepals.",
-  "form": "Recessed elfin face within a forward-curving orchid cowl with rolled rim, lower lip petals, branching nectar guides, pigment spots and cream edges. Cowl radial fullness and tissue thickness halved."
+  "form": "Recessed elfin face within a forward-curving orchid cowl with rolled rim, lower lip petals, branching nectar guides, pigment spots and cream edges. Cowl radial fullness and tissue thickness halved.",
+  "body": "Slender torso, arms, fingers, legs and feet; shared face pigment texture; eight curved, ribbed living skirt leaves with warm edge variegation."
 }
