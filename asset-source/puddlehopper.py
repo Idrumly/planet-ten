@@ -64,6 +64,20 @@ def texture(name, petal=False, face=False):
         color=color*(1-jade[:,:,None])+np.array([.18,.45,.30])*jade[:,:,None]
         freckles=(noise>.997)*(np.sin(y*97+x*177)>.2)*(y<.65)
         color[freckles]*=.60
+        # Orchid nectar guides: branching veins and irregular pigmented spots.
+        vein=np.exp(-(np.sin((y+abs(x-.5)*.8)*math.pi*18+.35*np.sin(x*35))/.13)**2)
+        stemline=np.exp(-((x-.5)/.012)**2)
+        guides=np.maximum(vein*.55,stemline)*np.maximum(0,np.sin(y*math.pi))**.5
+        color=color*(1-guides[:,:,None]*.40)+np.array([.42,.09,.24])*guides[:,:,None]*.40
+        spots=np.zeros_like(x)
+        for _ in range(165):
+            sx,sy=rng.uniform(.06,.94),rng.uniform(.06,.68)
+            rx,ry=rng.uniform(.004,.013),rng.uniform(.004,.018)
+            spots=np.maximum(spots,np.exp(-(((x-sx)/rx)**2+((y-sy)/ry)**2)*2))
+        color=color*(1-spots[:,:,None]*.65)+np.array([.36,.055,.17])*spots[:,:,None]*.65
+        rim=np.clip((abs(x-.5)-.41)/.09,0,1)*.52
+        color=color*(1-rim[:,:,None])+np.array([.98,.78,.55])*rim[:,:,None]
+        h+=guides*.040+spots*.008
     def image(label,pixels,space):
         im=bpy.data.images.new(label,width=n,height=n,alpha=True)
         rgba=np.ones((n,n,4),np.float32);rgba[:,:,:3]=np.clip(pixels,0,1)
@@ -245,10 +259,32 @@ for obj in list(bpy.context.scene.objects):
 pivot=Vector((0,0,2.49))
 inset=Matrix.Translation(pivot+Vector((0,.055,.035))) @ Matrix.Scale(.82,4) @ Matrix.Translation(-pivot)
 for obj in set(bpy.data.objects)-before_face:obj.matrix_world=inset @ obj.matrix_world
-# A cupped inner corolla places the face inside the flower and casts real edge shadows.
+# A continuous horseshoe corolla grows forward, then rolls inward around the face.
+# Negative Y faces the viewer. The overhanging rim is real geometry, not painted shadow.
+verts=[];uv=[];faces=[];N=72;M=24
+for j in range(M+1):
+    v=j/M
+    for i in range(N+1):
+        u=i/N;angle=-.38+u*(math.pi+.76)
+        radius=.24+.15*math.sin(v*math.pi*.82)
+        radius-=.065*v**5
+        fold=.012*math.sin(angle*13)*math.sin(v*math.pi)
+        x=math.cos(angle)*(radius+fold)
+        z=2.54+math.sin(angle)*(radius+.075)
+        y=.15-.49*math.sin(v*math.pi/2)+.055*v**7
+        y+=.012*math.sin(angle*17)*v**4
+        verts.append((x,y,z));uv.append((u,v))
+        if i<N and j<M:
+            a=j*(N+1)+i;faces.append((a,a+1,a+N+2,a+N+1))
+mesh=bpy.data.meshes.new('Orchid cowl');mesh.from_pydata(verts,[],faces);mesh.update()
+layer=mesh.uv_layers.new(name='BotanicalUV')
+for poly in mesh.polygons:
+    for loop in poly.loop_indices:layer.data[loop].uv=uv[mesh.loops[loop].vertex_index]
+hood=bpy.data.objects.new('Forward folded orchid cowl',mesh);bpy.context.collection.objects.link(hood);finish(hood,hood.name,petal)
+sub=hood.modifiers.new('Soft corolla folds','SUBSURF');sub.levels=1
+solid=hood.modifiers.new('Fleshy petal rim','SOLIDIFY');solid.thickness=.014;solid.offset=0
 for side in [-1,1]:
-    blade('Inner corolla hood',(side*.11,.10,2.85),(side*.255,-.09,2.37),.070,petal,cup=.14,ruffle=.012)
-    blade('Inner corolla chin cup',(side*.045,.015,2.24),(side*.205,-.11,2.43),.060,petal,cup=.06,ruffle=.012)
+    blade('Inner corolla chin cup',(side*.045,.015,2.24),(side*.23,-.30,2.43),.085,petal,cup=.09,ruffle=.012)
 for name,loc in [('anchor_sentence',(-.33,-.12,3.17)),('anchor_definition',(.38,-.12,3.15)),('anchor_show',(-.57,-.12,2.72)),('anchor_human',(.57,-.12,2.68)),('anchor_history',(-.25,-.22,1.13)),('anchor_part_of_speech',(.25,-.22,1.13)),('anchor_hear',(0,-.28,1.76)),('anchor_test',(0,-.25,.73))]:
     o=bpy.data.objects.new(name,None);o.location=loc;bpy.context.collection.objects.link(o)
 

@@ -1,13 +1,13 @@
 {
   "name": "Puddlehopper",
-  "version": 5,
+  "version": 6,
   "units": "metres",
   "up": "Y",
   "forward": "+Z",
-  "triangles": 246568,
+  "triangles": 265360,
   "materials": 8,
   "meshes": 69,
-  "bytes": 9366188,
+  "bytes": 9967244,
   "anchors": [
     "anchor_sentence",
     "anchor_definition",
@@ -24,5 +24,5 @@
   "validation": "No glTF errors or warnings. Intentional empty nodes retain clue anchors.",
   "status": "Character study. Not rigged or connected to spelling interactions.",
   "face": "Continuous projected copper, coral, plum, pollen and jade pigments across the face, eyelids, lip, brow leaves and forehead sepals.",
-  "form": "Elfin face scaled to 82%, recessed within four inner corolla petals. Fine botanical surface relief and varied roughness; approved eyes, shape and botanical pigments retained."
+  "form": "Recessed elfin face within a forward-curving orchid cowl with rolled rim, lower lip petals, branching nectar guides, pigment spots and cream edges."
 }
