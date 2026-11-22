@@ -201,6 +201,6 @@ for side in [-1,1]:tube('Staff stone cradle',[(.91,-.15,2.31),(.87+side*.09,-.15
 for name,loc in [('anchor_voice',(0,-.44,2.44)),('anchor_journal',(0,-.55,1.48)),('anchor_staff',(.91,-.16,1.98))]:
     o=bpy.data.objects.new(name,None);o.location=loc;bpy.context.collection.objects.link(o)
 bpy.context.scene.unit_settings.system='METRIC'
-bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT,'elder-clover-source.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUT,'elder-clover-source.blend'),compress=True)
 bpy.ops.export_scene.gltf(filepath=os.path.join(OUT,'elder-clover.glb'),export_format='GLB',export_apply=True,export_animations=False,export_yup=True)
 print('ELDER_CLOVER_EXPORTED')
