@@ -311,6 +311,49 @@ for side in [-1,1]:
 for name,loc in [('anchor_sentence',(-.33,-.12,3.17)),('anchor_definition',(.38,-.12,3.15)),('anchor_show',(-.57,-.12,2.72)),('anchor_human',(.57,-.12,2.68)),('anchor_history',(-.25,-.22,1.13)),('anchor_part_of_speech',(.25,-.22,1.13)),('anchor_hear',(0,-.28,1.76)),('anchor_test',(0,-.25,.73))]:
     o=bpy.data.objects.new(name,None);o.location=loc;bpy.context.collection.objects.link(o)
 
+# Short rustic boots: soft suede uppers, folded cuffs and hand-tied cord.
+leather=material('Boot leather • warm chestnut',(.30,.105,.045),.88)
+sole=material('Boot sole • dark worn leather',(.065,.027,.014),.92)
+cord=material('Boot lacing • natural flax',(.68,.46,.23),.90)
+rng=np.random.default_rng(308)
+n=256;yy,xx=np.mgrid[0:n,0:n]/n
+mottle=.90+.10*np.sin(xx*31)*np.sin(yy*23)+rng.random((n,n))*.13
+pixels=np.ones((n,n,4),np.float32);pixels[:,:,:3]=mottle[:,:,None]*np.array([.47,.235,.125])
+im=bpy.data.images.new('Chestnut suede grain',width=n,height=n,alpha=True);im.colorspace_settings.name='sRGB';im.pixels.foreach_set(pixels.ravel());im.update();im.pack()
+node=leather.node_tree.nodes.new('ShaderNodeTexImage');node.image=im
+leather.node_tree.links.new(node.outputs['Color'],leather.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
+for side in [-1,1]:
+    ellipsoid('Soft leather boot toe',(side*.30,-.145,.085),(.105,.205,.072),leather)
+    ellipsoid('Low leather boot sole',(side*.30,-.145,.035),(.108,.210,.025),sole)
+    # Open ankle shaft, with slight slouch rather than a rigid cylinder.
+    vs=[];fs=[];uvs=[];rings=16;segments=40
+    for j in range(rings+1):
+        v=j/rings;z=.10+v*.31
+        cx=side*(.26-.04*v);cy=-.045+.075*v
+        rx=.076+.009*v+.006*math.sin(v*14)
+        ry=.086+.010*v+.004*math.sin(v*17)
+        for i in range(segments+1):
+            u=i/segments;a=u*math.tau
+            vs.append((cx+rx*math.cos(a),cy+ry*math.sin(a),z+.004*math.sin(a*3)*v))
+            uvs.append((u,v))
+            if i<segments and j<rings:
+                k=j*(segments+1)+i;fs.append((k,k+1,k+segments+2,k+segments+1))
+    me=bpy.data.meshes.new('Boot shaft');me.from_pydata(vs,[],fs);me.update();layer=me.uv_layers.new(name='SuedeUV')
+    for poly in me.polygons:
+        for loop in poly.loop_indices:layer.data[loop].uv=uvs[me.loops[loop].vertex_index]
+    boot=bpy.data.objects.new('Short peasant boot',me);bpy.context.collection.objects.link(boot);finish(boot,boot.name,leather)
+    sol=boot.modifiers.new('Leather thickness','SOLIDIFY');sol.thickness=.008
+    # Folded cuff and two crossed laces, kept below the calf.
+    cuff=[(side*.22+.091*math.cos(a),.03+.106*math.sin(a),.395+.005*math.sin(a*3)) for a in np.linspace(0,math.tau,25)]
+    tube('Soft rolled boot cuff',cuff,.012,leather)
+    for z in [.19,.27]:
+        t=(z-.10)/.31;cx=side*(.26-.04*t);front=-.045+.075*t-.094
+        tube('Crossed flax boot lace',[(cx-.047,front,z),(cx,front-.008,z+.035),(cx+.047,front+.008,z+.07)],.004,cord)
+        tube('Crossed flax boot lace',[(cx+.047,front,z),(cx,front-.010,z+.035),(cx-.047,front+.008,z+.07)],.004,cord)
+    cx=side*.225
+    tube('Boot lace bow',[(cx,-.075,.36),(cx-.04,-.085,.39),(cx-.05,-.085,.36),(cx,-.075,.36),(cx+.04,-.085,.39),(cx+.05,-.085,.36),(cx,-.075,.36)],.0035,cord)
+    tube('Boot lace tails',[(cx-.025,-.086,.31),(cx,-.080,.36),(cx+.030,-.090,.30)],.0035,cord)
+
 # Keep the editable source, then export evaluated geometry/materials to glTF.
 for obj in bpy.context.scene.objects:
     if obj.type=='MESH':
