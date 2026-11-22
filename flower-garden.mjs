@@ -4,7 +4,7 @@ import {defaultLook} from './bee-playground-rules.mjs';
 import {createLetterPlayer} from './bee-letter-audio.mjs';
 import {feedbackFor} from './bee-tutor.mjs';
 import {emptyStudy,prize,ready,finishPetal,recallAttempt,settleStudy,restoreGarden,nextGarden,normalizeAnswer} from './flower-study.mjs';
-import {plants,flowerArt,icon} from './flower-art.mjs?v=alien-blooms-1';
+import {plants,flowerArt,icon} from './flower-art.mjs?v=organic-blooms-1';
 import {createStudyAudio} from './flower-audio.mjs';
 const $=id=>document.getElementById(id),labels={sentence:'Sentence',definition:'Definition',partOfSpeech:'Part of speech',wordHistory:'Word history',human:'Human voice',show:'Show / hide'};
 const audio=createStudyAudio(),letters=createLetterPlayer();

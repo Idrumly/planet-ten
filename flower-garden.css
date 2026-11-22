@@ -11,3 +11,11 @@
 @media(max-width:700px){.flower-centre{padding:9px}}
 
 @media(max-width:700px){.hero-place .bee-bubble{max-width:110px}}
+
+/* Naturalistic plant anatomy remains visible between peripheral clue seals. */
+.flower-centre{top:84%;left:43%}
+.petal:nth-child(1){top:9%}.petal:nth-child(2),.petal:nth-child(3){left:88%}.petal:nth-child(5),.petal:nth-child(6){left:12%}
+.petal:nth-child(4){top:72%}
+.flower.speaking .flower-centre{box-shadow:0 0 14px #cee6c777;border-color:#e2edc6}
+
+@media(max-width:700px){.petal:nth-child(5){left:23%}}
