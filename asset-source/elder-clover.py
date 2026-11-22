@@ -138,12 +138,45 @@ for side in [-1,1]:
 for i in range(19):
     x=(i-9)*.024;length=.29+.16*(1-abs(x)/.24)
     tuft('Silver beard lock',[(x,-.32,2.40),(x*1.15,-.42,2.23),(x*.55,-.34,2.40-length)],.035,silver)
-# Fine sparse fur, authored as tapered geometry so it exports without particle systems.
+# Dense tapered, gently bent hairs, batched into one mesh per body region.
+# Real exported geometry gives the silhouette fuzz without a particle-system dependency.
+hairmat=mat('Bumblebee fibres • amber and charcoal',(1,1,1),.92)
+attr=hairmat.node_tree.nodes.new('ShaderNodeVertexColor');attr.layer_name='FibreColour'
+hairmat.node_tree.links.new(attr.outputs['Color'],hairmat.node_tree.nodes.get('Principled BSDF').inputs['Base Color'])
 rng=np.random.default_rng(77)
-for i in range(120):
-    a=rng.uniform(0,math.tau);z=rng.uniform(2.45,3.04);zz=(z-2.64)/.48;rad=math.sqrt(max(0,1-zz*zz));x=.47*rad*math.cos(a);y=-.02+.34*rad*math.sin(a)
-    if y<-.15 and abs(x)<.34:continue
-    tuft('Elder velvet tuft',[(x,y,z),(x*1.02,y*1.02,z+.012),(x*1.04,y*1.04,z+.020)],.004,fur)
+def fuzzy(name,center,scale,count,length,region):
+    center=Vector(center);scale=Vector(scale);vs=[];fs=[];cols=[]
+    for _ in range(count):
+        z=rng.uniform(-1,1);a=rng.uniform(0,math.tau);r=math.sqrt(1-z*z)
+        unit=Vector((r*math.cos(a),r*math.sin(a),z));p=center+Vector((unit.x*scale.x,unit.y*scale.y,unit.z*scale.z))
+        if region=='head' and p.y<-.16 and abs(p.x)<.34 and p.z<2.91:continue
+        if region=='thorax' and p.y<.06 and p.z<2.15:continue
+        if region=='abdomen' and p.y<.06 and p.z>1.38:continue
+        if region=='cheek' and (p.y>-.28 or abs(p.x)<.20):continue
+        n=Vector((unit.x/scale.x,unit.y/scale.y,unit.z/scale.z)).normalized()
+        tangent=n.cross(Vector((0,0,1)))
+        if tangent.length<.01:tangent=n.cross(Vector((1,0,0)))
+        tangent.normalize();bitan=n.cross(tangent).normalized()
+        ln=length*rng.uniform(.65,1.3);rad=rng.uniform(.0008,.0015)
+        bend=(Vector((0,0,-1))-n*n.z)*ln*.27+tangent*rng.uniform(-.008,.008)
+        v=1-math.acos(z)/math.pi
+        isdark=region=='abdomen' and math.sin(v*math.pi*8)<0
+        color=np.array([.038,.027,.016] if isdark else [.52,.30,.075])*rng.uniform(.78,1.15)
+        base=len(vs)
+        for j in range(4):
+            t=j/3;q=p-n*.003+n*(ln*t)+bend*t*t;width=rad*(1-t*.97)
+            for k in range(3):
+                angle=k*math.tau/3;vs.append(q+width*(tangent*math.cos(angle)+bitan*math.sin(angle)))
+                c=color*(.80+.35*t);cols.append((*np.clip(c,0,1),1))
+                if j<3:fs.append((base+j*3+k,base+j*3+(k+1)%3,base+(j+1)*3+(k+1)%3,base+(j+1)*3+k))
+    me=bpy.data.meshes.new(name);me.from_pydata(vs,[],fs);me.update()
+    colors=me.color_attributes.new(name='FibreColour',type='FLOAT_COLOR',domain='POINT')
+    for c,value in zip(colors.data,cols):c.color=value
+    ob=bpy.data.objects.new(name,me);bpy.context.collection.objects.link(ob);finish(ob,name,hairmat)
+fuzzy('Soft head fuzz',(0,-.02,2.64),(.47,.34,.48),14000,.042,'head')
+fuzzy('Shoulder and thorax fuzz',(0,.045,1.94),(.47,.34,.48),9500,.046,'thorax')
+fuzzy('Striped bumblebee abdomen fuzz',(0,.13,1.24),(.57,.43,.64),14000,.043,'abdomen')
+for side in [-1,1]:fuzzy('Cheek fuzz',(side*.24,-.275,2.51),(.18,.11,.17),2300,.023,'cheek')
 
 # Four thin wings with explicit branching veins; swept back behind the shoulders.
 for side in [-1,1]:

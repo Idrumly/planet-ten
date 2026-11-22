@@ -1,18 +1,18 @@
 {
   "name": "Elder Clover",
-  "version": 1,
+  "version": 2,
   "units": "metres",
   "up": "Y",
   "forward": "+Z",
-  "bytes": 5588428,
-  "meshes": 269,
-  "materials": 14,
-  "triangles": 206912,
+  "bytes": 16426988,
+  "meshes": 199,
+  "materials": 15,
+  "triangles": 725732,
   "authoring": "Original script-authored Blender 4.5.9 geometry and packed procedural textures",
   "textures": "512px original colour and normal maps; WebP packaging",
-  "optimization": "glTF Transform dedup, prune --keep-leaves true, tangents, webp --quality 90",
+  "optimization": "glTF Transform dedup, prune --keep-leaves true, tangents, webp --quality 90; quantize position 16 / normal 12",
   "validation": "No glTF errors or warnings; desktop and mobile Chrome preview passed",
-  "status": "Static character study; not rigged or connected to tutor speech or game state.",
+  "status": "Static detailed character study; not rigged or connected to tutor speech or game state. Dense fur needs a reduced-detail variant before multiple-character gameplay.",
   "features": [
     "Six limbs",
     "Four veined translucent wings",
@@ -20,7 +20,8 @@
     "Amber and charcoal abdomen",
     "Teal waistcoat",
     "Word journal",
-    "Walking staff"
+    "Walking staff",
+    "Dense tapered bumblebee fibres on head, cheeks, thorax and striped abdomen"
   ],
   "anchors": [
     "anchor_voice",
