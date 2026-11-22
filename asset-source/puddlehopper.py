@@ -266,8 +266,8 @@ for j in range(M+1):
     v=j/M
     for i in range(N+1):
         u=i/N;angle=-.38+u*(math.pi+.76)
-        radius=.24+.15*math.sin(v*math.pi*.82)
-        radius-=.065*v**5
+        radius=.24+.075*math.sin(v*math.pi*.82)
+        radius-=.0325*v**5
         fold=.012*math.sin(angle*13)*math.sin(v*math.pi)
         x=math.cos(angle)*(radius+fold)
         z=2.54+math.sin(angle)*(radius+.075)
@@ -282,7 +282,7 @@ for poly in mesh.polygons:
     for loop in poly.loop_indices:layer.data[loop].uv=uv[mesh.loops[loop].vertex_index]
 hood=bpy.data.objects.new('Forward folded orchid cowl',mesh);bpy.context.collection.objects.link(hood);finish(hood,hood.name,petal)
 sub=hood.modifiers.new('Soft corolla folds','SUBSURF');sub.levels=1
-solid=hood.modifiers.new('Fleshy petal rim','SOLIDIFY');solid.thickness=.014;solid.offset=0
+solid=hood.modifiers.new('Fleshy petal rim','SOLIDIFY');solid.thickness=.007;solid.offset=0
 for side in [-1,1]:
     blade('Inner corolla chin cup',(side*.045,.015,2.24),(side*.23,-.30,2.43),.085,petal,cup=.09,ruffle=.012)
 for name,loc in [('anchor_sentence',(-.33,-.12,3.17)),('anchor_definition',(.38,-.12,3.15)),('anchor_show',(-.57,-.12,2.72)),('anchor_human',(.57,-.12,2.68)),('anchor_history',(-.25,-.22,1.13)),('anchor_part_of_speech',(.25,-.22,1.13)),('anchor_hear',(0,-.28,1.76)),('anchor_test',(0,-.25,.73))]:
