@@ -23,7 +23,7 @@ try{
  document.getElementById('surface').onchange=e=>{model?.traverse(o=>{if(o.isMesh)o.material=e.target.value==='clay'?clay:e.target.value==='wire'?wire:o.userData.originalMaterial;});wake();};
  canvas.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const offset=camera.position.clone().sub(controls.target);offset.applyAxisAngle(new T.Vector3(0,1,0),e.key==='ArrowLeft'?.15:-.15);camera.position.copy(controls.target).add(offset);controls.update();}});
  resize();view('three');
- const gltf=await new GLTFLoader().loadAsync('./assets/puddlehopper/puddlehopper.glb?v=asset-8');model=gltf.scene;
+ const gltf=await new GLTFLoader().loadAsync('./assets/puddlehopper/puddlehopper.glb?v=asset-9');model=gltf.scene;
  model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.userData.originalMaterial=o.material;for(const mat of Array.isArray(o.material)?o.material:[o.material])if(mat.map)mat.map.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());}});
  scene.add(model);status.textContent='Asset study · sculpt and textures';document.body.dataset.loaded='true';wake();
 }catch(error){status.textContent='The 3D preview could not load. You can download the model using “About this asset”, or reload to retry.';console.error(error);}

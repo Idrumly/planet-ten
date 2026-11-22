@@ -294,7 +294,7 @@ for j in range(M+1):
         fold=.012*math.sin(angle*13)*math.sin(v*math.pi)
         x=math.cos(angle)*(radius+fold)
         z=2.54+math.sin(angle)*(radius+.075)
-        y=.15-.49*math.sin(v*math.pi/2)+.055*v**7
+        y=.15-.30*math.sin(v*math.pi/2)+.025*v**7
         y+=.012*math.sin(angle*17)*v**4
         verts.append((x,y,z));uv.append((u,v))
         if i<N and j<M:
