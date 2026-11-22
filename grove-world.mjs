@@ -1,5 +1,6 @@
 import * as T from './vendor/three-0.187.0.mjs';
 import {addLivingGrove} from './grove-flora.mjs';
+import {createFlowerModel} from './flower-model.mjs';
 // Rendering adapter only. Word progress, coins and audio stay in flower-study/garden.
 export async function createGroveWorld({canvas,track,onFailure}){
  const renderer=new T.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'low-power'});
@@ -57,9 +58,10 @@ export async function createGroveWorld({canvas,track,onFailure}){
  const plane=new T.Mesh(planeGeo,mat);plane.castShadow=true;plantGroup.add(plane);flowerPlanes.push(plane);
  const bed=mesh(bedGeo,dark,0,0,0);beds.push(bed);
  }
+ const sculpted=createFlowerModel({runes:false});scene.add(sculpted.root);sculpted.root.position.set(0,0,-6);sculpted.root.scale.setScalar(.88);
  let total=5,index=0,studying=false,enabled=true,disposed=false,lost=false,angle=0,target=0,frame=0,lastTime=0;
  const projected=new T.Vector3(),right=new T.Vector3(),up=new T.Vector3();
- function positionPlants(){for(let i=0;i<10;i++){const a=i/total*Math.PI*2,visible=i<total;const p=flowerPlanes[i];p.visible=visible&&!studying;beds[i].visible=visible&&!studying;p.position.set(Math.sin(a)*6,1.6,-Math.cos(a)*6);beds[i].position.set(p.position.x,-.05,p.position.z);}}
+ function positionPlants(){sculpted.root.visible=!studying;for(let i=0;i<10;i++){const a=i/total*Math.PI*2,visible=i<total;const p=flowerPlanes[i];p.visible=i!==0&&visible&&!studying;beds[i].visible=visible&&!studying;p.position.set(Math.sin(a)*6,1.6,-Math.cos(a)*6);beds[i].position.set(p.position.x,-.05,p.position.z);}}
  function alignButtons(){if(studying)return;const rect=track.getBoundingClientRect();camera.updateMatrixWorld();right.setFromMatrixColumn(camera.matrixWorld,0);up.setFromMatrixColumn(camera.matrixWorld,1);
  [...track.children].forEach((button,i)=>{const pos=flowerPlanes[i].position;projected.copy(pos).project(camera);const center={x:(projected.x+1)*innerWidth/2,y:(1-projected.y)*innerHeight/2,z:projected.z};const edge=pos.clone().addScaledVector(up,1.5).project(camera);const height=Math.abs((1-edge.y)*innerHeight/2-center.y)*2;
  const facing=pos.clone().sub(camera.position).dot(camera.getWorldDirection(new T.Vector3()))>0;

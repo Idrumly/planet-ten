@@ -112,3 +112,12 @@ dialog{background:#302b45}.bank-total{color:#edc3a6}
 @media(max-width:700px){.webgl #plant-path .plant-choice.nearest span{font-size:13px;padding:4px 8px}}
 
 .webgl #plant-path .plant-choice.nearest span{display:none}
+.flower.sculpted #flower-picture{filter:none}
+.flower.sculpted #flower-picture>svg{display:none}
+.flower.sculpted canvas{width:100%;height:100%;display:block;pointer-events:none}
+.flower.sculpted .petal,.flower.sculpted .flower-centre,.flower.sculpted .test-petal{width:48px;height:48px;min-width:44px;min-height:44px;transform:translate(-50%,-50%);padding:0;animation:none}
+.flower-view-controls{position:absolute;right:9%;bottom:-38px;width:360px;display:flex;justify-content:center;gap:6px}
+.flower-view-controls button{font-size:12px;padding:5px 10px}
+.encounter-scene:has(.sculpted){margin-bottom:48px}
+@media(max-width:700px){.flower-view-controls{right:calc(50% - 185px);width:300px}}
+@media(prefers-reduced-motion:reduce){.flower.collecting{animation:none;opacity:.7;transform:scale(.5)}}
