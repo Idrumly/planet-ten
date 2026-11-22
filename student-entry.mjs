@@ -3,6 +3,7 @@ const form=document.querySelector('#bee-entry'),input=document.querySelector('#b
 const welcome=document.querySelector('#bee-welcome'),heading=document.querySelector('#welcome-heading');
 function showBee(bee,focus=false){
   form.hidden=true;welcome.hidden=false;
+  document.querySelector('#flower-link').href='flower-garden.html?bee='+encodeURIComponent(bee.linkId);
   heading.textContent=`Welcome, S’Pling ${bee.surname}!`;
   document.title=`S’Pling ${bee.surname} · Planet Ten`;
   if(focus)heading.focus();
