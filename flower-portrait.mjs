@@ -1,5 +1,5 @@
 import * as T from './vendor/three-0.187.0.mjs';
-import {createFlowerModel} from './flower-model.mjs';
+import {createFlowerModel} from './flower-model.mjs?v=verdant-1';
 
 export function createFlowerPortrait({host,flower,onFailure}){
  const canvas=document.createElement('canvas');canvas.setAttribute('aria-hidden','true');host.append(canvas);

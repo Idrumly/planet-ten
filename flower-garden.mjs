@@ -4,7 +4,7 @@ import {defaultLook} from './bee-playground-rules.mjs';
 import {createLetterPlayer} from './bee-letter-audio.mjs';
 import {feedbackFor} from './bee-tutor.mjs';
 import {emptyStudy,prize,ready,finishPetal,recallAttempt,settleStudy,restoreGarden,nextGarden,normalizeAnswer} from './flower-study.mjs';
-import {plants,flowerArt,icon,tattooSites} from './flower-art.mjs?v=sculpted-1';
+import {plants,flowerArt,icon,tattooSites} from './flower-art.mjs?v=verdant-1';
 import {createStudyAudio} from './flower-audio.mjs';
 const $=id=>document.getElementById(id),labels={sentence:'Sentence',definition:'Definition',partOfSpeech:'Part of speech',wordHistory:'Word history',human:'Human voice',show:'Show / hide'};
 const audio=createStudyAudio(),letters=createLetterPlayer(),rememberedMarks=new Set();
@@ -13,7 +13,7 @@ let world=null,worldLoading=false;
 let portrait=null,portraitTicket=0;
 function closePortrait(){portraitTicket++;portrait?.dispose();portrait=null;}
 function syncPortrait(){if(!portrait)return;const states={};for(const k of [...Object.keys(labels),'hear','test']){const b=k==='hear'?$('hear'):k==='test'?$('test-petal'):$('petals').querySelector('[data-kind="'+k+'"]');states[k]={done:b?.classList.contains('done'),active:active===k,unavailable:!b||b.disabled||(k==='test'&&b.hidden)};}portrait.sync(states);}
-async function startPortrait(){closePortrait();if(!current||groveIndex!==0||!$('world-3d').checked)return;const ticket=portraitTicket;try{const {createFlowerPortrait}=await import('./flower-portrait.mjs?v=sculpted-1');if(ticket!==portraitTicket||!current)return;portrait=createFlowerPortrait({host:$('flower-picture'),flower:$('flower'),onFailure:()=>{portrait=null;}});syncPortrait();}catch{/* Existing illustrated flower remains usable. */}}
+async function startPortrait(){closePortrait();if(!current||groveIndex!==0||!$('world-3d').checked)return;const ticket=portraitTicket;try{const {createFlowerPortrait}=await import('./flower-portrait.mjs?v=verdant-1');if(ticket!==portraitTicket||!current)return;portrait=createFlowerPortrait({host:$('flower-picture'),flower:$('flower'),onFailure:()=>{portrait=null;}});syncPortrait();}catch{/* Existing illustrated flower remains usable. */}}
 let groveIndex=0,swipeStart=null,suppressPlantClickUntil=0;
 const teacher=new URLSearchParams(location.search).get('source')==='teacher'||location.hostname.endsWith('.chatgpt.site');
 const beeId=new URLSearchParams(location.search).get('bee')||'preview';
@@ -82,7 +82,7 @@ async function boot(){try{if(teacher){const r=await fetch('/api/garden',{cache:'
 function resetWorldButtons(){for(const b of $('plant-path').children)for(const key of ['left','top','width','height','visibility'])b.style.removeProperty(key);}
 function flatView(message){document.body.classList.remove('webgl');$('grove-world').hidden=true;world?.setEnabled(false);resetWorldButtons();$('world-status').textContent=message;}
 async function startWorld(){if(worldLoading||!$('world-3d').checked||!profile)return;if(world){document.body.classList.add('webgl');world.setEnabled(true);world.show(groveIndex,profile.round.length,!!current);return;}
- worldLoading=true;try{const {createGroveWorld}=await import('./grove-world.mjs?v=sculpted-1');world=await createGroveWorld({canvas:$('grove-world'),track:$('plant-path'),onFailure:()=>{flatView('3D graphics paused. Your study continues in the illustrated view.');$('world-3d').checked=false;world?.dispose();world=null;}});
+ worldLoading=true;try{const {createGroveWorld}=await import('./grove-world.mjs?v=verdant-1');world=await createGroveWorld({canvas:$('grove-world'),track:$('plant-path'),onFailure:()=>{flatView('3D graphics paused. Your study continues in the illustrated view.');$('world-3d').checked=false;world?.dispose();world=null;}});
  if($('world-3d').checked){document.body.classList.add('webgl');world.setEnabled(true);world.show(groveIndex,profile.round.length,!!current);$('world-status').textContent='The first flower has sculpted 3D petals. Other species still use illustrated artwork.';}else world.setEnabled(false);
  }catch{flatView('3D is unavailable on this device. The illustrated garden is ready to use.');$('world-3d').checked=false;}finally{worldLoading=false;}}
 $('world-3d').onchange=()=>{if(current)void startPortrait();if($('world-3d').checked)void startWorld();else flatView('Illustrated view selected. Your progress is unchanged.');};

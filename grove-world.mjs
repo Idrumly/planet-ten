@@ -1,6 +1,6 @@
 import * as T from './vendor/three-0.187.0.mjs';
-import {addLivingGrove} from './grove-flora.mjs';
-import {createFlowerModel} from './flower-model.mjs';
+import {addLivingGrove} from './grove-flora.mjs?v=verdant-1';
+import {createFlowerModel} from './flower-model.mjs?v=verdant-1';
 // Rendering adapter only. Word progress, coins and audio stay in flower-study/garden.
 export async function createGroveWorld({canvas,track,onFailure}){
  const renderer=new T.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'low-power'});
@@ -40,9 +40,9 @@ export async function createGroveWorld({canvas,track,onFailure}){
  for(let i=0;i<75;i++){const a=rand()*Math.PI*2,r=7.5+rand()*3.2;matrix.position.set(Math.sin(a)*r,.2,-Math.cos(a)*r);matrix.rotation.set((rand()-.5)*.5,rand()*6,(rand()-.5)*.5);const size=.2+rand()*.8;matrix.scale.set(size,size,size);matrix.updateMatrix();shards.setMatrixAt(i,matrix.matrix);}scene.add(shards);
  // Branching mineral growths give the alien beds a recognisable non-Earth ecology.
  for(let i=0;i<18;i++){const a=rand()*Math.PI*2,r=7.4+rand()*2;const x=Math.sin(a)*r,z=-Math.cos(a)*r;for(let k=0;k<3;k++){const stem=mesh(new T.CylinderGeometry(.035,.075,.7+k*.16,5),rose,x+k*.12,.25+k*.08,z,.9,1,.9);stem.rotation.z=(k-1)*.35;mesh(rockGeo,k%2?frost:rose,x+k*.18,.68+k*.16,z,.23,.13,.23);}}
- const leafGeo=new T.SphereGeometry(1,10,7),leafMaterial=new T.MeshStandardMaterial({color:'#858ec0',roughness:.7,metalness:.08});const leaves=new T.InstancedMesh(leafGeo,leafMaterial,150);
- for(let i=0;i<150;i++){const cluster=Math.floor(i/5),a=cluster*Math.PI*2/30,r=7.5+(cluster%3)*.45,k=i%5;matrix.position.set(Math.sin(a)*r,.25+k*.06,-Math.cos(a)*r);matrix.rotation.set(.2,k*1.4+a,(k-2)*.35);matrix.scale.set(.13,.45+k*.05,.035);matrix.updateMatrix();leaves.setMatrixAt(i,matrix.matrix);leaves.setColorAt(i,new T.Color(['#a39bd0','#718ea5','#bd9aaa'][cluster%3]));}leaves.castShadow=true;scene.add(leaves);
- addLivingGrove(scene);
+ const leafGeo=new T.SphereGeometry(1,10,7),leafMaterial=new T.MeshStandardMaterial({color:'#79a88a',roughness:.7,metalness:.08});const leaves=new T.InstancedMesh(leafGeo,leafMaterial,150);
+ for(let i=0;i<150;i++){const cluster=Math.floor(i/5),a=cluster*Math.PI*2/30,r=7.5+(cluster%3)*.45,k=i%5;matrix.position.set(Math.sin(a)*r,.25+k*.06,-Math.cos(a)*r);matrix.rotation.set(.2,k*1.4+a,(k-2)*.35);matrix.scale.set(.13,.45+k*.05,.035);matrix.updateMatrix();leaves.setMatrixAt(i,matrix.matrix);leaves.setColorAt(i,new T.Color(['#8dbd82','#5da994','#b5c984'][cluster%3]));}leaves.castShadow=true;scene.add(leaves);
+ const livingGrove=addLivingGrove(scene);
  const moon=mesh(new T.SphereGeometry(5,32,24),new T.MeshStandardMaterial({color:'#b6a0c9',roughness:1,emissive:'#5a405f',emissiveIntensity:.2}),-20,17,-45);
  const orbit=mesh(new T.TorusGeometry(7.6,.14,5,96),new T.MeshBasicMaterial({color:'#d2a9bd'}),moon.position.x,moon.position.y,moon.position.z);orbit.rotation.set(1.1,.3,.4);
  mesh(new T.SphereGeometry(2.3,24,16),new T.MeshBasicMaterial({color:'#b2a8d0'}),27,13, -53);
@@ -59,7 +59,7 @@ export async function createGroveWorld({canvas,track,onFailure}){
  const bed=mesh(bedGeo,dark,0,0,0);beds.push(bed);
  }
  const sculpted=createFlowerModel({runes:false});scene.add(sculpted.root);sculpted.root.position.set(0,0,-6);sculpted.root.scale.setScalar(.88);
- let total=5,index=0,studying=false,enabled=true,disposed=false,lost=false,angle=0,target=0,frame=0,lastTime=0;
+ let total=5,index=0,studying=false,enabled=true,disposed=false,lost=false,angle=0,target=0,frame=0,lastTime=0,lastPaint=0;
  const projected=new T.Vector3(),right=new T.Vector3(),up=new T.Vector3();
  function positionPlants(){sculpted.root.visible=!studying;for(let i=0;i<10;i++){const a=i/total*Math.PI*2,visible=i<total;const p=flowerPlanes[i];p.visible=i!==0&&visible&&!studying;beds[i].visible=visible&&!studying;p.position.set(Math.sin(a)*6,1.6,-Math.cos(a)*6);beds[i].position.set(p.position.x,-.05,p.position.z);}}
  function alignButtons(){if(studying)return;const rect=track.getBoundingClientRect();camera.updateMatrixWorld();right.setFromMatrixColumn(camera.matrixWorld,0);up.setFromMatrixColumn(camera.matrixWorld,1);
@@ -67,10 +67,10 @@ export async function createGroveWorld({canvas,track,onFailure}){
  const facing=pos.clone().sub(camera.position).dot(camera.getWorldDirection(new T.Vector3()))>0;
  button.style.left=(center.x-rect.left-height/2)+'px';button.style.top=(center.y-rect.top-height/2)+'px';button.style.width=height+'px';button.style.height=height+'px';button.style.visibility=facing&&center.z<1&&Math.abs(Number(button.dataset.slot))<=1?'visible':'hidden';
  });}
- function render(time){frame=0;if(disposed||lost||!enabled||document.hidden)return;const dt=Math.min((time-lastTime)/1000||.016,.05);lastTime=time;const distance=target-angle;angle=reduced.matches?target:angle+distance*(1-Math.exp(-dt*8));if(Math.abs(target-angle)<.001)angle=target;
+ function render(time){frame=0;if(disposed||lost||!enabled||document.hidden)return;if(!reduced.matches&&time-lastPaint<33){wake();return;}lastPaint=time;livingGrove.update(time/1000,!reduced.matches);sculpted.update(time/1000,{motion:!reduced.matches});sculpted.root.scale.setScalar(.88);const dt=Math.min((time-lastTime)/1000||.016,.05);lastTime=time;const distance=target-angle;angle=reduced.matches?target:angle+distance*(1-Math.exp(-dt*8));if(Math.abs(target-angle)<.001)angle=target;
  camera.position.set(-Math.sin(angle)*.4,2.5,Math.cos(angle)*.4);camera.lookAt(Math.sin(angle)*6,1.35,-Math.cos(angle)*6);
  for(const p of flowerPlanes)p.quaternion.copy(camera.quaternion);
- try{renderer.render(scene,camera);}catch{lost=true;onFailure();return;}if(lost||disposed)return;alignButtons();if(angle!==target)wake();}
+ try{renderer.render(scene,camera);}catch{lost=true;onFailure();return;}if(lost||disposed)return;alignButtons();if(angle!==target||!reduced.matches)wake();}
  function wake(){if(!frame&&!disposed&&!document.hidden&&enabled&&!lost)frame=requestAnimationFrame(render);}
  function resize(){renderer.setSize(innerWidth,innerHeight,false);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();wake();}
  function show(next,count,inStudy){total=count;index=next;studying=inStudy;let nextAngle=index/total*Math.PI*2;while(nextAngle-angle>Math.PI)nextAngle-=Math.PI*2;while(nextAngle-angle< -Math.PI)nextAngle+=Math.PI*2;target=nextAngle;positionPlants();wake();}
