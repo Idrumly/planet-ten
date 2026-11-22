@@ -1,4 +1,5 @@
 import * as T from './vendor/three-0.187.0.mjs';
+import {addLivingGrove} from './grove-flora.mjs';
 // Rendering adapter only. Word progress, coins and audio stay in flower-study/garden.
 export async function createGroveWorld({canvas,track,onFailure}){
  const renderer=new T.WebGLRenderer({canvas,antialias:true,alpha:false,powerPreference:'low-power'});
@@ -40,6 +41,7 @@ export async function createGroveWorld({canvas,track,onFailure}){
  for(let i=0;i<18;i++){const a=rand()*Math.PI*2,r=7.4+rand()*2;const x=Math.sin(a)*r,z=-Math.cos(a)*r;for(let k=0;k<3;k++){const stem=mesh(new T.CylinderGeometry(.035,.075,.7+k*.16,5),rose,x+k*.12,.25+k*.08,z,.9,1,.9);stem.rotation.z=(k-1)*.35;mesh(rockGeo,k%2?frost:rose,x+k*.18,.68+k*.16,z,.23,.13,.23);}}
  const leafGeo=new T.SphereGeometry(1,10,7),leafMaterial=new T.MeshStandardMaterial({color:'#858ec0',roughness:.7,metalness:.08});const leaves=new T.InstancedMesh(leafGeo,leafMaterial,150);
  for(let i=0;i<150;i++){const cluster=Math.floor(i/5),a=cluster*Math.PI*2/30,r=7.5+(cluster%3)*.45,k=i%5;matrix.position.set(Math.sin(a)*r,.25+k*.06,-Math.cos(a)*r);matrix.rotation.set(.2,k*1.4+a,(k-2)*.35);matrix.scale.set(.13,.45+k*.05,.035);matrix.updateMatrix();leaves.setMatrixAt(i,matrix.matrix);leaves.setColorAt(i,new T.Color(['#a39bd0','#718ea5','#bd9aaa'][cluster%3]));}leaves.castShadow=true;scene.add(leaves);
+ addLivingGrove(scene);
  const moon=mesh(new T.SphereGeometry(5,32,24),new T.MeshStandardMaterial({color:'#b6a0c9',roughness:1,emissive:'#5a405f',emissiveIntensity:.2}),-20,17,-45);
  const orbit=mesh(new T.TorusGeometry(7.6,.14,5,96),new T.MeshBasicMaterial({color:'#d2a9bd'}),moon.position.x,moon.position.y,moon.position.z);orbit.rotation.set(1.1,.3,.4);
  mesh(new T.SphereGeometry(2.3,24,16),new T.MeshBasicMaterial({color:'#b2a8d0'}),27,13, -53);

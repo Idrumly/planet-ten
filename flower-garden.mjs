@@ -4,7 +4,7 @@ import {defaultLook} from './bee-playground-rules.mjs';
 import {createLetterPlayer} from './bee-letter-audio.mjs';
 import {feedbackFor} from './bee-tutor.mjs';
 import {emptyStudy,prize,ready,finishPetal,recallAttempt,settleStudy,restoreGarden,nextGarden,normalizeAnswer} from './flower-study.mjs';
-import {plants,flowerArt,icon,tattooSites} from './flower-art.mjs?v=violet-world-1';
+import {plants,flowerArt,icon,tattooSites} from './flower-art.mjs?v=living-grove-1';
 import {createStudyAudio} from './flower-audio.mjs';
 const $=id=>document.getElementById(id),labels={sentence:'Sentence',definition:'Definition',partOfSpeech:'Part of speech',wordHistory:'Word history',human:'Human voice',show:'Show / hide'};
 const audio=createStudyAudio(),letters=createLetterPlayer(),rememberedMarks=new Set();
@@ -78,7 +78,7 @@ async function boot(){try{if(teacher){const r=await fetch('/api/garden',{cache:'
 function resetWorldButtons(){for(const b of $('plant-path').children)for(const key of ['left','top','width','height','visibility'])b.style.removeProperty(key);}
 function flatView(message){document.body.classList.remove('webgl');$('grove-world').hidden=true;world?.setEnabled(false);resetWorldButtons();$('world-status').textContent=message;}
 async function startWorld(){if(worldLoading||!$('world-3d').checked||!profile)return;if(world){document.body.classList.add('webgl');world.setEnabled(true);world.show(groveIndex,profile.round.length,!!current);return;}
- worldLoading=true;try{const {createGroveWorld}=await import('./grove-world.mjs?v=violet-world-1');world=await createGroveWorld({canvas:$('grove-world'),track:$('plant-path'),onFailure:()=>{flatView('3D graphics paused. Your study continues in the illustrated view.');$('world-3d').checked=false;world?.dispose();world=null;}});
+ worldLoading=true;try{const {createGroveWorld}=await import('./grove-world.mjs?v=living-grove-1');world=await createGroveWorld({canvas:$('grove-world'),track:$('plant-path'),onFailure:()=>{flatView('3D graphics paused. Your study continues in the illustrated view.');$('world-3d').checked=false;world?.dispose();world=null;}});
  if($('world-3d').checked){document.body.classList.add('webgl');world.setEnabled(true);world.show(groveIndex,profile.round.length,!!current);$('world-status').textContent='3D terrain, stone ring and camera. Flowers use the current illustrated artwork.';}else world.setEnabled(false);
  }catch{flatView('3D is unavailable on this device. The illustrated garden is ready to use.');$('world-3d').checked=false;}finally{worldLoading=false;}}
 $('world-3d').onchange=()=>{if($('world-3d').checked)void startWorld();else flatView('Illustrated view selected. Your progress is unchanged.');};
