@@ -4,7 +4,7 @@ No third-party character meshes or reference-image pixels are included.
 """
 import bpy, math, os, sys, json
 import numpy as np
-from mathutils import Vector
+from mathutils import Vector, Matrix
 
 OUT = os.environ.get('PLANET_TEN_ASSET_OUT', os.path.dirname(__file__) + '/../assets/puddlehopper')
 os.makedirs(OUT, exist_ok=True)
@@ -53,7 +53,10 @@ def texture(name, petal=False, face=False):
         goldline=np.exp(-((sweep+.11)/.035)**2)*np.clip((v+.3),0,.25)
         color+=goldline[:,:,None]*np.array([.35,.25,.08])
         color+=np.sin(u*26+v*11)[:,:,None]*.012
-        h=noise*.003+leaflines*.007+goldline*.012
+        fibres=np.exp(-(np.sin(u*67+np.sin(v*12)*1.2)/.22)**2)
+        cells=np.sin(u*155+v*17)*np.sin(v*133-u*21)
+        h=noise*.002+leaflines*.016+goldline*.018+fibres*.013+cells*.003
+        color-=fibres[:,:,None]*.010
     if petal:
         warm=np.exp(-((x-.22-.10*np.sin(y*7))/.19)**2)*np.sin(y*math.pi)*.32
         color=color*(1-warm[:,:,None])+np.array([.87,.43,.18])*warm[:,:,None]
@@ -67,10 +70,12 @@ def texture(name, petal=False, face=False):
         im.colorspace_settings.name=space;im.pixels.foreach_set(rgba.ravel());im.update()
         im.filepath_raw=os.path.join(OUT,label+'.png');im.file_format='PNG';im.save();im.pack();return im
     albedo=image(name+'-colour',color,'sRGB')
-    dy,dx=np.gradient(h);norm=np.stack([-dx*12,-dy*12,np.ones_like(h)],axis=-1)
+    dy,dx=np.gradient(h);relief=65 if face else 12
+    norm=np.stack([-dx*relief,-dy*relief,np.ones_like(h)],axis=-1)
     norm/=np.linalg.norm(norm,axis=-1,keepdims=True)
     normal=image(name+'-normal',norm*.5+.5,'Non-Color')
     rough=np.repeat((.56+noise*.12)[:,:,None],3,axis=2)
+    if face:rough=np.repeat(np.clip(.57+fibres*.13+cells*.055+noise*.045,.45,.85)[:,:,None],3,axis=2)
     roughness=image(name+'-roughness',rough,'Non-Color')
     return albedo,normal,roughness
 
@@ -175,6 +180,7 @@ for side in [-1,1]:
     tube('Curling crown tendril',[(side*.21,.13,2.86),(side*.48,.18,3.22),(side*.76,.15,3.30),(side*.82,.10,3.20)],.012,gold)
 
 # Elfin head: narrow jaw, angular cheek planes and an integrated nose bridge.
+before_face=set(bpy.data.objects)
 levels=[-.40,-.35,-.28,-.20,-.10,.015,.09,.17,.25,.32,.365]
 widths=[.012,.055,.095,.143,.185,.226,.232,.207,.195,.155,.012]
 depths=[.018,.060,.092,.125,.151,.175,.181,.181,.17,.12,.012]
@@ -235,6 +241,14 @@ for obj in list(bpy.context.scene.objects):
             for loop in poly.loop_indices:
                 co=obj.data.vertices[obj.data.loops[loop].vertex_index].co
                 obj.data.uv_layers.active.data[loop].uv=((co.x/.265+1)/2,((co.z-2.49)/.365+1)/2)
+# Preserve all approved facial proportions while reducing the head as one assembly.
+pivot=Vector((0,0,2.49))
+inset=Matrix.Translation(pivot+Vector((0,.055,.035))) @ Matrix.Scale(.82,4) @ Matrix.Translation(-pivot)
+for obj in set(bpy.data.objects)-before_face:obj.matrix_world=inset @ obj.matrix_world
+# A cupped inner corolla places the face inside the flower and casts real edge shadows.
+for side in [-1,1]:
+    blade('Inner corolla hood',(side*.11,.10,2.85),(side*.255,-.09,2.37),.070,petal,cup=.14,ruffle=.012)
+    blade('Inner corolla chin cup',(side*.045,.015,2.24),(side*.205,-.11,2.43),.060,petal,cup=.06,ruffle=.012)
 for name,loc in [('anchor_sentence',(-.33,-.12,3.17)),('anchor_definition',(.38,-.12,3.15)),('anchor_show',(-.57,-.12,2.72)),('anchor_human',(.57,-.12,2.68)),('anchor_history',(-.25,-.22,1.13)),('anchor_part_of_speech',(.25,-.22,1.13)),('anchor_hear',(0,-.28,1.76)),('anchor_test',(0,-.25,.73))]:
     o=bpy.data.objects.new(name,None);o.location=loc;bpy.context.collection.objects.link(o)
 

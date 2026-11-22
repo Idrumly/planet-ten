@@ -10,10 +10,10 @@ function view(name){const values={front:[0,2.2,7,0,1.85,0],three:[3.3,2.6,6.4,0,
 try{
  renderer=new T.WebGLRenderer({canvas,antialias:true,powerPreference:'low-power'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;
  controls=new OrbitControls(camera,canvas);controls.enablePan=false;controls.minDistance=1.5;controls.maxDistance=11;controls.maxPolarAngle=Math.PI*.53;controls.addEventListener('change',wake);
- scene.add(new T.HemisphereLight('#e6eddb','#536254',1.4));
+ scene.add(new T.HemisphereLight('#e6eddb','#536254',.9));
  function light(color,intensity,x,y,z){const l=new T.DirectionalLight(color,intensity);l.position.set(x,y,z);scene.add(l);return l;}
- const key=light('#ffdfb5',3,-3,6,5);key.castShadow=true;key.shadow.mapSize.set(2048,2048);Object.assign(key.shadow.camera,{left:-3,right:3,top:5,bottom:-2,near:.1,far:15});key.shadow.bias=-.0002;key.shadow.normalBias=.018;key.shadow.radius=3;
- light('#aacdd7',1.4,4,3,3);light('#f8ba9a',2,1,5,-3);
+ const key=light('#ffdfb5',3,-3,6,5);key.castShadow=true;key.shadow.mapSize.set(2048,2048);Object.assign(key.shadow.camera,{left:-3,right:3,top:5,bottom:-2,near:.1,far:15});key.shadow.bias=-.0002;key.shadow.normalBias=.003;key.shadow.radius=3;
+ light('#aacdd7',.85,4,3,3);light('#f8ba9a',2,1,5,-3);
  const floor=new T.Mesh(new T.PlaneGeometry(200,200),new T.MeshStandardMaterial({color:'#35403a',roughness:.95}));floor.rotation.x=-Math.PI/2;floor.position.y=-.025;floor.receiveShadow=true;scene.add(floor);
  const clay=new T.MeshStandardMaterial({color:'#c5b299',roughness:.78});const wire=new T.MeshBasicMaterial({color:'#b7d7c0',wireframe:true});
  function resize(){renderer.setSize(canvas.clientWidth,canvas.clientHeight,false);camera.aspect=canvas.clientWidth/canvas.clientHeight;camera.updateProjectionMatrix();wake();}
@@ -23,7 +23,7 @@ try{
  document.getElementById('surface').onchange=e=>{model?.traverse(o=>{if(o.isMesh)o.material=e.target.value==='clay'?clay:e.target.value==='wire'?wire:o.userData.originalMaterial;});wake();};
  canvas.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const offset=camera.position.clone().sub(controls.target);offset.applyAxisAngle(new T.Vector3(0,1,0),e.key==='ArrowLeft'?.15:-.15);camera.position.copy(controls.target).add(offset);controls.update();}});
  resize();view('three');
- const gltf=await new GLTFLoader().loadAsync('./assets/puddlehopper/puddlehopper.glb?v=asset-4');model=gltf.scene;
+ const gltf=await new GLTFLoader().loadAsync('./assets/puddlehopper/puddlehopper.glb?v=asset-5');model=gltf.scene;
  model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;o.userData.originalMaterial=o.material;for(const mat of Array.isArray(o.material)?o.material:[o.material])if(mat.map)mat.map.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy());}});
  scene.add(model);status.textContent='Asset study · sculpt and textures';document.body.dataset.loaded='true';wake();
 }catch(error){status.textContent='The 3D preview could not load. You can download the model using “About this asset”, or reload to retry.';console.error(error);}
