@@ -19,3 +19,31 @@
 .flower.speaking .flower-centre{box-shadow:0 0 14px #cee6c777;border-color:#e2edc6}
 
 @media(max-width:700px){.petal:nth-child(5){left:23%}}
+/* Living botanical ink: transparent controls leave the plant tissue visible. */
+.flower .petal,.flower .flower-centre,.flower .test-petal{background:none;border:0;box-shadow:none;color:#91ff65;filter:none}
+.flower .petal{width:60px;height:60px;padding:12px;border-radius:45%;transform:translate(-50%,-50%) rotate(var(--mark-tilt,0deg));transition:color .4s}
+.flower .petal svg,.flower .flower-centre svg,.flower .test-petal svg{filter:drop-shadow(0 0 2px #143918) drop-shadow(0 0 5px #70ff43a6);stroke-width:1.7}
+.flower .petal.done,.flower .flower-centre.done{color:#2d713e}
+.flower .petal.done svg,.flower .flower-centre.done svg{filter:drop-shadow(0 1px 1px #b1d28a55);stroke-width:1.4}
+.flower .petal.done:after{content:none}
+.flower .petal.active,.flower .petal:hover,.flower .flower-centre:hover,.flower .test-petal:hover{background:none;border:0;box-shadow:none;color:#c5ff9d}
+.flower .petal.active svg{filter:drop-shadow(0 0 3px #60ff3b) drop-shadow(0 0 8px #83ff66)}
+.flower .petal:disabled{color:#5f7063;opacity:.4}
+.flower .petal:disabled svg{filter:none}
+.petal:hover .petal-label{display:none}
+.petal:focus-visible .petal-label,.labels .petal .petal-label{display:block;transform:translateX(-50%) rotate(calc(-1 * var(--mark-tilt,0deg)))}
+.flower .petal:focus-visible,.flower .flower-centre:focus-visible,.flower .test-petal:focus-visible{outline:2px dashed #e5ffd0;outline-offset:2px}
+.flower .test-petal{padding:15px;width:66px;height:70px;transform:rotate(-12deg)}
+.test-petal:after{content:none}
+.labels .test-petal:after{content:'Test me'}
+.flower.speaking .flower-centre{box-shadow:none;color:#c5ff9d}
+.memory .petal{color:#91ff65}
+#symbol-guide{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+#symbol-guide>div{display:flex;gap:10px;align-items:center;font-size:14px}
+#symbol-guide svg{width:36px;height:36px;flex-shrink:0;color:#91ff65}
+#menu details{margin:18px 0;padding:12px;border:1px solid #80a87a66;border-radius:12px}
+#menu summary{cursor:pointer;color:#c9e8af}
+@media(max-width:700px){.flower .petal{width:48px;height:48px;padding:8px}.flower .test-petal{width:56px;height:60px;padding:12px}}
+
+.flower-centre{top:54%;left:43%}
+.flower .petal.done:not(.active):hover,.flower .flower-centre.done:hover{color:#3f8f50}

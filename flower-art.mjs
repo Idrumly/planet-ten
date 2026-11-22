@@ -7,7 +7,18 @@ export const plants=[
  ['Orbit Weaver','#e593ec','passion'],['Star Sail','#e8ae67','starfish'],
  ['Ghost Lantern','#c5edfa','ghost'],['Spiral Sprite','#f4c88b','spiral']
 ];
-export const glyphs={sentence:'<path d="M5 6h22v15H15l-7 6v-6H5z"/><path d="M10 12h12m-12 4h8"/>',definition:'<path d="M16 8Q8 3 3 7v19q7-4 13 0 6-4 13 0V7q-5-4-13 1v18"/>',partOfSpeech:'<path d="M12 3h8v8h-8zm-9 20h8v7H3zm18 0h8v7h-8zM16 11v6H7v6m9-6h9v6"/>',wordHistory:'<path d="M16 2v13m0-5-8 5-4 8m12-8 9 3 4 8m-13-9-4 12m4-10 5 11M8 15l-6 1m23 2 5-5"/>',human:'<circle cx="16" cy="16" r="13"/><path d="m8 5 3 6-5 6 6 2 3 9m10-20-7 3-1 7 8 2M3 16h4"/>',show:'<path d="M2 16Q16-3 30 16 16 35 2 16Z"/><circle cx="16" cy="16" r="5"/>',test:'<circle cx="15" cy="18" r="11"/><circle cx="15" cy="18" r="5"/><path d="m15 18 13-15m-6 1 6-1v7"/>',hear:'<path d="M3 12h6l7-7v22l-7-7H3zm18-3q8 7 0 14m4-18q12 11 0 22"/>'};
+// Curved vein-like glyphs: leaf speech, unfurling knowledge, branching grammar,
+// roots, Earth, seed-eye, a growing challenge bud and sound ripples.
+export const glyphs={
+ sentence:'<path d="M7 25C-2 9 10 2 24 5Q31 13 22 21Q15 25 7 25L4 30M8 18Q14 11 24 10M11 20Q16 17 22 17"/>',
+ definition:'<path d="M16 28C7 20 1 23 3 7Q12 5 16 14Q20 3 29 5C30 22 22 20 16 28ZM16 14V28M7 11Q11 12 13 17M25 10Q21 12 20 17"/>',
+ partOfSpeech:'<path d="M16 30Q13 18 17 4M16 20Q4 21 3 11Q14 9 16 20M16 13Q26 15 29 5Q20 3 16 13M16 26Q26 28 29 19Q20 16 16 26"/>',
+ wordHistory:'<path d="M17 2Q13 12 16 19M16 9Q8 10 5 5M16 14Q24 13 28 7M16 19Q5 19 3 28M16 19Q13 25 11 30M16 19Q24 20 29 29M20 21Q25 20 29 22M9 21Q6 19 3 21"/>',
+ human:'<path d="M16 3C-1 3-1 29 16 29C33 29 33 3 16 3ZM11 4Q17 10 8 14Q5 19 13 20L17 28M26 7Q16 10 20 16L29 19M5 25Q14 30 25 23"/>',
+ show:'<path d="M2 17Q15-2 30 15Q18 34 2 17ZM17 10C10 8 9 22 16 23C24 23 24 10 17 10ZM2 17Q4 8 9 5M30 15Q27 24 23 28"/>',
+ test:'<path d="M16 30Q13 22 17 15M17 17Q3 17 4 5Q16 6 17 17Q29 11 27 2Q15 3 17 17M16 24Q24 26 29 20M15 27Q7 29 3 24"/>',
+ hear:'<path d="M14 5Q1 6 5 18Q7 24 14 27Q21 21 14 5ZM19 9Q27 16 19 23M24 4Q37 16 24 28M9 10Q6 17 12 21"/>'
+};
 export const icon=key=>`<svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${glyphs[key]||glyphs.test}</svg>`;
 
 export function flowerArt(index=0,context='garden'){
@@ -15,3 +26,17 @@ export function flowerArt(index=0,context='garden'){
  const x=(n%5)*420,y=Math.floor(n/5)*420;
  return '<svg viewBox="0 0 420 500" aria-hidden="true" focusable="false" class="alien-bloom species-'+plants[n][2]+'"><ellipse cx="210" cy="459" rx="100" ry="14" fill="#102c32" opacity=".35"/><svg x="0" y="30" width="420" height="420" viewBox="'+x+' '+y+' 420 420" overflow="hidden"><image href="assets/garden/organic-flowers.webp" width="2100" height="840" preserveAspectRatio="none"/></svg></svg>';
 }
+
+// Positions follow broad petal and leaf surfaces; DOM hit areas remain at least 44px.
+export const tattooSites=[
+ [[48,19],[66,27],[70,59],[51,77],[30,66],[29,41]],
+ [[31,24],[70,24],[66,67],[51,79],[31,66],[25,43]],
+ [[32,23],[70,27],[68,63],[51,78],[32,64],[28,43]],
+ [[35,23],[68,24],[72,57],[51,78],[30,63],[30,43]],
+ [[34,24],[72,29],[72,64],[51,79],[31,65],[29,43]],
+ [[34,22],[72,29],[70,58],[51,79],[31,66],[29,44]],
+ [[32,27],[73,29],[70,60],[51,78],[29,65],[30,45]],
+ [[33,23],[69,28],[70,61],[51,79],[30,65],[29,44]],
+ [[43,22],[71,30],[73,62],[51,79],[30,67],[32,45]],
+ [[33,25],[70,28],[70,61],[51,79],[29,65],[30,45]]
+];
