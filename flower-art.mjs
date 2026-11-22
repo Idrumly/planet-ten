@@ -22,21 +22,15 @@ export const glyphs={
 export const icon=key=>`<svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${glyphs[key]||glyphs.test}</svg>`;
 
 export function flowerArt(index=0,context='garden'){
- const n=((index%plants.length)+plants.length)%plants.length;
- const x=(n%5)*420,y=Math.floor(n/5)*420;
- return '<svg viewBox="0 0 420 500" aria-hidden="true" focusable="false" class="alien-bloom species-'+plants[n][2]+'"><ellipse cx="210" cy="459" rx="100" ry="14" fill="#102c32" opacity=".35"/><svg x="0" y="30" width="420" height="420" viewBox="'+x+' '+y+' 420 420" overflow="hidden"><image href="assets/garden/organic-flowers.webp" width="2100" height="840" preserveAspectRatio="none"/></svg></svg>';
+ const n=((index%plants.length)+plants.length)%plants.length,x=(n%5)*420,y=Math.floor(n/5)*420;
+ const plant='<svg x="0" y="30" width="420" height="420" viewBox="'+x+' '+y+' 420 420" overflow="hidden"><image href="assets/garden/organic-flowers.webp" width="2100" height="840" preserveAspectRatio="none"/></svg>';
+ const id='tissue-'+context.replace(/[^a-z0-9-]/gi,'')+'-'+n;
+ const sites=tattooSites[n],keys=['sentence','definition','partOfSpeech','wordHistory','human','show','hear','test'];
+ const bud=sites[7];
+ const grownBud='<g class="botanical-rune unavailable" data-kind="test"><path d="M210 355Q'+(bud[0]*4.2-25)+' '+(bud[1]*5+20)+' '+bud[0]*4.2+' '+bud[1]*5+'" fill="none" stroke="#758855" stroke-width="3"/><g transform="translate('+bud[0]*4.2+' '+bud[1]*5+')"><path d="M0 24Q-35-2-17-30Q7-25 27-38Q38 1 0 24Z" fill="#344e2e" stroke="#9aab69" stroke-width="1"/><svg x="-15" y="-17" width="30" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">'+glyphs.test+'</svg></g></g>';
+ const runes=context==='encounter'?'<defs><mask id="'+id+'" maskUnits="userSpaceOnUse" x="0" y="0" width="420" height="500" style="mask-type:alpha">'+plant+'</mask></defs><g mask="url(#'+id+')">'+keys.slice(0,7).map((k,i)=>{const site=sites[i];return '<g class="botanical-rune'+(k==='test'?' unavailable':'')+'" data-kind="'+k+'" transform="translate('+site[0]*4.2+' '+site[1]*5+') rotate('+(i%2?18:-18)+') skewX(-10)"><path class="rune-vein" d="M-4-26Q-13-12-3 0T7 27M-4-14Q8-23 12-21M3 15Q-9 21-12 19"/><svg x="-15" y="-16" width="30" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+glyphs[k]+'</svg></g>';}).join('')+'</g>'+grownBud:'';
+ return '<svg viewBox="0 0 420 500" aria-hidden="true" focusable="false" class="alien-bloom species-'+plants[n][2]+'"><ellipse cx="210" cy="459" rx="100" ry="14" fill="#102c32" opacity=".35"/>'+plant+runes+'</svg>';
 }
 
 // Positions follow broad petal and leaf surfaces; DOM hit areas remain at least 44px.
-export const tattooSites=[
- [[48,19],[66,27],[70,59],[51,77],[30,66],[29,41]],
- [[31,24],[70,24],[66,67],[51,79],[31,66],[25,43]],
- [[32,23],[70,27],[68,63],[51,78],[32,64],[28,43]],
- [[35,23],[68,24],[72,57],[51,78],[30,63],[30,43]],
- [[34,24],[72,29],[72,64],[51,79],[31,65],[29,43]],
- [[34,22],[72,29],[70,58],[51,79],[31,66],[29,44]],
- [[32,27],[73,29],[70,60],[51,78],[29,65],[30,45]],
- [[33,23],[69,28],[70,61],[51,79],[30,65],[29,44]],
- [[43,22],[71,30],[73,62],[51,79],[30,67],[32,45]],
- [[33,25],[70,28],[70,61],[51,79],[29,65],[30,45]]
-];
+export const tattooSites=[[[48.2,19],[66.2,27.2],[68.1,50.8],[51.2,77.2],[33.8,61.4],[29.2,41.2],[50.2,59.2],[78.2,78.2]],[[31.2,24.2],[70.2,24.2],[64.1,63.6],[51.2,79.2],[29.8,74.6],[35.2,41.4],[51,56.8],[78,78]],[[33.7,28.6],[69.5,27.8],[71.8,74.6],[51.2,78.2],[38.7,62.4],[29,42],[51.7,58.6],[78,78]],[[35.2,22.6],[66.8,25.4],[71.5,57.2],[51.2,78.2],[31.7,68.6],[37.4,45.6],[50.2,59.2],[79.7,75.2]],[[34.2,24.2],[72.2,29.2],[74.4,61.2],[51.2,79.2],[37,64],[29.2,43.2],[48.8,58],[64.7,82.4]],[[34.2,22.6],[72.2,29.2],[70.2,58.2],[51.2,79.2],[31.2,66.2],[29.2,44.2],[50.2,59.2],[76.8,74.6]],[[32.2,27.2],[72.5,29.2],[66.7,56.6],[51.2,78.2],[29.2,65.2],[30.2,44.6],[51,58.6],[81.8,69.8]],[[32.5,23.2],[69.2,28.2],[69.5,66],[51.2,79.2],[30.2,65.2],[29.2,44.2],[50.2,58.6],[79.7,74]],[[43.2,22],[71.2,30.2],[70.4,65.8],[51.2,79.2],[29.5,68.4],[35.1,45.2],[44.5,60.4],[78,78]],[[33.2,24.6],[76,33.6],[70.2,69.6],[51.2,79.2],[29.2,65.2],[30.2,45.2],[50.2,59.2],[78,78]]];
