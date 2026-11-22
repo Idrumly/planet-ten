@@ -1,0 +1,26 @@
+{
+  "name": "Puddlehopper",
+  "version": 1,
+  "units": "metres",
+  "up": "Y",
+  "forward": "+Z",
+  "triangles": 182168,
+  "materials": 9,
+  "meshes": 62,
+  "bytes": 6920776,
+  "anchors": [
+    "anchor_sentence",
+    "anchor_definition",
+    "anchor_show",
+    "anchor_human",
+    "anchor_history",
+    "anchor_part_of_speech",
+    "anchor_hear",
+    "anchor_test"
+  ],
+  "authoring": "Blender 4.5.9, original script-authored subdivision and voxel-remeshed model",
+  "textures": "Original 1024px colour, normal and roughness maps; WebP packaging",
+  "optimization": "glTF Transform 4.5.1: dedup, prune --keep-leaves true, tangents, webp --quality 90",
+  "validation": "No glTF errors or warnings. Intentional empty nodes retain clue anchors.",
+  "status": "Character study. Not rigged or connected to spelling interactions."
+}

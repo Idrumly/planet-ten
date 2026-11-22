@@ -1,0 +1,6 @@
+# Intermediate texture PNGs are packed into the editable .blend and web GLB.
+*-colour.png
+*-normal.png
+*-roughness.png
+*.blend1
+*.blend2
