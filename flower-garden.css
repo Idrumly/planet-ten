@@ -88,3 +88,27 @@ body:before{background:linear-gradient(#10251b66,transparent 35%,#11261d22 70%,#
  #message{font-size:13px;padding:7px 10px}.encounter-top{margin-top:9px}.encounter-top>span{font-size:12px}.caption-wrap{margin-top:12px}
 }
 @media(prefers-reduced-motion:reduce){body,#plant-path .plant-choice,.botanical-rune{transition:none}}
+/* Violet basalt, copper soil and blue mineral growth replace the Earth-green grove. */
+body{background-color:#655174;background-blend-mode:luminosity;color:#f2e8e3}
+body:before{background:linear-gradient(#25243e77,#55446033 45%,#25223899)}
+#grove-world{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:-1}
+body.webgl{background-image:none;background-color:#302d50}
+body.webgl:before{background:linear-gradient(#211d3544,transparent 40%,#1b193022);z-index:0;pointer-events:none}
+#game{position:relative;z-index:1}
+:root{--panel:#302d48e8;--line:#c3aed15c;--muted:#d5c8e0;--gold:#edc3a6}
+button,select{background:linear-gradient(#51465e,#332d49);box-shadow:0 4px 0 #211e35,0 6px 12px #14112533}
+.grove-controls button,#grove-position,#message{background:#302c46e8;border-color:#b4a0c480}
+#caption{background:#27223bed}.garden-intro p{background:#302c46e8}
+#plant-path .plant-choice span{background:#302c46e8}
+dialog{background:#302b45}.bank-total{color:#edc3a6}
+#flower-picture{filter:sepia(.08) hue-rotate(8deg) saturate(.85)}
+.webgl .grove-floor{display:none}
+.webgl #plant-path .plant-choice{transform:none!important;transition:none;filter:none;opacity:1!important;min-height:0}
+.webgl #plant-path .plant-choice>svg{visibility:hidden}
+.webgl #plant-path .plant-choice.nearest span{bottom:-18px;left:15%;right:15%}
+.webgl #plant-path .plant-choice.collected:after{top:5%;right:15%}
+.webgl #plant-path .plant-choice:focus-visible{outline-offset:-3px;border-radius:40%}
+.webgl .garden-intro{pointer-events:none}.webgl .grove-controls{z-index:10}
+@media(max-width:700px){.webgl #plant-path .plant-choice.nearest span{font-size:13px;padding:4px 8px}}
+
+.webgl #plant-path .plant-choice.nearest span{display:none}
